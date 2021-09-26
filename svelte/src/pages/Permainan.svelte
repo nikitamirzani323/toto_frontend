@@ -382,7 +382,9 @@
     const handleKeyboardbukumimpi_checkenter = (e) => {
 		let keyCode = e.which || e.keyCode;
 		if (keyCode === 13) {
-            tipe = "";
+            // tipe = "";
+            filterBukuMimpi = [];
+            listBukumimpi = [];
 			fetch_bukumimpi();
 		}
 	};
