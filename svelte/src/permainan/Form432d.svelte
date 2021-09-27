@@ -532,26 +532,24 @@
 		let kei_percen = 0;
 		let bayar = 0;
 		let nmgame = "";
-
+		let msg = "";
 		if (nomor == "") {
 			nomor_input.focus();
 			flag = false;
 		}
-		if (nomor[0] == "*" && nomor[1] == "*") {
-			//xxxx
-			if (nomor[2] == "*" && nomor[3] == "*") {
-				flag = false;
-				form_clear("4-3-2");
-				nomor_input.focus();
+		let tempbintang = 0
+		for(let i=0;i<=3;i++){
+			if(nomor[i] == "*"){
+				tempbintang = tempbintang + 1
 			}
 		}
-		if (nomor[0] == "*" && nomor[1] == "*") {
-			//xxx1
-			if (nomor[2] == "*" && nomor[3] != "*") {
-				flag = false;
-				form_clear("4-3-2");
-			}
+		if(tempbintang > 2){
+			flag = false;
+			form_clear("4-3-2");
+			nomor_input.focus();
+			alert("Format Salah\nContoh:\n4D: 1234\n3D: 123\n2D: 12 atau **10\n2DD: 10**\n2DT: *10*\n")
 		}
+		
 		if (nomor[0] == "*" && nomor[1] == "*") {
 			nomor = String(nomor[2]) + String(nomor[3]);
 			game = "2";
@@ -642,7 +640,7 @@
 			}
 		}
 		if (game.toString() == "2DT") {
-			if (parseInt(bet) > parseInt(max2dt_bet)) {
+			if (parseInt(bet_432) > parseInt(max2dt_bet)) {
 				bet = minimal_bet;
 				flag = false;
 				alert(
@@ -657,6 +655,7 @@
 			}
 		}
 		if (flag) {
+			
 			switch (game.toString()) {
 				case "4":
 					nmgame = "4D";
