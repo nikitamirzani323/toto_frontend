@@ -941,7 +941,11 @@
                 </div>
                 <div class="tab-pane fade" id="pills-bukumimpi" role="tabpanel" aria-labelledby="pills-result-tab">
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="background-color: #181818;">
-                        <li class="nav-item" role="presentation" >
+                        <li 
+                            on:click={() => {
+                                handleClickBukuMimpi("ALL");
+                            }} 
+                            class="nav-item" role="presentation" >
                             <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-bukumimpiall" type="button" role="tab" aria-controls="pills-bukumimpiall" aria-selected="true">ALL</button>
                         </li>
                         <li 
