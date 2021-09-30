@@ -1,7 +1,7 @@
 <script>
     import { Button, Icon, TabContent, TabPane } from "sveltestrap";
     import { createEventDispatcher } from "svelte";
-    import PanelFull from "../components/PanelFull.svelte";
+    import PanelFull from "../components/Panelfull.svelte";
     import Modal from "../components/Modal.svelte";
 
     export let keranjang = [];
