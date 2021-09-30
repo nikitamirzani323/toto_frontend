@@ -5,8 +5,8 @@ services:
     container_name: frontend-svelte-go
     image: frontend-svelte-go:0.0.1
     build: .
-    volumes:
-    - ./svelte:/app/svelte
+    # volumes:
+    # - ./svelte:/app/svelte
     ports:
       - 7071:7071
     restart: always

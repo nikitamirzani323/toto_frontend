@@ -1,32 +1,31 @@
-# Building the binary of the App
 FROM golang:alpine AS totobuild
-
-# `boilerplate` should be replaced with your project name
 WORKDIR /go/src/bitbucket.org/isbtotogroup/frontend_svelte
-
-# Copy all the Code and stuff to compile everything
 COPY . .
-
-# Downloads all the dependencies in advance (could be left out, but it's more clear this way)
 RUN go mod download
-
-# Builds the application as a staticly linked one, to allow it to run on alpine
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o app .
 
+# ---- Svelte Base ----
+FROM node:lts-alpine AS totosveltebase
+WORKDIR /svelteapp
+COPY [ "svelte/package.json" , "svelte/yarn.lock" , "svelte/rollup.config.js" , "./"]
+
+# ---- Svelte Dependencies ----
+FROM totosveltebase AS totosveltedep
+RUN yarn
+RUN cp -R node_modules prod_node_modules
+
+#
+# ---- Svelte Builder ----
+FROM totosveltebase AS totosveltebuilder
+COPY --from=totosveltedep /svelteapp/prod_node_modules ./node_modules
+COPY ./svelte .
+RUN yarn build
 
 # Moving the binary to the 'final Image' to make it smaller
-FROM alpine:latest
-
+FROM alpine:latest as totosvelterelease
 WORKDIR /app
-
-# Create the `public` dir and copy all the assets into it
 RUN mkdir -p ./svelte/public
-COPY ./svelte/public ./svelte/public
-
-# `boilerplate` should be replaced here as well
+COPY --from=totosveltebuilder /svelteapp/public ./svelte/public
 COPY --from=totobuild /go/src/bitbucket.org/isbtotogroup/frontend_svelte/app .
-
-# Exposes port 3000 because our program listens on that port
 EXPOSE 7071
-
 CMD ["./app"]
