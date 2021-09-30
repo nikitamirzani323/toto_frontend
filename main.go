@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/nikitamirzani323/gofiber-frontendtogel/routers"
+	"bitbucket.org/isbtotogroup/frontend_svelte/routers"
 )
 
 func main() {

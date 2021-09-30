@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  frontend-svelte-go:
+    container_name: frontend-svelte-go
+    image: frontend-svelte-go
+    build: .
+    ports:
+      - 7071:7071
+    restart: always

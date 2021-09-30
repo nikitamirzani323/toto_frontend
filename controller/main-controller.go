@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
+	"bitbucket.org/isbtotogroup/frontend_svelte/config"
 	"github.com/go-resty/resty/v2"
 	"github.com/gofiber/fiber/v2"
-	"github.com/nikitamirzani323/gofiber-frontendtogel/config"
 )
 
 const PATH string = config.PATH_API
