@@ -537,19 +537,21 @@
 			nomor_input.focus();
 			flag = false;
 		}
-		let tempbintang = 0
-		for(let i=0;i<=3;i++){
-			if(nomor[i] == "*"){
-				tempbintang = tempbintang + 1
+		let tempbintang = 0;
+		for (let i = 0; i <= 3; i++) {
+			if (nomor[i] == "*") {
+				tempbintang = tempbintang + 1;
 			}
 		}
-		if(tempbintang > 2){
+		if (tempbintang > 2) {
 			flag = false;
 			form_clear("4-3-2");
 			nomor_input.focus();
-			alert("Format Salah\nContoh:\n4D: 1234\n3D: 123\n2D: 12 atau **10\n2DD: 10**\n2DT: *10*\n")
+			alert(
+				"Format Salah\nContoh:\n4D: 1234\n3D: 123\n2D: 12 atau **10\n2DD: 10**\n2DT: *10*\n"
+			);
 		}
-		
+
 		if (nomor[0] == "*" && nomor[1] == "*") {
 			nomor = String(nomor[2]) + String(nomor[3]);
 			game = "2";
@@ -655,7 +657,6 @@
 			}
 		}
 		if (flag) {
-			
 			switch (game.toString()) {
 				case "4":
 					nmgame = "4D";
@@ -757,9 +758,18 @@
 		if (parseInt(bet_1) > 0) {
 			if (parseInt(bet_1) < parseInt(minimal_bet)) {
 				bet_1 = minimal_bet;
-				flag = false;
+
 				alert("Minimal Bet 4D : " + minimal_bet);
-			} else {
+			}
+			if (parseInt(bet_1) > parseInt(max4d_bet)) {
+				bet_1 = max4d_bet;
+				flag = false;
+				alert(
+					"Maximal Bet 4D : " +
+						new Intl.NumberFormat().format(max4d_bet)
+				);
+			}
+			if (flag == true) {
 				diskon = Math.ceil(bet_1 * disc4d_bet);
 				diskonpercen = disc4d_bet;
 				win = win4d_bet;
@@ -831,7 +841,16 @@
 				bet_2 = minimal_bet;
 				flag = false;
 				alert("Minimal Bet 3D : " + minimal_bet);
-			} else {
+			}
+			if (parseInt(bet_2) > parseInt(max3d_bet)) {
+				bet_2 = max3d_bet;
+				flag = false;
+				alert(
+					"Maximal Bet 3D : " +
+						new Intl.NumberFormat().format(max3d_bet)
+				);
+			}
+			if (flag == true) {
 				diskon = Math.ceil(bet_2 * disc3d_bet);
 				diskonpercen = disc3d_bet;
 				win = win3d_bet;
@@ -894,7 +913,16 @@
 				bet_3 = minimal_bet;
 				flag = false;
 				alert("Minimal Bet 2D : " + minimal_bet);
-			} else {
+			}
+			if (parseInt(bet_3) > parseInt(max2d_bet)) {
+				bet_3 = max2d_bet;
+				flag = false;
+				alert(
+					"Maximal Bet 2D : " +
+						new Intl.NumberFormat().format(max2d_bet)
+				);
+			}
+			if (flag == true) {
 				diskon = Math.ceil(bet_3 * disc2d_bet);
 				diskonpercen = disc2d_bet;
 				win = win2d_bet;
