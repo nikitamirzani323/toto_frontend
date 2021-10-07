@@ -14,7 +14,8 @@ import (
 const PATH string = config.PATH_API
 
 type clientInit struct {
-	Token string `json:"token"`
+	Token      string `json:"token"`
+	Agent_Code string `json:"agent`
 }
 type clientlistpasaran struct {
 	Token    string `json:"token"`
@@ -127,7 +128,8 @@ func InitToken(c *fiber.Ctx) error {
 		SetResult(responseinitresult{}).
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
-			"token": client.Token,
+			"token":      client.Token,
+			"agent_code": client.Agent_Code,
 		}).
 		Post(PATH + "api/servicetoken")
 	if err != nil {

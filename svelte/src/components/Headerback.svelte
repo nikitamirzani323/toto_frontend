@@ -1,6 +1,7 @@
 <script>
     export let client_token = "";
     export let client_device = "";
+    export let client_company = "";
 </script>
 
 {#if client_device == "WEBSITE"}
@@ -10,7 +11,7 @@
                 <a
                     style="margin-left: -20px;"
                     class="navbar-brand"
-                    href="/?token={client_token}"
+                    href="/?token={client_token}&agent={client_company}"
                     title="isbtoto"
                 >
                     <img
@@ -31,7 +32,7 @@
                 <a
                     style="margin-left: -20px;"
                     class="navbar-brand"
-                    href="/?token={client_token}"
+                    href="/?token={client_token}&agent={client_company}"
                     title="isbtoto"
                 >
                     <img
