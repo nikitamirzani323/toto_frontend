@@ -4,7 +4,7 @@
     import utc from "dayjs/plugin/utc";
     import timezone from "dayjs/plugin/timezone";
     import Modal from "../components/Modalfull2.svelte"
-
+    import PanelFull from "../components/Panelfull.svelte"
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
@@ -22,6 +22,11 @@
     }
     let display_credit = 0;
     let clockmachine = "";
+    let record = "";
+    let filterBukuMimpi = [];
+    let listBukumimpi = [];
+    let searchbukumimpi = "";
+    let tipe = "";
     function updateClock() {
         let endtime = dayjs()
             .tz(client_timezone)
@@ -29,8 +34,50 @@
 
         clockmachine = endtime;
     }
+    async function fetch_bukumimpi() {
+        const res = await fetch("/api/bookdream", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                tipe: tipe,
+                nama: searchbukumimpi.toLowerCase(),
+            }),
+        });
+
+        const json = await res.json();
+        if (json.status == 200) {
+            record = json.record;
+            if (record != null) {
+                for (var i = 0; i < record.length; i++) {
+                    listBukumimpi = [
+                        ...listBukumimpi,
+                        {
+                            bukumimpi_tipe: record[i]["bukumimpi_tipe"],
+                            bukumimpi_nama: record[i]["bukumimpi_nama"],
+                            bukumimpi_nomor: record[i]["bukumimpi_nomor"],
+                        },
+                    ];
+                }
+            } else {
+                alert("Error");
+            }
+        } else {
+            alert("Error");
+        }
+    }
     $: {
         setInterval(updateClock, 100);
+        if (searchbukumimpi) {
+            filterBukuMimpi = listBukumimpi.filter((item) =>
+                item.bukumimpi_nama
+                    .toLowerCase()
+                    .includes(searchbukumimpi.toLowerCase())
+            );
+        } else {
+            filterBukuMimpi = [...listBukumimpi];
+        }
     }
     display_credit = new Intl.NumberFormat().format(client_credit);
 
@@ -63,6 +110,7 @@
         {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
         {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
     ]
+    
     const handleClickButtonTop = (e) => {
         let idmodal = ""
         switch(e){
@@ -73,15 +121,46 @@
                 idmodal = "modalhasilinvoice"
                 break;
             case "bukumimpi":
-                idmodal = "modalhasilinvoice"
+                idmodal = "modalbukumimpi"
+                fetch_bukumimpi()
                 break;
         }
         let myModal = new bootstrap.Modal(
             document.getElementById(idmodal)
         );
-        myModal.show();
-        
+        myModal.show(); 
     }
+    const handleClickBukuMimpi = (e) => {
+        filterBukuMimpi = [];
+        listBukumimpi = [];
+        switch (e) {
+            case "ALL":
+                tipe = "";
+                searchbukumimpi = "";
+                break;
+            case "4D":
+                tipe = "4D";
+                searchbukumimpi = "";
+                break;
+            case "3D":
+                tipe = "3D";
+                searchbukumimpi = "";
+                break;
+            case "2D":
+                tipe = "2D";
+                searchbukumimpi = "";
+                break;
+        }
+        fetch_bukumimpi();
+    }
+    const handleKeyboardbukumimpi_checkenter = (e) => {
+        let keyCode = e.which || e.keyCode;
+        if (keyCode === 13) {
+            filterBukuMimpi = [];
+            listBukumimpi = [];
+            fetch_bukumimpi();
+        }
+    };
 </script>
 {#if client_device == "WEBSITE"}
     <nav class="navbar fixed-top " style="background-color: #e91e63;">
@@ -294,5 +373,266 @@
                 {/each}
             </tbody>
         </table>
+    </slot:template>
+</Modal>
+<Modal 
+    modal_id={"modalbukumimpi"}
+    modal_headerbootom_flag={true} 
+    modal_footer_flag={false} 
+    modal_body_height={"height:550px;"}
+    modal_size={"modal-dialog-centered"}>
+    <slot:template slot="header">
+        <h5 class="modal-title">
+            BUKU MIMPI
+        </h5>
+    </slot:template>
+    <slot:template slot="headerbottom">
+        <ul
+            class="nav nav-pills mb-3"
+            id="pills-tab"
+            role="tablist"
+            style="background-color: #181818;"
+        >
+            <li
+                on:click={() => {
+                    handleClickBukuMimpi("ALL");
+                }}
+                class="nav-item"
+                role="presentation"
+            >
+                <button
+                    class="nav-link active"
+                    id="pills-home-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-bukumimpiall"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-bukumimpiall"
+                    aria-selected="true">ALL</button
+                >
+            </li>
+            <li
+                on:click={() => {
+                    handleClickBukuMimpi("4D");
+                }}
+                class="nav-item"
+                role="presentation"
+            >
+                <button
+                    class="nav-link"
+                    id="pills-profile-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-bukumimpi4d"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-bukumimpi4d"
+                    aria-selected="false">4D</button
+                >
+            </li>
+            <li
+                on:click={() => {
+                    handleClickBukuMimpi("3D");
+                }}
+                class="nav-item"
+                role="presentation"
+            >
+                <button
+                    class="nav-link"
+                    id="pills-contact-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-bukumimpi3d"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-bukumimpi3d"
+                    aria-selected="false">3D</button
+                >
+            </li>
+            <li
+                on:click={() => {
+                    handleClickBukuMimpi("2D");
+                }}
+                class="nav-item"
+                role="presentation"
+            >
+                <button
+                    class="nav-link"
+                    id="pills-contact-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-bukumimpi2d"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-bukumimpi2d"
+                    aria-selected="false">2D</button
+                >
+            </li>
+        </ul>
+        <input
+            bind:value={searchbukumimpi}
+            on:keypress={handleKeyboardbukumimpi_checkenter}
+            style="border-radius: none;border: none; background: rgb(48, 48, 48) none repeat scroll 0% 0%; color: white; font-size: 15px; "
+            placeholder="Ketik apa yang telah kamu impikan"
+            class="form-control"
+            type="text"
+        />
+    </slot:template>
+    <slot:template slot="body">
+        <div class="tab-content" id="pills-tabContent">
+            <div
+                class="tab-pane fade show active"
+                id="pills-bukumimpiall"
+                role="tabpanel"
+                aria-labelledby="pills-bukumimpiall-tab"
+            >
+                <PanelFull
+                    header={false}
+                    footer={false}
+                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:620px;"
+                >
+                    <slot:template slot="body">
+                        <table>
+                            <tbody>
+                                {#each filterBukuMimpi as rec}
+                                    <tr>
+                                        <td
+                                            NOWRAP
+                                            width="30px"
+                                            style="text-align:center;vertical-align:top;font-size:14px;color:#fc0;"
+                                            >{rec.bukumimpi_tipe}</td
+                                        >
+                                        <td
+                                            width="*"
+                                            style="text-align:left;vertical-align:top;font-size:15px;color:#8b8989;"
+                                            >{rec.bukumimpi_nama}
+                                            <br />
+                                            <span
+                                                style="color:#fc0;font-size:14px;"
+                                                >{rec.bukumimpi_nomor}</span
+                                            >
+                                        </td>
+                                    </tr>
+                                {/each}
+                            </tbody>
+                        </table>
+                    </slot:template>
+                </PanelFull>
+            </div>
+            <div
+                class="tab-pane fade"
+                id="pills-bukumimpi4d"
+                role="tabpanel"
+                aria-labelledby="pills-bukumimpi4d-tab"
+            >
+                <PanelFull
+                    header={false}
+                    footer={false}
+                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:620px;"
+                >
+                    <slot:template slot="body">
+                        <table>
+                            <tbody>
+                                {#each filterBukuMimpi as rec}
+                                    <tr>
+                                        <td
+                                            NOWRAP
+                                            width="30px"
+                                            style="text-align:center;vertical-align:top;font-size:14px;color:#fc0;"
+                                            >{rec.bukumimpi_tipe}</td
+                                        >
+                                        <td
+                                            width="*"
+                                            style="text-align:left;vertical-align:top;font-size:15px;color:#8b8989;"
+                                            >{rec.bukumimpi_nama}
+                                            <br />
+                                            <span
+                                                style="color:#fc0;font-size:14px;"
+                                                >{rec.bukumimpi_nomor}</span
+                                            >
+                                        </td>
+                                    </tr>
+                                {/each}
+                            </tbody>
+                        </table>
+                    </slot:template>
+                </PanelFull>
+            </div>
+            <div
+                class="tab-pane fade"
+                id="pills-bukumimpi3d"
+                role="tabpanel"
+                aria-labelledby="pills-bukumimpi3d-tab"
+            >
+                <PanelFull
+                    header={false}
+                    footer={false}
+                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:620px;"
+                >
+                    <slot:template slot="body">
+                        <table>
+                            <tbody>
+                                {#each filterBukuMimpi as rec}
+                                    <tr>
+                                        <td
+                                            NOWRAP
+                                            width="30px"
+                                            style="text-align:center;vertical-align:top;font-size:14px;color:#fc0;"
+                                            >{rec.bukumimpi_tipe}</td
+                                        >
+                                        <td
+                                            width="*"
+                                            style="text-align:left;vertical-align:top;font-size:15px;color:#8b8989;"
+                                            >{rec.bukumimpi_nama}
+                                            <br />
+                                            <span
+                                                style="color:#fc0;font-size:14px;"
+                                                >{rec.bukumimpi_nomor}</span
+                                            >
+                                        </td>
+                                    </tr>
+                                {/each}
+                            </tbody>
+                        </table>
+                    </slot:template>
+                </PanelFull>
+            </div>
+            <div
+                class="tab-pane fade"
+                id="pills-bukumimpi2d"
+                role="tabpanel"
+                aria-labelledby="pills-bukumimpi2d-tab"
+            >
+                <PanelFull
+                    header={false}
+                    footer={false}
+                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:620px;"
+                >
+                    <slot:template slot="body">
+                        <table>
+                            <tbody>
+                                {#each filterBukuMimpi as rec}
+                                    <tr>
+                                        <td
+                                            NOWRAP
+                                            width="30px"
+                                            style="text-align:center;vertical-align:top;font-size:14px;color:#fc0;"
+                                            >{rec.bukumimpi_tipe}</td
+                                        >
+                                        <td
+                                            width="*"
+                                            style="text-align:left;vertical-align:top;font-size:15px;color:#8b8989;"
+                                            >{rec.bukumimpi_nama}
+                                            <br />
+                                            <span
+                                                style="color:#fc0;font-size:14px;"
+                                                >{rec.bukumimpi_nomor}</span
+                                            >
+                                        </td>
+                                    </tr>
+                                {/each}
+                            </tbody>
+                        </table>
+                    </slot:template>
+                </PanelFull>
+            </div>
+        </div>
     </slot:template>
 </Modal>

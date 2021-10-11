@@ -2,6 +2,7 @@
     export let modal_id = "";
     export let modal_size = "";
     export let modal_body_height = "height:350px;overflow:scroll;";
+    export let modal_headerbootom_flag = false;
     export let modal_footer_flag = true;
 </script>
 
@@ -25,6 +26,11 @@
                     aria-label="Close"
                 />
             </div>
+            {#if modal_headerbootom_flag}
+            <div style="background-color: #181818;">
+                <slot name="headerbottom" />
+            </div>
+            {/if}
             <div
                 data-simplebar
                 class="modal-body"
