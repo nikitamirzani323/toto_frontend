@@ -4,6 +4,7 @@
   import Permainan from "./pages/Permainan.svelte";
   import Loader from "./components/Loader.svelte";
   import Footer from "./components/Footer.svelte";
+  import Notif from "./components/Notif.svelte";
   import dayjs from "dayjs";
   import utc from "dayjs/plugin/utc";
   import timezone from "dayjs/plugin/timezone";
@@ -49,6 +50,8 @@
   };
 
   let record = "";
+  let message_err = "";
+  let css_err = "display:none;";
   async function initTimezone() {
     const res = await fetch("https://ipinfo.io/json?token=a50f35c7f0138c");
     if (!res.ok) {
@@ -79,7 +82,11 @@
       if (initJson.status === 200) {
         switch (initJson.company) {
           case "":
-            alert("Company code not found");
+            css_err = "display:inline-block";
+            message_err = "Agen not found, Please contact admin";
+            setTimeout(function () {
+                css_err = "display: none;";
+            }, 5000);
 			break;
           default:
             client_token = initJson.token;
@@ -172,6 +179,9 @@
               on:pasaran={pasaran}
             />
           {:else}
+            <Notif 
+              message="{message_err}" 
+              css_init="{css_err}"  />
             <div style="height: 100%;margin:100px 0px 100px 0px;">
               <center>
                 <Loader cssstyle={"height: 100%;margin:100px 0px 100px 0px;"} />
