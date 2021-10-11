@@ -758,7 +758,7 @@
 		if (parseInt(bet_1) > 0) {
 			if (parseInt(bet_1) < parseInt(minimal_bet)) {
 				bet_1 = minimal_bet;
-
+				flag = false;
 				alert("Minimal Bet 4D : " + minimal_bet);
 			}
 			if (parseInt(bet_1) > parseInt(max4d_bet)) {
