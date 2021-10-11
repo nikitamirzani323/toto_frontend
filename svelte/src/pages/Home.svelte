@@ -59,7 +59,7 @@
                 }}
             >
                 <CardHeader style="background:#181a1c;border:none;">
-                    <center id="style_text" style="font-size:20px;">
+                    <center id="style_text" style="font-size:18px;">
                         {rec.pasaran}
                     </center>
                 </CardHeader>
@@ -83,7 +83,7 @@
                     <span style="font-size: 12px;"
                         >PERIODE : {rec.pasaran_periode}</span
                     ><br />
-                    <span style="font-size: 12px;">{rec.pasaran_tgl}</span>
+                    <span style="font-size: 11px;">{rec.pasaran_tgl} WIB</span>
                 </CardBody>
             </Card>
         </Col>
@@ -119,7 +119,7 @@
                         PERIODE : {rec.pasaran_periode}
                     </span>
                     <br />
-                    <span style="font-size: 12px;">{rec.pasaran_tgl}</span>
+                    <span style="font-size: 10px;">{rec.pasaran_tgl} WIB</span>
                 </CardBody>
                 <CardFooter style="padding:0px;margin:0px;">
                     {#if rec.pasaran_status == "ONLINE"}
