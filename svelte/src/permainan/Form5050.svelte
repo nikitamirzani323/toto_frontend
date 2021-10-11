@@ -600,7 +600,8 @@
 		}
 		count_line_5050umum = count_umum + db_form5050_umum_count_temp;
 		count_line_5050special = count_special + db_form5050_special_count_temp;
-		count_line_5050kombinasi = count_kombinasi + db_form5050_kombinasi_count_temp;
+		count_line_5050kombinasi =
+			count_kombinasi + db_form5050_kombinasi_count_temp;
 	}
 
 	//5050 UMUM - INIT FORM
@@ -969,6 +970,7 @@
 			form_clear("5050kombinasi");
 		}
 	}
+
 	const handleTambah = (e) => {
 		switch (e) {
 			case "5050umum":
@@ -1000,7 +1002,7 @@
 				) {
 					select_5050kombinasi_1_input.focus();
 				} else {
-					form5050special_add();
+					form5050kombinasi_add();
 				}
 				break;
 		}
@@ -1073,7 +1075,6 @@
 					active
 					style="padding:5px;"
 				>
-					
 					<table class="table" style="background:none;width:100%;">
 						<tr>
 							<td
@@ -1235,7 +1236,7 @@
 								<Button
 									id="btn2"
 									on:click={() => {
-										handleTambah("5050umum");
+										handleTambah("5050special");
 									}}>TAMBAH</Button
 								>
 							</td>
@@ -1330,7 +1331,7 @@
 								<Button
 									id="btn2"
 									on:click={() => {
-										handleTambah("5050umum");
+										handleTambah("5050kombinasi");
 									}}>TAMBAH</Button
 								>
 							</td>
