@@ -26,6 +26,7 @@ func Init() *fiber.App {
 	app.Post("api/resulttogel", controller.Resulttogel)
 	app.Post("api/resulttogelall", controller.ResulttogelAll)
 	app.Post("api/invoicebet", controller.Invoicebet)
+	app.Post("api/invoicebetdetail", controller.Invoicebetid)
 	app.Post("api/slipperiode", controller.Slipperiode)
 	app.Post("api/slipperiodeall", controller.SlipperiodeAll)
 	app.Post("api/slipperiodedetail", controller.Slipperiodedetail)

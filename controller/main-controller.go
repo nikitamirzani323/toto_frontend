@@ -38,6 +38,12 @@ type clientlimitpasaran struct {
 	Permainan       string `json:"permainan"`
 	Username        string `json:"username"`
 }
+type clientinvoicedetailid struct {
+	Invoice   int    `json:"invoice"`
+	Company   string `json:"company"`
+	Username  string `json:"username"`
+	Permainan string `json:"permainan"`
+}
 type clientresult struct {
 	Company      string `json:"company"`
 	Pasaran_code string `json:"pasaran_code"`
@@ -437,6 +443,48 @@ func Invoicebet(c *fiber.Ctx) error {
 			"totalbet":   result.Totalbet,
 			"record":     result.Record,
 			"time":       time.Since(render_page).String(),
+		})
+	} else {
+		return c.JSON(fiber.Map{
+			"status": http.StatusOK,
+			"record": nil,
+			"time":   time.Since(render_page).String(),
+		})
+	}
+}
+func Invoicebetid(c *fiber.Ctx) error {
+	client := new(clientinvoicedetailid)
+	render_page := time.Now()
+	if err := c.BodyParser(client); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"status":  fiber.StatusBadRequest,
+			"message": err.Error(),
+			"record":  nil,
+		})
+	}
+
+	axios := resty.New()
+	resp, err := axios.R().
+		SetResult(response{}).
+		SetHeader("Content-Type", "application/json").
+		SetBody(map[string]interface{}{
+			"client_idinvoice": client.Invoice,
+			"client_company":   client.Company,
+			"client_username":  client.Username,
+			"permainan":        client.Permainan,
+		}).
+		Post(PATH + "api/serviceinvoicebetdetail")
+	if err != nil {
+		log.Println(err.Error())
+	}
+	result := resp.Result().(*response)
+
+	if result.Status == 200 {
+		return c.JSON(fiber.Map{
+			"status": http.StatusOK,
+			"record": result.Record,
+			"time":   time.Since(render_page).String(),
 		})
 	} else {
 		return c.JSON(fiber.Map{

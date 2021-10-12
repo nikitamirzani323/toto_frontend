@@ -29,10 +29,12 @@
     let listBukumimpi = [];
     let listhasilkeluaran = [];
     let listhasilinvoice = [];
+    let listhasilinvoicebet = [];
     let searchbukumimpi = "";
     let tipe = "";
     let idinvoiceall = "";
     let detailslipheader = "";
+    let detailslipheaderpermainan = "";
     let total4d_bayar = 0;
     let total3d_bayar = 0;
     let total2d_bayar = 0;
@@ -237,7 +239,69 @@
         myModal.show();
     }
     async function fetch_invoicealldetailpermainan(permainan,bayar){
-        alert(idinvoiceall+" - "+permainan+" - "+bayar)
+        if(parseInt(bayar) > 0) {
+            detailslipheaderpermainan = permainan;
+            listhasilinvoicebet = []
+            const res = await fetch("/api/invoicebetdetail", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    invoice: parseInt(idinvoiceall),
+                    company: client_company,
+                    username: client_username,
+                    permainan: permainan,
+                }),
+            });
+
+            const json = await res.json();
+            if (json.status == 200) {
+                record = json.record;
+                if (record != null) {
+                    for (var i = 0; i < record.length; i++) {
+                        let status = record[i]["status"];
+                        let background = "";
+                        switch(status){
+                            case "RUNNING":
+                                background = "background:#FFEB3B;font-weight:bold;color:black;"
+                                break;
+                            case "WINNER":
+                                background = "background:#8BC34A;font-weight:bold;color:black;"
+                                break;
+                            case "LOSE":
+                                background = "background:#E91E63;font-weight:bold;color:white;"
+                                break;
+                        }
+                        listhasilinvoicebet = [
+                            ...listhasilinvoicebet,
+                            {
+                                bet_no: record[i]["no"],
+                                bet_background: background,
+                                bet_status: record[i]["status"],
+                                bet_permainan: record[i]["permainan"],
+                                bet_nomor: record[i]["nomor"],
+                                bet_bet: record[i]["bet"],
+                                bet_diskon: record[i]["diskon"],
+                                bet_kei: record[i]["kei"],
+                                bet_bayar: record[i]["bayar"],
+                                bet_win: record[i]["win"],
+                            },
+                        ];
+                    }
+                    let myModal = new bootstrap.Modal(
+                        document.getElementById("modalslipalldetailbyid")
+                    );
+                    myModal.show(); 
+                } else {
+                    alert("Error");
+                }
+            } else {
+                alert("Error");
+            }
+        }else{
+            alert("Data Not Found")
+        }
     }
     $: {
         setInterval(updateClock, 100);
@@ -814,7 +878,7 @@
                         <th
                             width="15%"
                             style="text-align:left;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
-                            >GAME</th
+                            >PERMAINAN</th
                         >
                         <th
                             width="50%"
@@ -1265,6 +1329,127 @@
                     >{new Intl.NumberFormat().format(total_winlose)}</td
                 >
             </tr>
+        </table>
+    </slot:template>
+</Modal>
+<Modal 
+    modal_id={"modalslipalldetailbyid"}
+    modal_footer_flag={true} 
+    modal_body_height={"height:450px;"}
+    modal_size={"modal-lg modal-dialog-centered"}>
+    <slot:template slot="header">
+        <h5 class="modal-title">
+            PERMAINAN : {detailslipheaderpermainan}
+        </h5>
+        
+    </slot:template>
+    <slot:template slot="body">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th
+                        width="1%"
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >NO</th
+                    >
+                    <th
+                        width="1%"
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >STATUS</th
+                    >
+                    <th
+                        width="20%"
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >PERMAINAN</th
+                    >
+                    <th
+                        width="*"
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >NOMOR</th
+                    >
+                    <th
+                        width="10%"
+                        style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >BET</th
+                    >
+                    <th
+                        width="10%"
+                        style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >DISC(%)</th
+                    >
+                    <th
+                        width="10%"
+                        style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >KEI(%)</th
+                    >
+                    <th
+                        width="10%"
+                        style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >BAYAR</th
+                    >
+                    <th
+                        width="10%"
+                        style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >WIN</th
+                    >
+                </tr>
+            </thead>
+            <tbody>
+                {#each listhasilinvoicebet as rec}
+                    <tr>
+                        <td
+                            NOWRAP
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >{rec.bet_no}</td
+                        >
+                        <td
+                            NOWRAP
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};{rec.bet_background}"
+                            >{rec.bet_status}</td
+                        >
+                        <td
+                            NOWRAP
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >{rec.bet_permainan}</td
+                        >
+                        <td
+                            NOWRAP
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >{rec.bet_nomor}</td
+                        >
+                        <td
+                            NOWRAP
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(rec.bet_bet)}
+                        </td>
+                        <td
+                            NOWRAP
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {rec.bet_diskon.toFixed(2)}
+                        </td>
+                        <td
+                            NOWRAP
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {rec.bet_kei.toFixed(2)}
+                        </td>
+                        <td
+                            NOWRAP
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(rec.bet_bayar)}
+                        </td>
+                        <td
+                            NOWRAP
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(rec.bet_win)}
+                        </td>
+                    </tr>
+                {/each}
+            </tbody>
         </table>
     </slot:template>
 </Modal>
