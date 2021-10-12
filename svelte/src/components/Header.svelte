@@ -362,11 +362,11 @@
             <tbody>
                 {#each listhasilkeluaran as rec }
                 <tr>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_no}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_date}</td>
-                    <td style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_pasaran}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_periode}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.keluaran_result}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_no}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_date}</td>
+                    <td NOWRAP style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_pasaran}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_periode}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.keluaran_result}</td>
                 </tr>
                 {/each}
             </tbody>
@@ -418,11 +418,11 @@
             <tbody>
                 {#each listhasilinvoice as rec }
                 <tr>
-                    <td style="text-align: center;vertical-align: top;{rec.invoice_background};">{rec.invoice_status}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_tglkeluaran}</td>
-                    <td style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_pasaran}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_periode}</td>
-                    <td style="text-align: right;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.invoice_totallose}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;{rec.invoice_background};">{rec.invoice_status}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_tglkeluaran}</td>
+                    <td NOWRAP style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_pasaran}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_periode}</td>
+                    <td NOWRAP style="text-align: right;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.invoice_totallose}</td>
                 </tr>
                 {/each}
             </tbody>
