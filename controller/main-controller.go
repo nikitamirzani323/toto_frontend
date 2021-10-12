@@ -42,10 +42,17 @@ type clientresult struct {
 	Company      string `json:"company"`
 	Pasaran_code string `json:"pasaran_code"`
 }
+type clientresultall struct {
+	Company string `json:"company"`
+}
 type clientslip struct {
 	Company      string `json:"company"`
 	Pasaran_code string `json:"pasaran_code"`
 	Username     string `json:"username"`
+}
+type clientslipall struct {
+	Company  string `json:"company"`
+	Username string `json:"username"`
 }
 type clientslipdetail struct {
 	Company   string `json:"company"`
@@ -343,6 +350,46 @@ func Resulttogel(c *fiber.Ctx) error {
 		})
 	}
 }
+func ResulttogelAll(c *fiber.Ctx) error {
+	client := new(clientresultall)
+	render_page := time.Now()
+	if err := c.BodyParser(client); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"status":  fiber.StatusBadRequest,
+			"message": err.Error(),
+			"record":  nil,
+		})
+	}
+
+	axios := resty.New()
+	resp, err := axios.R().
+		SetResult(responsedua{}).
+		SetHeader("Content-Type", "application/json").
+		SetBody(map[string]interface{}{
+			"client_company": client.Company,
+		}).
+		Post(PATH + "api/serviceresultall")
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	result := resp.Result().(*responsedua)
+
+	if result.Status == 200 {
+		return c.JSON(fiber.Map{
+			"status": http.StatusOK,
+			"record": result.Record,
+			"time":   time.Since(render_page).String(),
+		})
+	} else {
+		return c.JSON(fiber.Map{
+			"status": http.StatusOK,
+			"record": nil,
+			"time":   time.Since(render_page).String(),
+		})
+	}
+}
 func Invoicebet(c *fiber.Ctx) error {
 	client := new(clientlimitpasaran)
 	render_page := time.Now()
@@ -411,6 +458,46 @@ func Slipperiode(c *fiber.Ctx) error {
 			"pasaran_code":    client.Pasaran_code,
 		}).
 		Post(PATH + "api/serviceslip")
+	if err != nil {
+		log.Println(err.Error())
+	}
+	result := resp.Result().(*response)
+
+	if result.Status == 200 {
+		return c.JSON(fiber.Map{
+			"status": http.StatusOK,
+			"record": result.Record,
+			"time":   time.Since(render_page).String(),
+		})
+	} else {
+		return c.JSON(fiber.Map{
+			"status": http.StatusOK,
+			"record": nil,
+			"time":   time.Since(render_page).String(),
+		})
+	}
+}
+func SlipperiodeAll(c *fiber.Ctx) error {
+	client := new(clientslipall)
+	render_page := time.Now()
+	if err := c.BodyParser(client); err != nil {
+		c.Status(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"status":  fiber.StatusBadRequest,
+			"message": err.Error(),
+			"record":  nil,
+		})
+	}
+
+	axios := resty.New()
+	resp, err := axios.R().
+		SetResult(response{}).
+		SetHeader("Content-Type", "application/json").
+		SetBody(map[string]interface{}{
+			"client_company":  client.Company,
+			"client_username": client.Username,
+		}).
+		Post(PATH + "api/serviceslipall")
 	if err != nil {
 		log.Println(err.Error())
 	}

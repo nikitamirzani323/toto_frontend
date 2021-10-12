@@ -9,11 +9,13 @@
     dayjs.extend(timezone);
 
     export let client_token = "";
+    export let client_company = "";
     export let client_username = "";
     export let client_credit = 0;
     export let client_ipaddress = "";
     export let client_timezone = "";
     export let client_device = "";
+  
     let modal_table_fontsize_header = "13px";
     let modal_table_fontsize_body = "12px";
     if (client_device == "MOBILE") {
@@ -25,6 +27,8 @@
     let record = "";
     let filterBukuMimpi = [];
     let listBukumimpi = [];
+    let listhasilkeluaran = [];
+    let listhasilinvoice = [];
     let searchbukumimpi = "";
     let tipe = "";
     function updateClock() {
@@ -67,6 +71,83 @@
             alert("Error");
         }
     }
+    async function fetch_resultall() {
+        listhasilkeluaran = []
+        const res = await fetch("/api/resulttogelall", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                company: client_company,
+            }),
+        });
+
+        const json = await res.json();
+        if (json.status == 200) {
+            record = json.record;
+            if (record != null) {
+                for (var i = 0; i < record.length; i++) {
+                    listhasilkeluaran = [
+                        ...listhasilkeluaran,
+                        {
+                            keluaran_no: record[i]["no"],
+                            keluaran_date: record[i]["date"],
+                            keluaran_periode: record[i]["periode"],
+                            keluaran_result: record[i]["result"],
+                        },
+                    ];
+                }
+            } else {
+                alert("Error");
+            }
+        } else {
+            alert("Error");
+        }
+    }
+    async function fetch_invoicell() {
+        listhasilinvoice = []
+        const res = await fetch("/api/slipperiodeall", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                company: client_company,
+                username: client_username,
+            }),
+        });
+
+        const json = await res.json();
+        if (json.status == 200) {
+            record = json.record;
+            if (record != null) {
+                for (var i = 0; i < record.length; i++) {
+                    listhasilinvoice = [
+                        ...listhasilinvoice,
+                        {
+                            invoice_idinvoice: record[i]["idinvoice"],
+                            invoice_tglkeluaran: record[i]["invoice_tglkeluaran"],
+                            invoice_pasaran: record[i]["pasaran"],
+                            invoice_periode: record[i]["periode"],
+                            invoice_status: record[i]["status"],
+                            invoice_totalbet: record[i]["totalbet"],
+                            invoice_totalbayar: record[i]["totalbayar"],
+                            invoice_totalwin: record[i]["totalwin"],
+                            invoice_totallose: record[i]["totallose"],
+                            invoice_background: record[i]["background"],
+                            invoice_color_lost: record[i]["color_lost"],
+                            invoice_color_totalloset: record[i]["color_totallose"],
+                        },
+                    ];
+                }
+            } else {
+                alert("Error");
+            }
+        } else {
+            alert("Error");
+        }
+    }
     $: {
         setInterval(updateClock, 100);
         if (searchbukumimpi) {
@@ -80,45 +161,17 @@
         }
     }
     display_credit = new Intl.NumberFormat().format(client_credit);
-
-    let hasilkeluaran = [
-        {no:1,tanggal:"2021-10-12",pasaran:"CAMBODIA",periode:"CAM-01",result:"1234"},
-        {no:2,tanggal:"2021-10-12",pasaran:"BULLSEYE",periode:"BE-01",result:"2345"},
-        {no:3,tanggal:"2021-10-12",pasaran:"SYDNEY",periode:"SY-01",result:"3456"},
-        {no:4,tanggal:"2021-10-12",pasaran:"PCSO",periode:"PCSO-01",result:"7890"},
-        {no:5,tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",result:"5678"},
-    ]
-    let hasilinvoice = [
-        {status:"RUNNING",tanggal:"2021-10-12",pasaran:"CAMBODIA",periode:"CAM-01",winlose:"500.000"},
-        {status:"RUNNING",tanggal:"2021-10-12",pasaran:"BULLSEYE",periode:"BE-01",winlose:"100.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"SYDNEY",periode:"SY-01",winlose:"20.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"PCSO",periode:"PCSO-01",winlose:"-20.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-    ]
     
     const handleClickButtonTop = (e) => {
         let idmodal = ""
         switch(e){
             case "result":
                 idmodal = "modalhasilkeluaran"
+                fetch_resultall()
                 break;
             case "invoice":
                 idmodal = "modalhasilinvoice"
+                fetch_invoicell()
                 break;
             case "bukumimpi":
                 idmodal = "modalbukumimpi"
@@ -306,13 +359,13 @@
                 </tr>
             </thead>
             <tbody>
-                {#each hasilkeluaran as rec }
+                {#each listhasilkeluaran as rec }
                 <tr>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.no}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.tanggal}</td>
-                    <td style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.pasaran}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.periode}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.result}</td>
+                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_no}</td>
+                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_date}</td>
+                    <td style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};"></td>
+                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_periode}</td>
+                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.keluaran_result}</td>
                 </tr>
                 {/each}
             </tbody>
@@ -331,7 +384,7 @@
         
     </slot:template>
     <slot:template slot="body">
-        <table class="table table-dark table-striped">
+        <table class="table table-dark">
             <thead>
                 <tr>
                     <th
@@ -362,13 +415,13 @@
                 </tr>
             </thead>
             <tbody>
-                {#each hasilinvoice as rec }
+                {#each listhasilinvoice as rec }
                 <tr>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.status}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.tanggal}</td>
-                    <td style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.pasaran}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.periode}</td>
-                    <td style="text-align: right;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.winlose}</td>
+                    <td style="text-align: center;vertical-align: top;{rec.invoice_background};">{rec.invoice_status}</td>
+                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_tglkeluaran}</td>
+                    <td style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_pasaran}</td>
+                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_periode}</td>
+                    <td style="text-align: right;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.invoice_totallose}</td>
                 </tr>
                 {/each}
             </tbody>
