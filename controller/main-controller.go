@@ -116,6 +116,16 @@ type responsedua struct {
 		Result  string `json:"result"`
 	} `json:"record"`
 }
+type responseduaall struct {
+	Status int `json:"status"`
+	Record []struct {
+		No      int    `json:"no"`
+		Date    string `json:"date"`
+		Pasaran string `json:"pasaran"`
+		Periode string `json:"periode"`
+		Result  string `json:"result"`
+	} `json:"record"`
+}
 
 func InitToken(c *fiber.Ctx) error {
 	client := new(clientInit)
@@ -364,7 +374,7 @@ func ResulttogelAll(c *fiber.Ctx) error {
 
 	axios := resty.New()
 	resp, err := axios.R().
-		SetResult(responsedua{}).
+		SetResult(responseduaall{}).
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
@@ -374,7 +384,7 @@ func ResulttogelAll(c *fiber.Ctx) error {
 		log.Println(err.Error())
 	}
 
-	result := resp.Result().(*responsedua)
+	result := resp.Result().(*responseduaall)
 
 	if result.Status == 200 {
 		return c.JSON(fiber.Map{

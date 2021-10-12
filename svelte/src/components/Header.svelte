@@ -93,6 +93,7 @@
                         {
                             keluaran_no: record[i]["no"],
                             keluaran_date: record[i]["date"],
+                            keluaran_pasaran: record[i]["pasaran"],
                             keluaran_periode: record[i]["periode"],
                             keluaran_result: record[i]["result"],
                         },
@@ -363,7 +364,7 @@
                 <tr>
                     <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_no}</td>
                     <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_date}</td>
-                    <td style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};"></td>
+                    <td style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_pasaran}</td>
                     <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_periode}</td>
                     <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.keluaran_result}</td>
                 </tr>
