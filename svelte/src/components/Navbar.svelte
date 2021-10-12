@@ -1,7 +1,5 @@
 <script>
     import moment from "moment";
-
-
     let clockmachine = "";
     function updateClock (){
         let currentTimeString = moment();
