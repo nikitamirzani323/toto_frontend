@@ -468,6 +468,23 @@
             </CardBody>
         </Card>
     </Col>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button
+            on:click={() => {
+                handleClickButtonTop("result");
+            }} 
+            id="btn1" class="btn btn-secondary " type="button">RESULT</button>&nbsp;
+        <button
+            on:click={() => {
+                handleClickButtonTop("invoice");
+            }}  
+            id="btn1" class="btn btn-secondary" type="button">INVOICE</button>&nbsp;
+        <button
+            on:click={() => {
+                handleClickButtonTop("bukumimpi");
+            }}  
+            id="btn1" class="btn btn-secondary" type="button">BUKU MIMPI</button>
+    </div>
 {/if}
 
 <div class="clearfix mb-10" />

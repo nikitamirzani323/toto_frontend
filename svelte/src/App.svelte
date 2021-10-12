@@ -217,6 +217,7 @@
         {:else if client_token != ""}
           <Home
             {client_token}
+            {client_company}
             {client_username}
             {client_credit}
             {client_ipaddress}
