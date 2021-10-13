@@ -5,6 +5,7 @@
     import { notifications } from "../components/Noti.svelte";
 
     export let client_token = "";
+    export let client_company = "";
     export let client_username = "";
     export let client_credit = 0;
     export let client_ipaddress = "";
@@ -30,6 +31,7 @@
 
 <Header
     {client_username}
+    {client_company}
     {client_credit}
     {client_token}
     {client_ipaddress}

@@ -9,11 +9,13 @@
     dayjs.extend(timezone);
 
     export let client_token = "";
+    export let client_company = "";
     export let client_username = "";
     export let client_credit = 0;
     export let client_ipaddress = "";
     export let client_timezone = "";
     export let client_device = "";
+  
     let modal_table_fontsize_header = "13px";
     let modal_table_fontsize_body = "12px";
     if (client_device == "MOBILE") {
@@ -25,8 +27,43 @@
     let record = "";
     let filterBukuMimpi = [];
     let listBukumimpi = [];
+    let listhasilkeluaran = [];
+    let listhasilinvoice = [];
+    let listhasilinvoicebet = [];
     let searchbukumimpi = "";
     let tipe = "";
+    let idinvoiceall = "";
+    let detailslipheader = "";
+    let detailslipheaderpermainan = "";
+    let total4d_bayar = 0;
+    let total3d_bayar = 0;
+    let total2d_bayar = 0;
+    let totalcolokbebas_bayar = 0;
+    let totalcolokmacau_bayar = 0;
+    let totalcoloknaga_bayar = 0;
+    let totalcolokjitu_bayar = 0;
+    let total5050umum_bayar = 0;
+    let total5050special_bayar = 0;
+    let total5050kombinasi_bayar = 0;
+    let totalmacaukombinasi_bayar = 0;
+    let totaldasar_bayar = 0;
+    let totalshio_bayar = 0;
+    let totalwin_4d = 0;
+    let totalwin_3d = 0;
+    let totalwin_2d = 0;
+    let totalwin_colokbebas = 0;
+    let totalwin_colokmacau = 0;
+    let totalwin_coloknaga = 0;
+    let totalwin_colokjitu = 0;
+    let totalwin_5050umum = 0;
+    let totalwin_5050special = 0;
+    let totalwin_5050kombinasi = 0;
+    let totalwin_macaukombinasi = 0;
+    let totalwin_dasar = 0;
+    let totalwin_shio = 0;
+    let subtotal_bayar = 0;
+    let subtotal_winner = 0;
+    let total_winlose = 0;
     function updateClock() {
         let endtime = dayjs()
             .tz(client_timezone)
@@ -67,6 +104,205 @@
             alert("Error");
         }
     }
+    async function fetch_resultall() {
+        listhasilkeluaran = []
+        const res = await fetch("/api/resulttogelall", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                company: client_company,
+            }),
+        });
+
+        const json = await res.json();
+        if (json.status == 200) {
+            record = json.record;
+            if (record != null) {
+                for (var i = 0; i < record.length; i++) {
+                    listhasilkeluaran = [
+                        ...listhasilkeluaran,
+                        {
+                            keluaran_no: record[i]["no"],
+                            keluaran_date: record[i]["date"],
+                            keluaran_pasaran: record[i]["pasaran"],
+                            keluaran_periode: record[i]["periode"],
+                            keluaran_result: record[i]["result"],
+                        },
+                    ];
+                }
+            } else {
+                alert("Error");
+            }
+        } else {
+            alert("Error");
+        }
+    }
+    async function fetch_invoicell() {
+        listhasilinvoice = []
+        const res = await fetch("/api/slipperiodeall", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                company: client_company,
+                username: client_username,
+            }),
+        });
+
+        const json = await res.json();
+        if (json.status == 200) {
+            record = json.record;
+            if (record != null) {
+                for (var i = 0; i < record.length; i++) {
+                    listhasilinvoice = [
+                        ...listhasilinvoice,
+                        {
+                            invoice_idinvoice: record[i]["idinvoice"],
+                            invoice_tglkeluaran: record[i]["tglkeluaran"],
+                            invoice_pasaran: record[i]["pasaran"],
+                            invoice_periode: record[i]["periode"],
+                            invoice_status: record[i]["status"],
+                            invoice_totalbet: record[i]["totalbet"],
+                            invoice_totalbayar: record[i]["totalbayar"],
+                            invoice_totalwin: record[i]["totalwin"],
+                            invoice_totallose: record[i]["totallose"],
+                            invoice_background: record[i]["background"],
+                            invoice_color_lost: record[i]["color_lost"],
+                            invoice_color_totalloset: record[i]["color_totallose"],
+                        },
+                    ];
+                }
+            } else {
+                alert("Error");
+            }
+        } else {
+            alert("Error");
+        }
+    }
+    async function fetch_invoicelldetail(e, periode) {
+        detailslipheader = periode;
+        idinvoiceall = e;
+        const res = await fetch("/api/slipperiodedetail", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                company: client_company,
+                username: client_username,
+                idinvoice: e,
+            }),
+        });
+
+        const json = await res.json();
+        record = json.record;
+
+        if (json.status == 200) {
+            record = json.record;
+            total4d_bayar = record["total4d_bayar"];
+            total3d_bayar = record["total3d_bayar"];
+            total2d_bayar = record["total2d_bayar"];
+            totalcolokbebas_bayar = record["totalcolokbebas_bayar"];
+            totalcolokmacau_bayar = record["totalcolokmacau_bayar"];
+            totalcoloknaga_bayar = record["totalcoloknaga_bayar"];
+            totalcolokjitu_bayar = record["totalcolokjitu_bayar"];
+            total5050umum_bayar = record["total5050umum_bayar"];
+            total5050special_bayar = record["total5050special_bayar"];
+            total5050kombinasi_bayar = record["total5050kombinasi_bayar"];
+            totalmacaukombinasi_bayar = record["totalmacaukombinasi_bayar"];
+            totaldasar_bayar = record["totaldasar_bayar"];
+            totalshio_bayar = record["totalshio_bayar"];
+            totalwin_4d = record["totalwin_4d"];
+            totalwin_3d = record["totalwin_3d"];
+            totalwin_2d = record["totalwin_2d"];
+            totalwin_colokbebas = record["totalwin_colokbebas"];
+            totalwin_colokmacau = record["totalwin_colokmacau"];
+            totalwin_coloknaga = record["totalwin_coloknaga"];
+            totalwin_colokjitu = record["totalwin_colokjitu"];
+            totalwin_5050umum = record["totalwin_5050umum"];
+            totalwin_5050special = record["totalwin_5050special"];
+            totalwin_5050kombinasi = record["totalwin_5050kombinasi"];
+            totalwin_macaukombinasi = record["totalwin_macaukombinasi"];
+            totalwin_dasar = record["totalwin_dasar"];
+            totalwin_shio = record["totalwin_shio"];
+            subtotal_bayar = record["subtotal_bayar"];
+            subtotal_winner = record["subtotal_winner"];
+            total_winlose = record["total_winlose"];
+        }
+
+        let myModal = new bootstrap.Modal(
+            document.getElementById("modalslipalldetail")
+        );
+        myModal.show();
+    }
+    async function fetch_invoicealldetailpermainan(permainan,bayar){
+        if(parseInt(bayar) > 0) {
+            detailslipheaderpermainan = permainan;
+            listhasilinvoicebet = []
+            const res = await fetch("/api/invoicebetdetail", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    invoice: parseInt(idinvoiceall),
+                    company: client_company,
+                    username: client_username,
+                    permainan: permainan,
+                }),
+            });
+
+            const json = await res.json();
+            if (json.status == 200) {
+                record = json.record;
+                if (record != null) {
+                    for (var i = 0; i < record.length; i++) {
+                        let status = record[i]["status"];
+                        let background = "";
+                        switch(status){
+                            case "RUNNING":
+                                background = "background:#FFEB3B;font-weight:bold;color:black;"
+                                break;
+                            case "WINNER":
+                                background = "background:#8BC34A;font-weight:bold;color:black;"
+                                break;
+                            case "LOSE":
+                                background = "background:#E91E63;font-weight:bold;color:white;"
+                                break;
+                        }
+                        listhasilinvoicebet = [
+                            ...listhasilinvoicebet,
+                            {
+                                bet_no: record[i]["no"],
+                                bet_background: background,
+                                bet_status: record[i]["status"],
+                                bet_permainan: record[i]["permainan"],
+                                bet_nomor: record[i]["nomor"],
+                                bet_bet: record[i]["bet"],
+                                bet_diskon: record[i]["diskon"],
+                                bet_kei: record[i]["kei"],
+                                bet_bayar: record[i]["bayar"],
+                                bet_win: record[i]["win"],
+                            },
+                        ];
+                    }
+                    let myModal = new bootstrap.Modal(
+                        document.getElementById("modalslipalldetailbyid")
+                    );
+                    myModal.show(); 
+                } else {
+                    alert("Error");
+                }
+            } else {
+                alert("Error");
+            }
+        }else{
+            alert("Data Not Found")
+        }
+    }
     $: {
         setInterval(updateClock, 100);
         if (searchbukumimpi) {
@@ -80,45 +316,17 @@
         }
     }
     display_credit = new Intl.NumberFormat().format(client_credit);
-
-    let hasilkeluaran = [
-        {no:1,tanggal:"2021-10-12",pasaran:"CAMBODIA",periode:"CAM-01",result:"1234"},
-        {no:2,tanggal:"2021-10-12",pasaran:"BULLSEYE",periode:"BE-01",result:"2345"},
-        {no:3,tanggal:"2021-10-12",pasaran:"SYDNEY",periode:"SY-01",result:"3456"},
-        {no:4,tanggal:"2021-10-12",pasaran:"PCSO",periode:"PCSO-01",result:"7890"},
-        {no:5,tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",result:"5678"},
-    ]
-    let hasilinvoice = [
-        {status:"RUNNING",tanggal:"2021-10-12",pasaran:"CAMBODIA",periode:"CAM-01",winlose:"500.000"},
-        {status:"RUNNING",tanggal:"2021-10-12",pasaran:"BULLSEYE",periode:"BE-01",winlose:"100.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"SYDNEY",periode:"SY-01",winlose:"20.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"PCSO",periode:"PCSO-01",winlose:"-20.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-        {status:"COMPLETED",tanggal:"2021-10-12",pasaran:"HONGKONG",periode:"HK-01",winlose:"-10.000"},
-    ]
     
     const handleClickButtonTop = (e) => {
         let idmodal = ""
         switch(e){
             case "result":
                 idmodal = "modalhasilkeluaran"
+                fetch_resultall()
                 break;
             case "invoice":
                 idmodal = "modalhasilinvoice"
+                fetch_invoicell()
                 break;
             case "bukumimpi":
                 idmodal = "modalbukumimpi"
@@ -260,6 +468,23 @@
             </CardBody>
         </Card>
     </Col>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button
+            on:click={() => {
+                handleClickButtonTop("result");
+            }} 
+            id="btn1" class="btn btn-secondary " type="button">RESULT</button>&nbsp;
+        <button
+            on:click={() => {
+                handleClickButtonTop("invoice");
+            }}  
+            id="btn1" class="btn btn-secondary" type="button">INVOICE</button>&nbsp;
+        <button
+            on:click={() => {
+                handleClickButtonTop("bukumimpi");
+            }}  
+            id="btn1" class="btn btn-secondary" type="button">BUKU MIMPI</button>
+    </div>
 {/if}
 
 <div class="clearfix mb-10" />
@@ -306,13 +531,13 @@
                 </tr>
             </thead>
             <tbody>
-                {#each hasilkeluaran as rec }
+                {#each listhasilkeluaran as rec }
                 <tr>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.no}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.tanggal}</td>
-                    <td style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.pasaran}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.periode}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.result}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_no}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_date}</td>
+                    <td NOWRAP style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_pasaran}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_periode}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.keluaran_result}</td>
                 </tr>
                 {/each}
             </tbody>
@@ -331,7 +556,7 @@
         
     </slot:template>
     <slot:template slot="body">
-        <table class="table table-dark table-striped">
+        <table class="table table-dark">
             <thead>
                 <tr>
                     <th
@@ -362,13 +587,24 @@
                 </tr>
             </thead>
             <tbody>
-                {#each hasilinvoice as rec }
+                {#each listhasilinvoice as rec }
                 <tr>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.status}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.tanggal}</td>
-                    <td style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.pasaran}</td>
-                    <td style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.periode}</td>
-                    <td style="text-align: right;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.winlose}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;{rec.invoice_background};">{rec.invoice_status}</td>
+                    <td NOWRAP style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_tglkeluaran} </td>
+                    <td NOWRAP style="text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_pasaran}</td>
+                    <td 
+                        on:click={() => {
+                            fetch_invoicelldetail(
+                                rec.invoice_idinvoice,
+                                rec.invoice_periode
+                            );
+                        }}
+                        NOWRAP style="text-decoration:underline;cursor:pointer;text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.invoice_periode}</td>
+                    <td NOWRAP style="text-align: right;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">
+                        {new Intl.NumberFormat().format(
+                            rec.invoice_totallose
+                        )}
+                    </td>
                 </tr>
                 {/each}
             </tbody>
@@ -634,5 +870,603 @@
                 </PanelFull>
             </div>
         </div>
+    </slot:template>
+</Modal>
+<Modal 
+    modal_id={"modalslipalldetail"}
+    modal_footer_flag={true} 
+    modal_body_height={"height:350px;"}
+    modal_size={"modal-dialog-centered"}>
+    <slot:template slot="header">
+        <h5 class="modal-title">
+            PASARAN : {detailslipheader}
+        </h5>
+        
+    </slot:template>
+    <slot:template slot="body">
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th
+                            width="1%"
+                            style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                            >NO</th
+                        >
+                        <th
+                            width="15%"
+                            style="text-align:left;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                            >PERMAINAN</th
+                        >
+                        <th
+                            width="50%"
+                            style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                            >BAYAR</th
+                        >
+                        <th
+                            width="25%"
+                            style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                            >MENANG</th
+                        >
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >1</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "4D",
+                                    total4d_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >4D</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(total4d_bayar)}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(totalwin_4d)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >2</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "3D",
+                                    total3d_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >3D</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(total3d_bayar)}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(totalwin_3d)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >3</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "2D",
+                                    total2d_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >2D</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(total2d_bayar)}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(totalwin_2d)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >4</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "colok_bebas",
+                                    totalcolokbebas_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >COLOK BEBAS</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                totalcolokbebas_bayar
+                            )}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                totalwin_colokbebas
+                            )}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >5</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "colok_macau",
+                                    totalcolokmacau_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >COLOK MACAU</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                totalcolokmacau_bayar
+                            )}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                totalwin_colokmacau
+                            )}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >6</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "colok_naga",
+                                    totalcoloknaga_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >COLOK NAGA</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                totalcoloknaga_bayar
+                            )}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(totalwin_coloknaga)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >7</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "colok_jitu",
+                                    totalcolokjitu_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >COLOK JITU</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                totalcolokjitu_bayar
+                            )}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(totalwin_colokjitu)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >8</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "50_50_UMUM",
+                                    total5050umum_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >50 - 50 UMUM</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                total5050umum_bayar
+                            )}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(totalwin_5050umum)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >9</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "50_50_SPECIAL",
+                                    total5050special_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >50 - 50 SPECIAL</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                total5050special_bayar
+                            )}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                totalwin_5050special
+                            )}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >10</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "50_50_KOMBINASI",
+                                    total5050kombinasi_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >50 - 50 KOMBINASI</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                total5050kombinasi_bayar
+                            )}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                totalwin_5050kombinasi
+                            )}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >11</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "MACAU_KOMBINASI",
+                                    totalmacaukombinasi_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >MACAU / KOMBINASI</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                totalmacaukombinasi_bayar
+                            )}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(
+                                totalwin_macaukombinasi
+                            )}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >12</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "DASAR",
+                                    totalmacaukombinasi_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >DASAR</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(totaldasar_bayar)}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(totalwin_dasar)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};f"
+                            >13</td
+                        >
+                        <td
+                            on:click={() => {
+                                fetch_invoicealldetailpermainan(
+                                    "SHIO",
+                                    totalmacaukombinasi_bayar
+                                );
+                            }}
+                            NOWRAP
+                            style="text-decoration:underline;cursor:pointer;text-align:left;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >SHIO</td
+                        >
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(totalshio_bayar)}
+                        </td>
+                        <td
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(totalwin_shio)}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </slot:template>
+    <slot:template slot="footer">
+        <table class="table" width="100%">
+            <tr>
+                <td
+                    NOWRAP
+                    width="50%"
+                    style="text-align:right;vertical-align:top;color:white;font-size:{modal_table_fontsize_body};"
+                    >TOTAL BAYAR</td
+                >
+                <td
+                    NOWRAP
+                    width="1%"
+                    style="text-align:center;vertical-align:top;color:white;font-size:{modal_table_fontsize_body};"
+                    >:</td
+                >
+                <td
+                    NOWRAP
+                    width="*"
+                    style="text-align:right;vertical-align:top;color:white;font-size:{modal_table_fontsize_body};color:#fc0;"
+                    >{new Intl.NumberFormat().format(subtotal_bayar)}</td
+                >
+            </tr>
+            <tr>
+                <td
+                    NOWRAP
+                    style="text-align:right;vertical-align:top;color:white;font-size:12px;"
+                    >TOTAL WINNER</td
+                >
+                <td
+                    NOWRAP
+                    style="text-align:center;vertical-align:top;color:white;font-size:12px;"
+                    >:</td
+                >
+                <td
+                    NOWRAP
+                    style="text-align:right;vertical-align:top;color:white;font-size:12px;color:#fc0;"
+                    >{new Intl.NumberFormat().format(subtotal_winner)}</td
+                >
+            </tr>
+            <tr>
+                <td
+                    NOWRAP
+                    style="text-align:right;vertical-align:top;color:white;font-size:12px;"
+                    >WINLOSE</td
+                >
+                <td
+                    NOWRAP
+                    style="text-align:center;vertical-align:top;color:white;font-size:12px;"
+                    >:</td
+                >
+                <td
+                    NOWRAP
+                    style="text-align:right;vertical-align:top;color:white;font-size:12px;color:#fc0;"
+                    >{new Intl.NumberFormat().format(total_winlose)}</td
+                >
+            </tr>
+        </table>
+    </slot:template>
+</Modal>
+<Modal 
+    modal_id={"modalslipalldetailbyid"}
+    modal_footer_flag={true} 
+    modal_body_height={"height:450px;"}
+    modal_size={"modal-lg modal-dialog-centered"}>
+    <slot:template slot="header">
+        <h5 class="modal-title">
+            PERMAINAN : {detailslipheaderpermainan}
+        </h5>
+        
+    </slot:template>
+    <slot:template slot="body">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th
+                        width="1%"
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >NO</th
+                    >
+                    <th
+                        width="1%"
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >STATUS</th
+                    >
+                    <th
+                        width="20%"
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >PERMAINAN</th
+                    >
+                    <th
+                        width="*"
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >NOMOR</th
+                    >
+                    <th
+                        width="10%"
+                        style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >BET</th
+                    >
+                    <th
+                        width="10%"
+                        style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >DISC(%)</th
+                    >
+                    <th
+                        width="10%"
+                        style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >KEI(%)</th
+                    >
+                    <th
+                        width="10%"
+                        style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >BAYAR</th
+                    >
+                    <th
+                        width="10%"
+                        style="text-align:right;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
+                        >WIN</th
+                    >
+                </tr>
+            </thead>
+            <tbody>
+                {#each listhasilinvoicebet as rec}
+                    <tr>
+                        <td
+                            NOWRAP
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >{rec.bet_no}</td
+                        >
+                        <td
+                            NOWRAP
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};{rec.bet_background}"
+                            >{rec.bet_status}</td
+                        >
+                        <td
+                            NOWRAP
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >{rec.bet_permainan}</td
+                        >
+                        <td
+                            NOWRAP
+                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_body};"
+                            >{rec.bet_nomor}</td
+                        >
+                        <td
+                            NOWRAP
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(rec.bet_bet)}
+                        </td>
+                        <td
+                            NOWRAP
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {rec.bet_diskon.toFixed(2)}
+                        </td>
+                        <td
+                            NOWRAP
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {rec.bet_kei.toFixed(2)}
+                        </td>
+                        <td
+                            NOWRAP
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(rec.bet_bayar)}
+                        </td>
+                        <td
+                            NOWRAP
+                            style="text-align:right;vertical-align:top;color:#fc0;font-size:{modal_table_fontsize_body};"
+                        >
+                            {new Intl.NumberFormat().format(rec.bet_win)}
+                        </td>
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
     </slot:template>
 </Modal>
