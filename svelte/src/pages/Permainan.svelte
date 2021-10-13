@@ -2,6 +2,7 @@
     import { Button, Col, TabContent, TabPane } from "sveltestrap";
     import Loader2 from "../components/Loader.svelte";
     import Modal from "../components/Modalfull.svelte";
+    import Notif from "../components/Notif.svelte";
     import Headerback from "../components/Headerback.svelte";
     import Panel from "../components/Panel.svelte";
     import PanelFull from "../components/Panelfull.svelte";
@@ -75,6 +76,8 @@
     let defailheader = "";
     let searchbukumimpi = "";
     let tipe = "";
+    let message_err = "";
+    let css_err = "display:none;";
     switch (permainan) {
         case "4-3-2":
             css_permainan_432 = "btn2";
@@ -180,6 +183,13 @@
         idtrxkeluaran = record["pasaran_idtransaction"];
         statuspasaran = record["pasaran_status"];
         pasaran_periode = record["pasaran_periode"];
+        if (statuspasaran == "OFFLINE") {
+            css_err = "display:inline-block";
+            message_err = "Pasaran OFFLINE";
+            setTimeout(function () {
+                css_err = "display: none;";
+            }, 5000);
+        }
         invoicebet("all");
     }
     async function resultpasaran() {
@@ -2422,6 +2432,7 @@
         }
     </style>
 {:else if statuspasaran == "OFFLINE"}
+    <Notif message={message_err} css_init={css_err} />
     <div style="margin-bottom:10px;margin-left: -10px;">
         <center>
             <div style="cursor: pointer;">
