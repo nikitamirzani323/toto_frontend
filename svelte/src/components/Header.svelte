@@ -999,7 +999,7 @@
                         <td
                             on:click={() => {
                                 fetch_invoicealldetailpermainan(
-                                    "colok_bebas",
+                                    "COLOK_BEBAS",
                                     totalcolokbebas_bayar
                                 );
                             }}
@@ -1030,7 +1030,7 @@
                         <td
                             on:click={() => {
                                 fetch_invoicealldetailpermainan(
-                                    "colok_macau",
+                                    "COLOK_MACAU",
                                     totalcolokmacau_bayar
                                 );
                             }}
@@ -1061,7 +1061,7 @@
                         <td
                             on:click={() => {
                                 fetch_invoicealldetailpermainan(
-                                    "colok_naga",
+                                    "COLOK_NAGA",
                                     totalcoloknaga_bayar
                                 );
                             }}
@@ -1090,7 +1090,7 @@
                         <td
                             on:click={() => {
                                 fetch_invoicealldetailpermainan(
-                                    "colok_jitu",
+                                    "COLOK_JITU",
                                     totalcolokjitu_bayar
                                 );
                             }}

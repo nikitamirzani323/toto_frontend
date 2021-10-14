@@ -24,8 +24,12 @@ RUN yarn build
 # Moving the binary to the 'final Image' to make it smaller
 FROM alpine:latest as totosvelterelease
 WORKDIR /app
+RUN apk add tzdata
 RUN mkdir -p ./svelte/public
 COPY --from=totosveltebuilder /svelteapp/public ./svelte/public
 COPY --from=totobuild /go/src/bitbucket.org/isbtotogroup/frontend_svelte/app .
+ENV TZ=Asia/Jakarta
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 EXPOSE 7071
 CMD ["./app"]
