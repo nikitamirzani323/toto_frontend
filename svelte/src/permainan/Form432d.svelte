@@ -80,7 +80,7 @@
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				company: client_company,
+				company: client_company.toUpperCase(),
 				pasaran_code: pasaran_code,
 				permainan: e,
 			}),

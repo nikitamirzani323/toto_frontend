@@ -13,6 +13,7 @@ require (
 	github.com/golang/dep v0.5.4 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/jmank88/nuts v0.4.0 // indirect
+	github.com/joho/godotenv v1.4.0
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/nightlyone/lockfile v1.0.0 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
