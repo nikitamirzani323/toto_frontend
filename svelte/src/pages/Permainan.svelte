@@ -1,101 +1,103 @@
 <script>
-  import { Button, Col, TabContent, TabPane } from "sveltestrap";
-  import Loader2 from "../components/Loader.svelte";
-  import Modal from "../components/Modalfull.svelte";
-  import Headerback from "../components/Headerback.svelte";
-  import Panel from "../components/Panel.svelte";
-  import PanelFull from "../components/Panelfull.svelte";
-  import Form432d from "../permainan/Form432d.svelte";
-  import Formcolok from "../permainan/Formcolok.svelte";
-  import Form5050 from "../permainan/Form5050.svelte";
-  import Formkombinasi from "../permainan/Formkombinasi.svelte";
-  import Formdasar from "../permainan/Formdasar.svelte";
-  import Formshio from "../permainan/Formshio.svelte";
-  import { notifications } from "../components/Noti.svelte";
+    import { Button, Col, TabContent, TabPane } from "sveltestrap";
+    import Loader2 from "../components/Loader.svelte";
+    import Modal from "../components/Modalfull.svelte";
+    import Notif from "../components/Notif.svelte";
+    import Headerback from "../components/Headerback.svelte";
+    import Panel from "../components/Panel.svelte";
+    import PanelFull from "../components/Panelfull.svelte";
+    import Form432d from "../permainan/Form432d.svelte";
+    import Formcolok from "../permainan/Formcolok.svelte";
+    import Form5050 from "../permainan/Form5050.svelte";
+    import Formkombinasi from "../permainan/Formkombinasi.svelte";
+    import Formdasar from "../permainan/Formdasar.svelte";
+    import Formshio from "../permainan/Formshio.svelte";
 
-  export let client_token = "";
-  export let client_company = "";
-  export let client_username = "";
-  export let client_credit = 0;
-  export let client_ipaddress = "";
-  export let client_timezone = "Asia/Jakarta";
-  export let client_device = "";
-  export let pasaran_code = "";
-  export let pasaran_name = "";
-  export let pasaran_periode = 0;
-  export let permainan = "";
-  let css_loader = "display:none;";
-  let resulttogel = [];
-  let resultinvoice = [];
-  let resultslipbet = [];
-  let filterBukuMimpi = [];
-  let listBukumimpi = [];
-  let record = "";
-  let idcomppasaran = "";
-  let idtrxkeluaran = "";
-  let statuspasaran = "";
-  let permainan_title = "4D / 3D / 2D";
-  let permainan_periode = pasaran_periode + " - " + pasaran_code;
-  let css_permainan_432 = "btn1";
-  let css_permainan_colok = "btn1";
-  let css_permainan_5050 = "btn1";
-  let css_permainan_kombinasi = "btn1";
-  let css_permainan_dasar = "btn1";
-  let css_permainan_shio = "btn1";
-  let totalbayar_invoice = 0;
-  let totalbet_invoice = 0;
-  let total4d_bayar = 0;
-  let total3d_bayar = 0;
-  let total2d_bayar = 0;
-  let totalcolokbebas_bayar = 0;
-  let totalcolokmacau_bayar = 0;
-  let totalcoloknaga_bayar = 0;
-  let totalcolokjitu_bayar = 0;
-  let total5050umum_bayar = 0;
-  let total5050special_bayar = 0;
-  let total5050kombinasi_bayar = 0;
-  let totalmacaukombinasi_bayar = 0;
-  let totaldasar_bayar = 0;
-  let totalshio_bayar = 0;
-  let totalwin_4d = 0;
-  let totalwin_3d = 0;
-  let totalwin_2d = 0;
-  let totalwin_colokbebas = 0;
-  let totalwin_colokmacau = 0;
-  let totalwin_coloknaga = 0;
-  let totalwin_colokjitu = 0;
-  let totalwin_5050umum = 0;
-  let totalwin_5050special = 0;
-  let totalwin_5050kombinasi = 0;
-  let totalwin_macaukombinasi = 0;
-  let totalwin_dasar = 0;
-  let totalwin_shio = 0;
-  let subtotal_bayar = 0;
-  let subtotal_winner = 0;
-  let total_winlose = 0;
-  let defailheader = "";
-  let searchbukumimpi = "";
-  let tipe = "";
-  switch (permainan) {
-    case "4-3-2":
-      css_permainan_432 = "btn2";
-      break;
-    case "colok":
-      css_permainan_colok = "btn2";
-      break;
-    case "5050":
-      css_permainan_5050 = "btn2";
-      break;
-    case "kombinasi":
-      css_permainan_kombinasi = "btn2";
-      break;
-    case "dasar":
-      css_permainan_dasar = "btn2";
-      break;
-    case "shio":
-      css_permainan_shio = "btn2";
-      break;
-  }
+    export let client_token = "";
+    export let client_company = "";
+    export let client_username = "";
+    export let client_credit = 0;
+    export let client_ipaddress = "";
+    export let client_timezone = "Asia/Jakarta";
+    export let client_device = "";
+    export let pasaran_code = "";
+    export let pasaran_name = "";
+    export let pasaran_periode = 0;
+    export let permainan = "";
+    let css_loader = "display:none;";
+    let resulttogel = [];
+    let resultinvoice = [];
+    let resultslipbet = [];
+    let filterBukuMimpi = [];
+    let listBukumimpi = [];
+    let record = "";
+    let idcomppasaran = "";
+    let idtrxkeluaran = "";
+    let statuspasaran = "";
+    let permainan_title = "4D / 3D / 2D";
+    let permainan_periode = pasaran_periode + " - " + pasaran_code;
+    let css_permainan_432 = "btn1";
+    let css_permainan_colok = "btn1";
+    let css_permainan_5050 = "btn1";
+    let css_permainan_kombinasi = "btn1";
+    let css_permainan_dasar = "btn1";
+    let css_permainan_shio = "btn1";
+    let totalbayar_invoice = 0;
+    let totalbet_invoice = 0;
+    let total4d_bayar = 0;
+    let total3d_bayar = 0;
+    let total2d_bayar = 0;
+    let totalcolokbebas_bayar = 0;
+    let totalcolokmacau_bayar = 0;
+    let totalcoloknaga_bayar = 0;
+    let totalcolokjitu_bayar = 0;
+    let total5050umum_bayar = 0;
+    let total5050special_bayar = 0;
+    let total5050kombinasi_bayar = 0;
+    let totalmacaukombinasi_bayar = 0;
+    let totaldasar_bayar = 0;
+    let totalshio_bayar = 0;
+    let totalwin_4d = 0;
+    let totalwin_3d = 0;
+    let totalwin_2d = 0;
+    let totalwin_colokbebas = 0;
+    let totalwin_colokmacau = 0;
+    let totalwin_coloknaga = 0;
+    let totalwin_colokjitu = 0;
+    let totalwin_5050umum = 0;
+    let totalwin_5050special = 0;
+    let totalwin_5050kombinasi = 0;
+    let totalwin_macaukombinasi = 0;
+    let totalwin_dasar = 0;
+    let totalwin_shio = 0;
+    let subtotal_bayar = 0;
+    let subtotal_winner = 0;
+    let total_winlose = 0;
+    let defailheader = "";
+    let searchbukumimpi = "";
+    let tipe = "";
+    let message_err = "";
+    let css_err = "display:none;";
+    switch (permainan) {
+        case "4-3-2":
+            css_permainan_432 = "btn2";
+            break;
+        case "colok":
+            css_permainan_colok = "btn2";
+            break;
+        case "5050":
+            css_permainan_5050 = "btn2";
+            break;
+        case "kombinasi":
+            css_permainan_kombinasi = "btn2";
+            break;
+        case "dasar":
+            css_permainan_dasar = "btn2";
+            break;
+        case "shio":
+            css_permainan_shio = "btn2";
+            break;
+    }
 
   const changePermainan = (e) => {
     permainan = e;
@@ -172,16 +174,23 @@
       }),
     });
 
-    const json = await res.json();
-    record = json;
-    if (json.status == "200") {
-      css_loader = "display:none;";
-    }
-    idcomppasaran = record["pasaran_idcomp"];
-    idtrxkeluaran = record["pasaran_idtransaction"];
-    statuspasaran = record["pasaran_status"];
-    pasaran_periode = record["pasaran_periode"];
-    invoicebet("all");
+        const json = await res.json();
+        record = json;
+        if (json.status == "200") {
+            css_loader = "display:none;";
+        }
+        idcomppasaran = record["pasaran_idcomp"];
+        idtrxkeluaran = record["pasaran_idtransaction"];
+        statuspasaran = record["pasaran_status"];
+        pasaran_periode = record["pasaran_periode"];
+        if (statuspasaran == "OFFLINE") {
+            css_err = "display:inline-block";
+            message_err = "Pasaran OFFLINE";
+            setTimeout(function () {
+                css_err = "display: none;";
+            }, 5000);
+        }
+        invoicebet("all");
   }
   async function resultpasaran() {
     const res = await fetch("/api/resulttogel", {
@@ -2340,17 +2349,15 @@
     }
   </style>
 {:else if statuspasaran == "OFFLINE"}
-  <div style="margin-bottom:10px;margin-left: -10px;">
-    <center>
-      <div style="cursor: pointer;">
-        <a
-          href="/?token={client_token}&agent={client_company}"
-          title="nuketoto"
-        >
-          Back to Home
-        </a>
-      </div>
-    </center>
-  </div>
+    <Notif message={message_err} css_init={css_err} />
+    <div style="margin-bottom:10px;margin-left: -10px;">
+        <center>
+            <div style="cursor: pointer;">
+                <a href="/?token={client_token}&agent={client_company}" title="nuketoto">
+                    Back to Home
+                </a>
+            </div>
+        </center>
+    </div>
 {/if}
 <Loader2 cssstyle={css_loader} />
