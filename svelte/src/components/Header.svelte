@@ -18,7 +18,9 @@
   
     let modal_table_fontsize_header = "13px";
     let modal_table_fontsize_body = "12px";
+    let modal_table_fontsize_bukumimpi_header = "14px";
     if (client_device == "MOBILE") {
+        modal_table_fontsize_bukumimpi_header = "13px";
         modal_table_fontsize_header = "11px";
         modal_table_fontsize_body = "11px";
     }
@@ -615,7 +617,7 @@
     modal_id={"modalbukumimpi"}
     modal_headerbootom_flag={true} 
     modal_footer_flag={false} 
-    modal_body_height={"height:550px;"}
+    modal_body_height={"height:500px;"}
     modal_size={"modal-dialog-centered"}>
     <slot:template slot="header">
         <h5 class="modal-title">
@@ -705,7 +707,7 @@
         <input
             bind:value={searchbukumimpi}
             on:keypress={handleKeyboardbukumimpi_checkenter}
-            style="border-radius: none;border: none; background: rgb(48, 48, 48) none repeat scroll 0% 0%; color: white; font-size: 15px; "
+            style="border-radius: none;border: none; background: rgb(48, 48, 48) none repeat scroll 0% 0%; color: white; font-size: {modal_table_fontsize_bukumimpi_header}; "
             placeholder="Ketik apa yang telah kamu impikan"
             class="form-control"
             type="text"
@@ -722,7 +724,7 @@
                 <PanelFull
                     header={false}
                     footer={false}
-                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:620px;"
+                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:500px;"
                 >
                     <slot:template slot="body">
                         <table>
@@ -732,16 +734,16 @@
                                         <td
                                             NOWRAP
                                             width="30px"
-                                            style="text-align:center;vertical-align:top;font-size:14px;color:#fc0;"
+                                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_bukumimpi_header};color:#fc0;"
                                             >{rec.bukumimpi_tipe}</td
                                         >
                                         <td
                                             width="*"
-                                            style="text-align:left;vertical-align:top;font-size:15px;color:#8b8989;"
+                                            style="text-align:left;vertical-align:top;font-size:{modal_table_fontsize_bukumimpi_header};color:#8b8989;"
                                             >{rec.bukumimpi_nama}
                                             <br />
                                             <span
-                                                style="color:#fc0;font-size:14px;"
+                                                style="color:#fc0;font-size:{modal_table_fontsize_bukumimpi_header};"
                                                 >{rec.bukumimpi_nomor}</span
                                             >
                                         </td>
@@ -761,7 +763,7 @@
                 <PanelFull
                     header={false}
                     footer={false}
-                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:620px;"
+                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:500px;"
                 >
                     <slot:template slot="body">
                         <table>
@@ -771,16 +773,16 @@
                                         <td
                                             NOWRAP
                                             width="30px"
-                                            style="text-align:center;vertical-align:top;font-size:14px;color:#fc0;"
+                                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_bukumimpi_header};color:#fc0;"
                                             >{rec.bukumimpi_tipe}</td
                                         >
                                         <td
                                             width="*"
-                                            style="text-align:left;vertical-align:top;font-size:15px;color:#8b8989;"
+                                            style="text-align:left;vertical-align:top;font-size:{modal_table_fontsize_bukumimpi_header};color:#8b8989;"
                                             >{rec.bukumimpi_nama}
                                             <br />
                                             <span
-                                                style="color:#fc0;font-size:14px;"
+                                                style="color:#fc0;font-size:{modal_table_fontsize_bukumimpi_header};"
                                                 >{rec.bukumimpi_nomor}</span
                                             >
                                         </td>
@@ -800,7 +802,7 @@
                 <PanelFull
                     header={false}
                     footer={false}
-                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:620px;"
+                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:500px;"
                 >
                     <slot:template slot="body">
                         <table>
@@ -810,16 +812,16 @@
                                         <td
                                             NOWRAP
                                             width="30px"
-                                            style="text-align:center;vertical-align:top;font-size:14px;color:#fc0;"
+                                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_bukumimpi_header};color:#fc0;"
                                             >{rec.bukumimpi_tipe}</td
                                         >
                                         <td
                                             width="*"
-                                            style="text-align:left;vertical-align:top;font-size:15px;color:#8b8989;"
+                                            style="text-align:left;vertical-align:top;font-size:{modal_table_fontsize_bukumimpi_header};color:#8b8989;"
                                             >{rec.bukumimpi_nama}
                                             <br />
                                             <span
-                                                style="color:#fc0;font-size:14px;"
+                                                style="color:#fc0;font-size:{modal_table_fontsize_bukumimpi_header};"
                                                 >{rec.bukumimpi_nomor}</span
                                             >
                                         </td>
@@ -839,7 +841,7 @@
                 <PanelFull
                     header={false}
                     footer={false}
-                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:620px;"
+                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:500px;"
                 >
                     <slot:template slot="body">
                         <table>
@@ -849,16 +851,16 @@
                                         <td
                                             NOWRAP
                                             width="30px"
-                                            style="text-align:center;vertical-align:top;font-size:14px;color:#fc0;"
+                                            style="text-align:center;vertical-align:top;font-size:{modal_table_fontsize_bukumimpi_header};color:#fc0;"
                                             >{rec.bukumimpi_tipe}</td
                                         >
                                         <td
                                             width="*"
-                                            style="text-align:left;vertical-align:top;font-size:15px;color:#8b8989;"
+                                            style="text-align:left;vertical-align:top;font-size:{modal_table_fontsize_bukumimpi_header};color:#8b8989;"
                                             >{rec.bukumimpi_nama}
                                             <br />
                                             <span
-                                                style="color:#fc0;font-size:14px;"
+                                                style="color:#fc0;font-size:{modal_table_fontsize_bukumimpi_header};"
                                                 >{rec.bukumimpi_nomor}</span
                                             >
                                         </td>
@@ -999,7 +1001,7 @@
                         <td
                             on:click={() => {
                                 fetch_invoicealldetailpermainan(
-                                    "colok_bebas",
+                                    "COLOK_BEBAS",
                                     totalcolokbebas_bayar
                                 );
                             }}
@@ -1030,7 +1032,7 @@
                         <td
                             on:click={() => {
                                 fetch_invoicealldetailpermainan(
-                                    "colok_macau",
+                                    "COLOK_MACAU",
                                     totalcolokmacau_bayar
                                 );
                             }}
@@ -1061,7 +1063,7 @@
                         <td
                             on:click={() => {
                                 fetch_invoicealldetailpermainan(
-                                    "colok_naga",
+                                    "COLOK_NAGA",
                                     totalcoloknaga_bayar
                                 );
                             }}
@@ -1090,7 +1092,7 @@
                         <td
                             on:click={() => {
                                 fetch_invoicealldetailpermainan(
-                                    "colok_jitu",
+                                    "COLOK_JITU",
                                     totalcolokjitu_bayar
                                 );
                             }}
