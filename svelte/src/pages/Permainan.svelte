@@ -1,7 +1,6 @@
 <script>
-    import { Button, Col, TabContent, TabPane } from "sveltestrap";
+    import { Button, Col } from "sveltestrap";
     import Loader2 from "../components/Loader.svelte";
-    import Modal from "../components/Modalfull.svelte";
     import Notif from "../components/Notif.svelte";
     import Headerback from "../components/Headerback.svelte";
     import Panel from "../components/Panel.svelte";
@@ -44,36 +43,6 @@
     let css_permainan_shio = "btn1";
     let totalbayar_invoice = 0;
     let totalbet_invoice = 0;
-    let total4d_bayar = 0;
-    let total3d_bayar = 0;
-    let total2d_bayar = 0;
-    let totalcolokbebas_bayar = 0;
-    let totalcolokmacau_bayar = 0;
-    let totalcoloknaga_bayar = 0;
-    let totalcolokjitu_bayar = 0;
-    let total5050umum_bayar = 0;
-    let total5050special_bayar = 0;
-    let total5050kombinasi_bayar = 0;
-    let totalmacaukombinasi_bayar = 0;
-    let totaldasar_bayar = 0;
-    let totalshio_bayar = 0;
-    let totalwin_4d = 0;
-    let totalwin_3d = 0;
-    let totalwin_2d = 0;
-    let totalwin_colokbebas = 0;
-    let totalwin_colokmacau = 0;
-    let totalwin_coloknaga = 0;
-    let totalwin_colokjitu = 0;
-    let totalwin_5050umum = 0;
-    let totalwin_5050special = 0;
-    let totalwin_5050kombinasi = 0;
-    let totalwin_macaukombinasi = 0;
-    let totalwin_dasar = 0;
-    let totalwin_shio = 0;
-    let subtotal_bayar = 0;
-    let subtotal_winner = 0;
-    let total_winlose = 0;
-    let defailheader = "";
     let searchbukumimpi = "";
     let tipe = "";
     let message_err = "";
@@ -362,6 +331,7 @@
         searchbukumimpi = "";
         tipe = "";
         fetch_bukumimpi();
+<<<<<<< HEAD
         break;
     }
   };
@@ -469,6 +439,30 @@
     modal_table_fontsize_header = "11px";
     modal_table_fontsize_body = "11px";
   }
+=======
+    };
+    const handleKeyboardbukumimpi_checkenter = (e) => {
+        let keyCode = e.which || e.keyCode;
+        if (keyCode === 13) {
+            // tipe = "";
+            filterBukuMimpi = [];
+            listBukumimpi = [];
+            fetch_bukumimpi();
+        }
+    };
+   
+    $: {
+        if (searchbukumimpi) {
+            filterBukuMimpi = listBukumimpi.filter((item) =>
+                item.bukumimpi_nama
+                    .toLowerCase()
+                    .includes(searchbukumimpi.toLowerCase())
+            );
+        } else {
+            filterBukuMimpi = [...listBukumimpi];
+        }
+    }
+>>>>>>> ef25efa5c78b0f0e7826e71ed5b4b26fb0e1a38f
 </script>
 
 {#if statuspasaran == "ONLINE"}
@@ -758,6 +752,7 @@
                       style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
                       NOWRAP>NOMOR</th
                     >
+<<<<<<< HEAD
                     <th
                       width="10%"
                       style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
@@ -772,12 +767,48 @@
                       width="20%"
                       style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
                       NOWRAP>KEI(%)</th
+=======
+                </li>
+                <li
+                    on:click={() => {
+                        handleClickTab("RESULT");
+                    }}
+                    class="nav-item"
+                    role="presentation">
+                    <button
+                        class="nav-link"
+                        id="pills-contact-tab"
+                        data-bs-toggle="pill"
+                        data-bs-target="#pills-result"
+                        type="button"
+                        role="tab"
+                        aria-controls="pills-result"
+                        aria-selected="false">RESULT</button
+                    >
+                </li>
+                <li
+                    on:click={() => {
+                        handleClickTab("BUKUMIMPI");
+                    }}
+                    class="nav-item"
+                    role="presentation">
+                    <button
+                        class="nav-link"
+                        id="pills-contact-tab"
+                        data-bs-toggle="pill"
+                        data-bs-target="#pills-bukumimpi"
+                        type="button"
+                        role="tab"
+                        aria-controls="pills-bukumimpi"
+                        aria-selected="false">BUKU MIMPI</button
+>>>>>>> ef25efa5c78b0f0e7826e71ed5b4b26fb0e1a38f
                     >
                     <th
                       width="20%"
                       style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
                       NOWRAP>DIS(%)</th
                     >
+<<<<<<< HEAD
                     <th
                       width="20%"
                       style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
@@ -935,6 +966,132 @@
                       width="10%"
                       style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
                       NOWRAP>NO</th
+=======
+                        <slot:template slot="header" />
+                        <slot:template slot="body">
+                            <table class="table table-dark table-striped">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            width="10%"
+                                            style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                                            NOWRAP>NOMOR</th
+                                        >
+                                        <th
+                                            width="10%"
+                                            style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                                            NOWRAP>PERMINAN</th
+                                        >
+                                        <th
+                                            width="20%"
+                                            style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                                            NOWRAP>BET</th
+                                        >
+                                        <th
+                                            width="20%"
+                                            style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                                            NOWRAP>KEI(%)</th
+                                        >
+                                        <th
+                                            width="20%"
+                                            style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                                            NOWRAP>DIS(%)</th
+                                        >
+                                        <th
+                                            width="20%"
+                                            style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                                            NOWRAP>BAYAR</th
+                                        >
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {#each resultinvoice as rec}
+                                        <tr>
+                                            <td
+                                                style="text-align:center;vertical-align:top;font-size:12px;color:#fc0;"
+                                                NOWRAP>{rec.nomor}</td
+                                            >
+                                            <td
+                                                style="text-align:center;vertical-align:top;font-size:12px;color:#fc0;"
+                                                NOWRAP>{rec.permainan}</td
+                                            >
+                                            <td
+                                                style="text-align:right;vertical-align:top;font-size:12px;color:#fc0;"
+                                                NOWRAP
+                                                >{new Intl.NumberFormat().format(
+                                                    rec.bet
+                                                )}</td
+                                            >
+                                            <td
+                                                style="text-align:right;vertical-align:top;font-size:12px;color:#fc0;"
+                                                NOWRAP>{rec.kei.toFixed(1)}</td
+                                            >
+                                            <td
+                                                style="text-align:right;vertical-align:top;font-size:12px;color:#fc0;"
+                                                NOWRAP
+                                                >{rec.diskon.toFixed(1)}</td
+                                            >
+                                            <td
+                                                style="text-align:right;vertical-align:top;font-size:12px;color:#fc0;"
+                                                NOWRAP
+                                                >{new Intl.NumberFormat().format(
+                                                    rec.bayar
+                                                )}</td
+                                            >
+                                        </tr>
+                                    {/each}
+                                </tbody>
+                            </table>
+                        </slot:template>
+                        <slot:template slot="footer">
+                            <table class="table" style="background:none;">
+                                <tr>
+                                    <td
+                                        style="text-align:right;color:white;font-size:12px;"
+                                        >TOTAL BET</td
+                                    >
+                                    <td
+                                        style="text-align:right;color:white;font-size:12px;"
+                                        >:</td
+                                    >
+                                    <td
+                                        style="text-align:right;color:#fc0;font-size:12px;"
+                                        >{new Intl.NumberFormat().format(
+                                            totalbet_invoice
+                                        )}</td
+                                    >
+                                </tr>
+                                <tr>
+                                    <td
+                                        style="text-align:right;color:white;font-size:12px;"
+                                        >TOTAL BAYAR</td
+                                    >
+                                    <td
+                                        style="text-align:right;color:white;font-size:12px;"
+                                        >:</td
+                                    >
+                                    <td
+                                        style="text-align:right;color:#fc0;font-size:12px;"
+                                        >{new Intl.NumberFormat().format(
+                                            totalbayar_invoice
+                                        )}</td
+                                    >
+                                </tr>
+                            </table>
+                        </slot:template>
+                    </PanelFull>
+                </div>             
+                <div
+                    class="tab-pane fade"
+                    id="pills-result"
+                    role="tabpanel"
+                    aria-labelledby="pills-result-tab"
+                >
+                    <PanelFull
+                        header={false}
+                        footer={false}
+                        body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:710px;"
+>>>>>>> ef25efa5c78b0f0e7826e71ed5b4b26fb0e1a38f
                     >
                     <th
                       width="20%"
@@ -994,6 +1151,7 @@
             id="pills-tab"
             role="tablist"
             style="background-color: #181818;"
+<<<<<<< HEAD
           >
             <li
               on:click={() => {
@@ -1077,6 +1235,55 @@
             type="text"
           />
           <div class="tab-content" id="pills-tabContent">
+=======
+        >
+            <li class="nav-item" role="presentation">
+                <button
+                    style="font-size:10px;"
+                    class="nav-link active"
+                    id="pills-keranjang-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-keranjang"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-keranjang"
+                    aria-selected="true">KERANJANG</button
+                >
+            </li>
+            <li class="nav-item" role="presentation">
+                <button
+                    style="font-size:10px;"
+                    class="nav-link"
+                    id="pills-pasangan-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-pasangan"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-pasangan"
+                    aria-selected="true">PASANGAN</button
+                >
+            </li> 
+            <li
+                on:click={() => {
+                    handleClickTab("RESULT");
+                }}
+                class="nav-item"
+                role="presentation">
+                <button
+                    style="font-size:10px;"
+                    class="nav-link"
+                    id="pills-contact-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-result"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-result"
+                    aria-selected="false">RESULT</button
+                >
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+>>>>>>> ef25efa5c78b0f0e7826e71ed5b4b26fb0e1a38f
             <div
               class="tab-pane fade show active"
               id="pills-bukumimpiall"
@@ -1153,6 +1360,7 @@
                 </slot:template>
               </PanelFull>
             </div>
+<<<<<<< HEAD
             <div
               class="tab-pane fade"
               id="pills-bukumimpi3d"
@@ -1191,6 +1399,9 @@
                 </slot:template>
               </PanelFull>
             </div>
+=======
+    
+>>>>>>> ef25efa5c78b0f0e7826e71ed5b4b26fb0e1a38f
             <div
               class="tab-pane fade"
               id="pills-bukumimpi2d"
@@ -1229,6 +1440,7 @@
                 </slot:template>
               </PanelFull>
             </div>
+<<<<<<< HEAD
           </div>
         </div>
       </div>
@@ -2327,6 +2539,15 @@
     #stream::-webkit-scrollbar {
       width: 0.3em;
     }
+=======
+        </div>
+    {/if}
+    <div class="clearfix" />
+    <style>
+        #stream::-webkit-scrollbar {
+            width: 0.3em;
+        }
+>>>>>>> ef25efa5c78b0f0e7826e71ed5b4b26fb0e1a38f
 
     #stream::-webkit-scrollbar-track {
       -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
