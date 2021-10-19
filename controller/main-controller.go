@@ -113,8 +113,9 @@ type responseinvoicebet struct {
 	Record     interface{} `json:"record"`
 }
 type response struct {
-	Status int         `json:"status"`
-	Record interface{} `json:"record"`
+	Status  int         `json:"status"`
+	Record  interface{} `json:"record"`
+	Message string      `json:"message"`
 }
 type responsedua struct {
 	Status int `json:"status"`
@@ -682,9 +683,10 @@ func Savetransaksi(c *fiber.Ctx) error {
 		})
 	} else {
 		return c.JSON(fiber.Map{
-			"status": http.StatusOK,
-			"record": nil,
-			"time":   time.Since(render_page).String(),
+			"status":  result.Status,
+			"record":  nil,
+			"message": result.Message,
+			"time":    time.Since(render_page).String(),
 		})
 	}
 }
