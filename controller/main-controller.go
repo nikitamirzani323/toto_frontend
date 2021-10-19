@@ -673,6 +673,7 @@ func Savetransaksi(c *fiber.Ctx) error {
 	if err != nil {
 		log.Println(err.Error())
 	}
+	fmt.Println("Response Info client: ", client.Company, resp.ReceivedAt(), resp)
 	result := resp.Result().(*response)
 
 	if result.Status == 200 {
