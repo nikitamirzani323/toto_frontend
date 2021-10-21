@@ -11,6 +11,7 @@
   import Tablekeranjangcolok from "../permainan/Tablekeranjangcolok.svelte";
   import Loader from "../components/Loader.svelte";
   import { createEventDispatcher } from "svelte";
+  import { notifications } from "../components/Noti.svelte";
 
   export let idcomppasaran = "";
   export let idtrxkeluaran = "";
@@ -156,9 +157,9 @@
     const json = await res.json();
     if (json.status == "200") {
       css_loader = "display:none;";
-      alert(
+      notifications.push(
         "Data telah berhasil disimpan, Total belanja : " +
-          new Intl.NumberFormat().format(totalkeranjang)
+          new Intl.NumberFormat().format(totalkeranjang), "warning", "middle"
       );
       dispatch("handleInvoice", "call");
       reset();
@@ -167,14 +168,14 @@
       switch (json.status) {
         case "500":
           group_btn_beli = true;
-          alert(json.message);
+          notifications.push(json.message);
           break;
         case "400":
           group_btn_beli = true;
-          alert(json.message);
+          notifications.push(json.message);
           break;
         default:
-          alert(json.message);
+          notifications.push(json.message);
           break;
       }
     }
@@ -261,14 +262,14 @@
       reset();
       count_keranjang();
     } else {
-      alert("Tidak ada list transaksi");
+      notifications.push("Tidak ada list transaksi","","middle");
     }
   };
   const handleSave = (e) => {
     if (keranjang.length > 0) {
       savetransaksi();
     } else {
-      alert("Tidak ada list transaksi");
+      notifications.push("Tidak ada list transaksi","","middle");
     }
   };
   function count_keranjang() {
@@ -371,17 +372,17 @@
     }
     if (bet == "") {
       flag = false;
-      alert("Amount tidak boleh kosong");
+      notifications.push("Amount tidak boleh kosong");
     }
     if (parseInt(bet) < parseInt(min_bet_colokbebas)) {
       flag = false;
       bet_colokbebas = min_bet_colokbebas;
-      alert("Minimal Bet : " + min_bet_colokbebas);
+      notifications.push("Minimal Bet : " + min_bet_colokbebas);
     }
     if (parseInt(bet) > parseInt(max_bet_colokbebas)) {
       flag = false;
       bet_colokbebas = max_bet_colokbebas;
-      alert("Maximal Bet : " + max_bet_colokbebas);
+      notifications.push("Maximal Bet : " + max_bet_colokbebas);
     }
     if (flag == true) {
       diskon = bet * disc_bet_colokbebas;
@@ -428,23 +429,23 @@
       flag = false;
     }
     if (nomor == nomor2) {
-      alert("Nomor tidak boleh sama");
+      notifications.push("Nomor tidak boleh sama");
       flag = false;
       form_clear("colokmacau");
     }
     if (bet == "") {
       flag = false;
-      alert("Amount tidak boleh kosong");
+      notifications.push("Amount tidak boleh kosong");
     }
     if (parseInt(bet) < parseInt(min_bet_colokmacau)) {
       bet_colokmacau = min_bet_colokmacau;
       flag = false;
-      alert("Minimal Bet : " + min_bet_colokmacau);
+      notifications.push("Minimal Bet : " + min_bet_colokmacau);
     }
     if (parseInt(bet) > parseInt(max_bet_colokmacau)) {
       bet_colokmacau = max_bet_colokmacau;
       flag = false;
-      alert("Maximal Bet : " + max_bet_colokmacau);
+      notifications.push("Maximal Bet : " + max_bet_colokmacau);
     }
     if (flag == true) {
       diskon = bet * disc_bet_colokmacau;
@@ -492,33 +493,33 @@
       flag = false;
     }
     if (nomor == nomor2) {
-      alert("Nomor tidak boleh sama");
+      notifications.push("Nomor tidak boleh sama");
       flag = false;
       form_clear("coloknaga");
     }
     if (nomor == nomor3) {
-      alert("Nomor tidak boleh sama");
+      notifications.push("Nomor tidak boleh sama");
       flag = false;
       form_clear("coloknaga");
     }
     if (nomor2 == nomor3) {
-      alert("Nomor tidak boleh sama");
+      notifications.push("Nomor tidak boleh sama");
       flag = false;
       form_clear("coloknaga");
     }
     if (bet == "") {
       flag = false;
-      alert("Amount tidak boleh kosong");
+      notifications.push("Amount tidak boleh kosong");
     }
     if (parseInt(bet) < parseInt(min_bet_coloknaga)) {
       bet_coloknaga = min_bet_coloknaga;
       flag = false;
-      alert("Minimal Bet : " + min_bet_coloknaga);
+      notifications.push("Minimal Bet : " + min_bet_coloknaga);
     }
     if (parseInt(bet) > parseInt(max_bet_coloknaga)) {
       bet_coloknaga = max_bet_coloknaga;
       flag = false;
-      alert("Maximal Bet : " + max_bet_coloknaga);
+      notifications.push("Maximal Bet : " + max_bet_coloknaga);
     }
     if (flag == true) {
       diskon = bet * disc_bet_coloknaga;
@@ -559,21 +560,21 @@
     if (posisi == "") {
       select_pilihancolokjitu_input.focus();
       flag = false;
-      alert("Posisi wajib diisi");
+      notifications.push("Posisi wajib diisi");
     }
     if (bet == "") {
       flag = false;
-      alert("Amount tidak boleh kosong");
+      notifications.push("Amount tidak boleh kosong");
     }
     if (parseInt(bet) < parseInt(min_bet_colokjitu)) {
       bet_colokjitu = min_bet_colokjitu;
       flag = false;
-      alert("Minimal Bet : " + min_bet_colokjitu);
+      notifications.push("Minimal Bet : " + min_bet_colokjitu);
     }
     if (parseInt(bet) > parseInt(max_bet_colokjitu)) {
       bet_colokjitu = max_bet_colokjitu;
       flag = false;
-      alert("Maximal Bet : " + max_bet_colokjitu);
+      notifications.push("Maximal Bet : " + max_bet_colokjitu);
     }
     if (flag == true) {
       diskon = bet * disc_bet_colokjitu;

@@ -11,6 +11,7 @@
   import Tablekeranjangkombinasi from "../permainan/Tablekeranjangkombinasi.svelte";
   import Loader from "../components/Loader.svelte";
   import { createEventDispatcher } from "svelte";
+  import { notifications } from "../components/Noti.svelte";
 
   export let idcomppasaran = "";
   export let idtrxkeluaran = "";
@@ -101,9 +102,9 @@
     const json = await res.json();
     if (json.status == "200") {
       css_loader = "display:none;";
-      alert(
+      notifications.push(
         "Data telah berhasil disimpan, Total belanja : " +
-          new Intl.NumberFormat().format(totalkeranjang)
+          new Intl.NumberFormat().format(totalkeranjang), "warning", "middle"
       );
       dispatch("handleInvoice", "call");
       reset();
@@ -112,14 +113,14 @@
       switch (json.status) {
         case "500":
           group_btn_beli = true;
-          alert(json.message);
+          notifications.push(json.message);
           break;
         case "400":
           group_btn_beli = true;
-          alert(json.message);
+          notifications.push(json.message);
           break;
         default:
-          alert(json.message);
+          notifications.push(json.message);
           break;
       }
     }
@@ -204,14 +205,14 @@
       reset();
       count_keranjang();
     } else {
-      alert("Tidak ada list transaksi");
+      notifications.push("Tidak ada list transaksi","","middle");
     }
   };
   const handleSave = (e) => {
     if (keranjang.length > 0) {
       savetransaksi();
     } else {
-      alert("Tidak ada list transaksi");
+      notifications.push("Tidak ada list transaksi","","middle");
     }
   };
   function count_keranjang() {
@@ -266,31 +267,31 @@
     if (nomor == "") {
       select_kombinasi_1_input.focus();
       flag = false;
-      alert("Tebak tidak boleh kosong");
+      notifications.push("Tebak tidak boleh kosong");
     }
     if (nomor2 == "") {
       select_kombinasi_2_input.focus();
       flag = false;
-      alert("Tebak tidak boleh kosong");
+      notifications.push("Tebak tidak boleh kosong");
     }
     if (nomor3 == "") {
       select_kombinasi_3_input.focus();
       flag = false;
-      alert("Tebak tidak boleh kosong");
+      notifications.push("Tebak tidak boleh kosong");
     }
     if (bet == "") {
       flag = false;
-      alert("Amount tidak boleh kosong");
+      notifications.push("Amount tidak boleh kosong");
     }
     if (parseInt(bet) < parseInt(min_bet)) {
       bet_kombinasi = min_bet;
       flag = false;
-      alert("Minimal Bet : " + min_bet);
+      notifications.push("Minimal Bet : " + min_bet);
     }
     if (parseInt(bet) > parseInt(max_bet)) {
       bet_kombinasi = max_bet;
       flag = false;
-      alert(" Maximal Bet : " + max_bet);
+      notifications.push(" Maximal Bet : " + max_bet);
     }
     if (flag == true) {
       diskon = bet * diskon_bet;
