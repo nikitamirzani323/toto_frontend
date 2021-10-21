@@ -5,6 +5,8 @@
     import timezone from "dayjs/plugin/timezone";
     import Modal from "../components/Modalfull2.svelte"
     import PanelFull from "../components/Panelfull.svelte"
+    import { notifications } from "../components/Noti.svelte";
+
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
@@ -100,10 +102,10 @@
                     ];
                 }
             } else {
-                alert("Error");
+                notifications.push("Error");
             }
         } else {
-            alert("Error");
+            notifications.push("Error");
         }
     }
     async function fetch_resultall() {
@@ -135,10 +137,10 @@
                     ];
                 }
             } else {
-                alert("Error");
+                notifications.push("Error");
             }
         } else {
-            alert("Error");
+            notifications.push("Error");
         }
     }
     async function fetch_invoicell() {
@@ -178,10 +180,10 @@
                     ];
                 }
             } else {
-                alert("Error");
+                notifications.push("Error");
             }
         } else {
-            alert("Error");
+            notifications.push("Error");
         }
     }
     async function fetch_invoicelldetail(e, periode) {
@@ -296,13 +298,13 @@
                     );
                     myModal.show(); 
                 } else {
-                    alert("Error");
+                    notifications.push("Error");
                 }
             } else {
-                alert("Error");
+                notifications.push("Error");
             }
         }else{
-            alert("Data Not Found")
+            notifications.push("Data Not Found","","middle")
         }
     }
     $: {

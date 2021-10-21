@@ -11,6 +11,7 @@
   import Tablekeranjang from "../permainan/Tablekeranjang.svelte";
   import Loader from "../components/Loader.svelte";
   import { createEventDispatcher } from "svelte";
+  import { notifications } from "../components/Noti.svelte";
 
   export let idcomppasaran = "";
   export let idtrxkeluaran = "";
@@ -179,9 +180,9 @@
     const json = await res.json();
     if (json.status == "200") {
       css_loader = "display:none;";
-      alert(
+      notifications.push(
         "Data telah berhasil disimpan, Total belanja : " +
-          new Intl.NumberFormat().format(totalkeranjang)
+          new Intl.NumberFormat().format(totalkeranjang), "warning", "middle"
       );
       dispatch("handleInvoice", "call");
       reset();
@@ -190,14 +191,14 @@
       switch (json.status) {
         case "500":
           group_btn_beli = true;
-          alert(json.message);
+          notifications.push(json.message);
           break;
         case "400":
           group_btn_beli = true;
-          alert(json.message);
+          notifications.push(json.message);
           break;
         default:
-          alert(json.message);
+          notifications.push(json.message);
           break;
       }
     }
@@ -365,14 +366,14 @@
       reset();
       count_keranjang();
     } else {
-      alert("Tidak ada list transaksi");
+      notifications.push("Tidak ada list transaksi","","middle");
     }
   };
   const handleSave = (e) => {
     if (keranjang.length > 0) {
       savetransaksi();
     } else {
-      alert("Tidak ada list transaksi");
+      notifications.push("Tidak ada list transaksi","","middle");
     }
   };
   function count_keranjang() {
@@ -515,7 +516,7 @@
       flag = false;
       form_clear("4-3-2");
       nomor_input.focus();
-      alert(
+      notifications.push(
         "Format Salah\nContoh:\n4D: 1234\n3D: 123\n2D: 12 atau **10\n2DD: 10**\n2DT: *10*\n"
       );
     }
@@ -536,26 +537,26 @@
       flag = false;
       nomor_input.focus();
       nomor = "";
-      alert("Nomor 2 - 4 Digit");
+      notifications.push("Isi Nomor Antara 2 - 4 Digit");
     }
     if (bet_432 == "") {
       flag = false;
-      alert("Amount tidak boleh kosong");
+      notifications.push("Amount tidak boleh kosong");
     }
     if (parseInt(bet_432) < parseInt(minimal_bet)) {
       bet_432 = minimal_bet;
       flag = false;
-      alert("Minimal Bet : " + new Intl.NumberFormat().format(minimal_bet));
+      notifications.push("Minimal Bet : " + new Intl.NumberFormat().format(minimal_bet));
     }
     if (game.toString() == "4") {
       if (parseInt(bet_432) > parseInt(max4d_bet)) {
         bet_432 = minimal_bet;
         flag = false;
-        alert("Maximal Bet 4D : " + new Intl.NumberFormat().format(max4d_bet));
+        notifications.push("Maximal Bet 4D : " + new Intl.NumberFormat().format(max4d_bet));
       }
       if (checkLimitLine("4D") == false) {
         flag = false;
-        alert("Maximal Line 4D : " + limitline_4d);
+        notifications.push("Maximal Line 4D : " + limitline_4d);
         form_clear("4-3-2");
       }
     }
@@ -563,11 +564,11 @@
       if (parseInt(bet_432) > parseInt(max3d_bet)) {
         bet_432 = minimal_bet;
         flag = false;
-        alert("Maximal Bet 3D : " + new Intl.NumberFormat().format(max3d_bet));
+        notifications.push("Maximal Bet 3D : " + new Intl.NumberFormat().format(max3d_bet));
       }
       if (checkLimitLine("3D") == false) {
         flag = false;
-        alert("Maximal Line 3D : " + limitline_3d);
+        notifications.push("Maximal Line 3D : " + limitline_3d);
         form_clear("4-3-2");
       }
     }
@@ -575,11 +576,11 @@
       if (parseInt(bet_432) > parseInt(max2d_bet)) {
         bet_432 = minimal_bet;
         flag = false;
-        alert("Maximal Bet 2D : " + new Intl.NumberFormat().format(max2d_bet));
+        notifications.push("Maximal Bet 2D : " + new Intl.NumberFormat().format(max2d_bet));
       }
       if (checkLimitLine("2D") == false) {
         flag = false;
-        alert("Maximal Line 2D : " + limitline_2d);
+        notifications.push("Maximal Line 2D : " + limitline_2d);
         form_clear("4-3-2");
       }
     }
@@ -587,11 +588,11 @@
       if (parseInt(bet_432) > parseInt(max2dd_bet)) {
         bet_432 = minimal_bet;
         flag = false;
-        alert("Maximal Bet 2D : " + new Intl.NumberFormat().format(max2dd_bet));
+        notifications.push("Maximal Bet 2D : " + new Intl.NumberFormat().format(max2dd_bet));
       }
       if (checkLimitLine("2DD") == false) {
         flag = false;
-        alert("Maximal Line 2DD : " + limitline_2dd);
+        notifications.push("Maximal Line 2DD : " + limitline_2dd);
         form_clear("4-3-2");
       }
     }
@@ -599,13 +600,13 @@
       if (parseInt(bet_432) > parseInt(max2dt_bet)) {
         bet = minimal_bet;
         flag = false;
-        alert(
+        notifications.push(
           "Maximal Bet 2DT : " + new Intl.NumberFormat().format(max2dt_bet)
         );
       }
       if (checkLimitLine("2DT") == false) {
         flag = false;
-        alert("Maximal Line 2DT : " + limitline_2dt);
+        notifications.push("Maximal Line 2DT : " + limitline_2dt);
         form_clear("4-3-2");
       }
     }
@@ -698,12 +699,12 @@
     if (nomorbbfs == "") {
       nomor_input.focus();
       flag = false;
-      alert("Nomor Tidak Boleh Kosong");
+      notifications.push("Nomor Tidak Boleh Kosong");
     }
     if (nomorbbfs.length < 2 || nomorbbfs.length > bbfs) {
       flag = false;
       nomor_input.focus();
-      alert("Nomor 2 - " + bbfs + " Digit");
+      notifications.push("Nomor 2 - " + bbfs + " Digit");
     } else {
       countangkabbfs(nomorbbfs);
     }
@@ -712,12 +713,12 @@
       if (parseInt(bet_1) < parseInt(minimal_bet)) {
         bet_1 = minimal_bet;
         flag = false;
-        alert("Minimal Bet 4D : " + minimal_bet);
+        notifications.push("Minimal Bet 4D : " + minimal_bet);
       }
       if (parseInt(bet_1) > parseInt(max4d_bet)) {
         bet_1 = max4d_bet;
         flag = false;
-        alert("Maximal Bet 4D : " + new Intl.NumberFormat().format(max4d_bet));
+        notifications.push("Maximal Bet 4D : " + new Intl.NumberFormat().format(max4d_bet));
       }
       if (flag == true) {
         diskon = Math.ceil(bet_1 * disc4d_bet);
@@ -774,7 +775,7 @@
         }
 
         if (code_alert == 1) {
-          alert(note_alert);
+          notifications.push(note_alert);
           code_alert = 0;
         }
       }
@@ -783,12 +784,12 @@
       if (parseInt(bet_2) < parseInt(minimal_bet)) {
         bet_2 = minimal_bet;
         flag = false;
-        alert("Minimal Bet 3D : " + minimal_bet);
+        notifications.push("Minimal Bet 3D : " + minimal_bet);
       }
       if (parseInt(bet_2) > parseInt(max3d_bet)) {
         bet_2 = max3d_bet;
         flag = false;
-        alert("Maximal Bet 3D : " + new Intl.NumberFormat().format(max3d_bet));
+        notifications.push("Maximal Bet 3D : " + new Intl.NumberFormat().format(max3d_bet));
       }
       if (flag == true) {
         diskon = Math.ceil(bet_2 * disc3d_bet);
@@ -842,7 +843,7 @@
         }
 
         if (code_alert == 1) {
-          alert(note_alert);
+          notifications.push(note_alert);
           code_alert = 0;
         }
       }
@@ -851,12 +852,12 @@
       if (parseInt(bet_3) < parseInt(minimal_bet)) {
         bet_3 = minimal_bet;
         flag = false;
-        alert("Minimal Bet 2D : " + minimal_bet);
+        notifications.push("Minimal Bet 2D : " + minimal_bet);
       }
       if (parseInt(bet_3) > parseInt(max2d_bet)) {
         bet_3 = max2d_bet;
         flag = false;
-        alert("Maximal Bet 2D : " + new Intl.NumberFormat().format(max2d_bet));
+        notifications.push("Maximal Bet 2D : " + new Intl.NumberFormat().format(max2d_bet));
       }
       if (flag == true) {
         diskon = Math.ceil(bet_3 * disc2d_bet);
@@ -913,7 +914,7 @@
           myModal.show();
         }
         if (code_alert == 1) {
-          alert(note_alert);
+          notifications.push(note_alert);
           code_alert = 0;
         }
       }
@@ -938,23 +939,23 @@
 
     if (bet_2dd == "") {
       flag = false;
-      alert("Bet tidak boleh kosong");
+      notifications.push("Bet tidak boleh kosong");
     }
     if (parseInt(bet_2dd) < parseInt(minimal_bet)) {
       bet_2dd = minimal_bet;
       flag = false;
-      alert("Minimal Bet : " + minimal_bet);
+      notifications.push("Minimal Bet : " + minimal_bet);
     }
 
     if (game.toString() == "2") {
       if (parseInt(bet_2dd) > parseInt(max2dd_bet)) {
         bet_2dd = minimal_bet;
         flag = false;
-        alert("Maximal Bet 2D Depan : " + max2dd_bet);
+        notifications.push("Maximal Bet 2D Depan : " + max2dd_bet);
       }
       if (checkLimitLine("2DD") == false) {
         flag = false;
-        alert("Maximal Line 2D Depan : " + limitline_2dd);
+        notifications.push("Maximal Line 2D Depan : " + limitline_2dd);
         form_clear("2DD");
       }
     }
@@ -963,7 +964,7 @@
       let numbera = parseInt(nomor2dd[i]);
       if (isNaN(numbera)) {
         flag = false;
-        alert("Error");
+        notifications.push("Error");
         form_clear("2DD");
       }
     }
@@ -1002,23 +1003,23 @@
 
     if (bet_2dt == "") {
       flag = false;
-      alert("Bet tidak boleh kosong");
+      notifications.push("Bet tidak boleh kosong");
     }
     if (parseInt(bet_2dt) < parseInt(minimal_bet)) {
       bet_2dt = minimal_bet;
       flag = false;
-      alert("Minimal Bet : " + minimal_bet);
+      notifications.push("Minimal Bet : " + minimal_bet);
     }
 
     if (game.toString() == "2") {
       if (parseInt(bet_2dt) > parseInt(max2dt_bet)) {
         bet_2dt = minimal_bet;
         flag = false;
-        alert("Maximal Bet 2D Tengah : " + max2dt_bet);
+        notifications.push("Maximal Bet 2D Tengah : " + max2dt_bet);
       }
       if (checkLimitLine("2DT") == false) {
         flag = false;
-        alert("Maximal Line 2T Tengah : " + limitline_2dd);
+        notifications.push("Maximal Line 2T Tengah : " + limitline_2dd);
         form_clear("2DT");
       }
     }
@@ -1027,7 +1028,7 @@
       let numbera = parseInt(nomor2dt[i]);
       if (isNaN(numbera)) {
         flag = false;
-        alert("Error");
+        notifications.push("Error");
         form_clear("2DT");
       }
     }
@@ -1064,12 +1065,12 @@
       }
     }
     if (flag_checkdata == false) {
-      alert("Format Salah, hanya boleh karakter angka * # ,");
+      notifications.push("Format Salah, hanya boleh karakter angka * # ,");
     } else {
       if (totalpemisah < 2) {
         //jika tidak ada pemisah
         if (totalres_money < 2) {
-          alert("Format Salah");
+          notifications.push("Format Salah");
         } else {
           checkbulkdata(nomorwap);
         }
@@ -1101,22 +1102,22 @@
     if (quick_pilihan1 == "") {
       quick_pilihan1_input.focus();
       flag = false;
-      alert("Besar/Kecil/Genap/Ganjil tidak boleh kosong");
+      notifications.push("Besar/Kecil/Genap/Ganjil tidak boleh kosong");
     }
     if (quick_pilihan2 == "") {
       quick_pilihan2_input.focus();
       flag = false;
-      alert("2D/2D Depan/2D Tengah tidak boleh kosong");
+      notifications.push("2D/2D Depan/2D Tengah tidak boleh kosong");
     }
     if (quick_bet == "") {
       quick_bet_input.focus();
       flag = false;
-      alert("Bet tidak boleh kosong");
+      notifications.push("Bet tidak boleh kosong");
     }
     if (parseInt(quick_bet) < parseInt(minimal_bet)) {
       quick_bet = minimal_bet;
       flag = false;
-      alert("Minimal Bet : " + minimal_bet);
+      notifications.push("Minimal Bet : " + minimal_bet);
     }
     if (quick_pilihan2 != "") {
       switch (quick_pilihan2) {
@@ -1124,21 +1125,21 @@
           if (parseInt(quick_bet) > parseInt(max2d_bet)) {
             quick_bet = minimal_bet;
             flag = false;
-            alert("Maximal Bet 2D  : " + max2d_bet);
+            notifications.push("Maximal Bet 2D  : " + max2d_bet);
           }
           break;
         case "2DD":
           if (parseInt(quick_bet) > parseInt(max2dd_bet)) {
             quick_bet = minimal_bet;
             flag = false;
-            alert("Maximal Bet 2D Depan : " + max2dd_bet);
+            notifications.push("Maximal Bet 2D Depan : " + max2dd_bet);
           }
           break;
         case "2DT":
           if (parseInt(quick_bet) > parseInt(max2dt_bet)) {
             quick_bet = minimal_bet;
             flag = false;
-            alert("Maximal Bet 2D Tengah : " + max2dt_bet);
+            notifications.push("Maximal Bet 2D Tengah : " + max2dt_bet);
           }
           break;
       }
@@ -1213,7 +1214,7 @@
               }
             }
             if (code_alert == 1) {
-              alert(note_alert);
+              notifications.push(note_alert);
               code_alert = 0;
             }
             if (temp_bulk_error != "") {
@@ -1264,7 +1265,7 @@
               }
             }
             if (code_alert == 1) {
-              alert(note_alert);
+              notifications.push(note_alert);
               code_alert = 0;
             }
             if (temp_bulk_error != "") {
@@ -1303,7 +1304,7 @@
               }
             }
             if (code_alert == 1) {
-              alert(note_alert);
+              notifications.push(note_alert);
               code_alert = 0;
             }
             if (temp_bulk_error != "") {

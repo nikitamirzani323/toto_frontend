@@ -28,10 +28,10 @@
   resolved "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.12.tgz"
   integrity sha512-6RglhutqrGFMO1MNUXp95RBuYIuc8wTnMAV5MUhLmjTOy78ncwOw7RgeQ/HeymkKXRhZd0s2DNrM1rL7unk3MQ==
 
-"@popperjs/core@^2.6.0":
-  version "2.9.2"
-  resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.9.2.tgz"
-  integrity sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==
+"@popperjs/core@^2.9.2":
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.10.2.tgz#0798c03351f0dea1a5a4cabddf26a55a7cbee590"
+  integrity sha512-IXf3XA7+XyN7CP9gGh/XB0UxVMlvARGEgGXLubFICsUMGz6Q+DU+i4gGlpOxTjKvXjkJDJC8YdqdKkDj9qZHEQ==
 
 "@rollup/plugin-commonjs@^17.0.0":
   version "17.1.0"
@@ -621,12 +621,12 @@ svelte@^3.38.2:
   resolved "https://registry.npmjs.org/svelte/-/svelte-3.38.2.tgz"
   integrity sha512-q5Dq0/QHh4BLJyEVWGe7Cej5NWs040LWjMbicBGZ+3qpFWJ1YObRmUDZKbbovddLC9WW7THTj3kYbTOFmU9fbg==
 
-sveltestrap@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.npmjs.org/sveltestrap/-/sveltestrap-5.0.2.tgz"
-  integrity sha512-tCGTTLtQ0hl6w7dOlCI3HJSo7Q4N0kZ147GlILiX8dhQrti0stKl7339ylsiO4MppUwLaSZMA81GTzKKl3wNiw==
+sveltestrap@^5.6.3:
+  version "5.6.3"
+  resolved "https://registry.yarnpkg.com/sveltestrap/-/sveltestrap-5.6.3.tgz#afb81b00d0b378719988e5339f92254dce41194f"
+  integrity sha512-/geTKJbPmJGzwHFKYC3NkUNDk/GKxrppgdSxcg58w/qcxs0S6RiN4PaQ1tgBKsdSrZDfbHfkFF+dybHAyUlV0A==
   dependencies:
-    "@popperjs/core" "^2.6.0"
+    "@popperjs/core" "^2.9.2"
 
 terser@^5.0.0:
   version "5.7.0"
