@@ -3,7 +3,6 @@
   import Home from "./pages/Home.svelte";
   import Permainan from "./pages/Permainan.svelte";
   import Loader from "./components/Loader.svelte";
-  import Footer from "./components/Footer.svelte";
   import Notif from "./components/Notif.svelte";
   import dayjs from "dayjs";
   import utc from "dayjs/plugin/utc";

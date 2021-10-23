@@ -1,5 +1,6 @@
 <script>
     import { Button, Col } from "sveltestrap";
+    import dayjs from "dayjs";
     import Loader2 from "../components/Loader.svelte";
     import Notif from "../components/Notif.svelte";
     import Headerback from "../components/Headerback.svelte";
@@ -183,7 +184,8 @@
                         ...resulttogel,
                         {
                             no: record[i]["no"],
-                            date: record[i]["date"],
+                            date: dayjs(record[i]["date"])
+                                    .format("DD MMM YYYY"),
                             periode: record[i]["periode"],
                             result: record[i]["result"],
                         },

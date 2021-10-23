@@ -127,7 +127,9 @@
                         ...listhasilkeluaran,
                         {
                             keluaran_no: record[i]["no"],
-                            keluaran_date: record[i]["date"],
+                            keluaran_date: dayjs(record[i]["date"])
+                                .tz(client_timezone)
+                                .format("DD MMM YYYY"),
                             keluaran_pasaran: record[i]["pasaran"],
                             keluaran_periode: record[i]["periode"],
                             keluaran_result: record[i]["result"],
@@ -163,7 +165,9 @@
                         ...listhasilinvoice,
                         {
                             invoice_idinvoice: record[i]["idinvoice"],
-                            invoice_tglkeluaran: record[i]["tglkeluaran"],
+                            invoice_tglkeluaran: dayjs(record[i]["tglkeluaran"])
+                                    .tz(client_timezone)
+                                    .format("DD MMM YYYY"),
                             invoice_pasaran: record[i]["pasaran"],
                             invoice_periode: record[i]["periode"],
                             invoice_status: record[i]["status"],
