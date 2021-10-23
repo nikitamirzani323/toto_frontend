@@ -378,10 +378,10 @@
             <a href="/?token={client_token}" title="totoapp">
                 <img
                     id="imglogo"
-                    alt="totoapp"
+                    alt="SDSB4D"
                     style="margin-top:0px;"
                     width="80"
-                    src="https://dataset.b-cdn.net/assets/images/companies/isb388/isb388.png"
+                    src="SDSB4D.png"
                 />
             </a>
             <form class="d-flex">
@@ -431,10 +431,10 @@
         <a href="/?token={client_token}" title="SDSB4D">
             <img
                 id="imglogo"
-                alt=""
+                alt="SDSB4D"
                 style="margin-top:10px;"
                 width="100"
-                src="https://dataset.b-cdn.net/assets/images/companies/isb388/isb388.png"
+                src="SDSB4D.png"
             />
         </a>
     </center>

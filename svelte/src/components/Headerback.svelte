@@ -11,7 +11,7 @@
                     style="margin-left: -20px;"
                     class="navbar-brand"
                     href="/?token={client_token}"
-                    title="isbtoto"
+                    title="BACK"
                 >
                     <img
                         style="margin-top: 0px;"
