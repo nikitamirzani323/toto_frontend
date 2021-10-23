@@ -285,3 +285,18 @@ hr {
     border-radius: 0px;
     font-weight: bold;
 }
+input::placeholder {
+    font-size:12px;
+}
+input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-size:12px;
+}
+input::-moz-placeholder { /* Firefox 19+ */
+    font-size:12px;
+}
+input:-ms-input-placeholder { /* IE 10+ */
+    font-size:12px;
+}
+input:-moz-placeholder { /* Firefox 18- */
+    font-size:12px;
+}

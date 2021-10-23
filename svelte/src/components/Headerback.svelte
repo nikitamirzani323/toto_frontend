@@ -4,7 +4,7 @@
 </script>
 
 {#if client_device == "WEBSITE"}
-    <nav class="navbar fixed-top " style="background-color: #e91e63;">
+    <nav class="navbar fixed-top " style="background-color: #2b2a33;">
         <div class="container">
             <center>
                 <a
@@ -25,7 +25,7 @@
         </div>
     </nav>
 {:else}
-    <nav class="navbar fixed-top " style="background-color: #e91e63;">
+    <nav class="navbar fixed-top " style="background-color: #2b2a33;">
         <div class="container-fluid">
             <center>
                 <a

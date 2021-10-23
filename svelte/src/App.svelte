@@ -145,7 +145,7 @@
 </script>
 
 <svelte:head>
-  <title>ISBTOTO APP</title>
+  <title>SDSB4D</title>
 </svelte:head>
 {#if client_device == "WEBSITE"}
   <div class="content" style="margin-top:20px;margin-bottom:50px;">
@@ -235,6 +235,5 @@
         {/if}
       </Row>
     {/if}
-    <Footer />
   </Container>
 {/if}

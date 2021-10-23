@@ -373,7 +373,7 @@
     };
 </script>
 {#if client_device == "WEBSITE"}
-    <nav class="navbar fixed-top " style="background-color: #e91e63;">
+    <nav class="navbar fixed-top " style="background-color: #2b2a33;">
         <div class="container">
             <a href="/?token={client_token}" title="totoapp">
                 <img
@@ -422,15 +422,13 @@
                     >TIMEZONE : <span id="style_text">{client_timezone}</span
                     ></span
                 ><br />
-                <span style="font-size:13px;"
-                    >CLOCK : <span id="style_text">{clockmachine}</span></span
-                >
+                <span style="font-size:13px;">CLOCK : <span id="style_text">{clockmachine} WIB</span></span>
             </CardBody>
         </Card>
     </Col>
 {:else}
     <center style="margin-bottom:5px;">
-        <a href="/?token={client_token}" title="isbtoto">
+        <a href="/?token={client_token}" title="SDSB4D">
             <img
                 id="imglogo"
                 alt=""
@@ -465,7 +463,7 @@
                     ></span
                 ><br />
                 <span style="font-size:12px;"
-                    >CLOCK : <span id="style_text">{clockmachine}</span></span
+                    >CLOCK : <span id="style_text">{clockmachine} WIB</span></span
                 >
             </CardBody>
         </Card>

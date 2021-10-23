@@ -650,7 +650,7 @@
                                         <th
                                             width="10%"
                                             style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
-                                            NOWRAP>PERMINAN</th
+                                            NOWRAP>PERMAINAN</th
                                         >
                                         <th
                                             width="20%"
@@ -1136,9 +1136,9 @@
                 <b style="font-size: 13px;">Pilih Permainan Dibawah Ini : </b>
                 <select
                     on:change={handleSelect}
-                    style="background-color: #323030;color:white;border:1px solid #323030;"
-                    class="form-control"
-                >
+                    style="background-color: #323030;color:white;border:1px solid #323030;" 
+                    aria-label="Permainan" 
+                    class="form-select">
                     <option value="4-3-2">4D/3D/2D</option>
                     <option value="colok">COLOK</option>
                     <option value="5050">50-50</option>
@@ -1276,7 +1276,7 @@
                                     <th
                                         width="10%"
                                         style="text-align:center;vertical-align:top;background:#303030;font-size:11px;border-bottom:none;"
-                                        NOWRAP>PERMINAN</th
+                                        NOWRAP>PERMAINAN</th
                                     >
                                     <th
                                         width="20%"
