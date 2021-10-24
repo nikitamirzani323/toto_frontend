@@ -83,11 +83,13 @@ type clientbukumimpi struct {
 }
 
 type responseinitresult struct {
-	Status    int    `json:"status"`
-	Token     string `json:"token"`
-	Developer string `json:"member_username"`
-	Company   string `json:"member_company"`
-	Credit    int    `json:"member_credit"`
+	Status          int    `json:"status"`
+	Token           string `json:"token"`
+	Developer       string `json:"member_username"`
+	Company         string `json:"member_company"`
+	Credit          int    `json:"member_credit"`
+	Website_status  string `json:"website_status"`
+	Website_message string `json:"website_message"`
 }
 type responsecheckpasaran struct {
 	Status      int    `json:"status"`
@@ -156,15 +158,27 @@ func InitToken(c *fiber.Ctx) error {
 	if err != nil {
 		log.Println(err.Error())
 	}
+	// Explore response object
+	log.Println("Response Info:")
+	log.Println("  Error      :", err)
+	log.Println("  Status Code:", resp.StatusCode())
+	log.Println("  Status     :", resp.Status())
+	log.Println("  Proto      :", resp.Proto())
+	log.Println("  Time       :", resp.Time())
+	log.Println("  Received At:", resp.ReceivedAt())
+	log.Println("  Body       :\n", resp)
+	log.Println()
 	result := resp.Result().(*responseinitresult)
 	c.Status(fiber.StatusOK)
 	return c.JSON(fiber.Map{
-		"status":    http.StatusOK,
-		"token":     result.Token,
-		"developer": result.Developer,
-		"company":   result.Company,
-		"credit":    result.Credit,
-		"time":      time.Since(render_page).String(),
+		"status":          http.StatusOK,
+		"token":           result.Token,
+		"developer":       result.Developer,
+		"company":         result.Company,
+		"credit":          result.Credit,
+		"website_status":  result.Website_status,
+		"website_message": result.Website_message,
+		"time":            time.Since(render_page).String(),
 	})
 }
 func Listpasaran(c *fiber.Ctx) error {
