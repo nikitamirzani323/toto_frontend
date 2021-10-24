@@ -381,7 +381,7 @@
 </script>
 
 {#if statuspasaran == "ONLINE"}
-    <Headerback {client_token} {client_device} />
+    <Headerback {client_token} {client_device} {client_company}/>
     {#if client_device == "WEBSITE"}
         <Col xs="12" style="padding: 0px; margin:0px;margin-top:40px;">
             <Panel>

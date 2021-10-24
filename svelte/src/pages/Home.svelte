@@ -2,6 +2,7 @@
     import { createEventDispatcher } from "svelte";
     import { Card, CardBody, CardHeader, CardFooter, Col } from "sveltestrap";
     import Header from "../components/Header.svelte";
+    import { notifications } from "../components/Noti.svelte";
 
     export let client_token = "";
     export let client_company = "";
@@ -23,7 +24,7 @@
             };
             dispatch("pasaran", pasaran);
         } else {
-            alert("PASARAN " + name + " OFFLINE");
+            notifications.push("PASARAN " + name + " OFFLINE");
         }
     };
 </script>

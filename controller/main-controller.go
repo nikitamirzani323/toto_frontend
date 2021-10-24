@@ -2,8 +2,10 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"bitbucket.org/isbtotogroup/frontend_svelte/config"
@@ -11,10 +13,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-const PATH string = config.PATH_API
+var PATH string = config.GetApiPath()
 
 type clientInit struct {
-	Token string `json:"token"`
+	Token      string `json:"token"`
+	Agent_Code string `json:"agent`
 }
 type clientlistpasaran struct {
 	Token    string `json:"token"`
@@ -112,8 +115,9 @@ type responseinvoicebet struct {
 	Record     interface{} `json:"record"`
 }
 type response struct {
-	Status int         `json:"status"`
-	Record interface{} `json:"record"`
+	Status  int         `json:"status"`
+	Record  interface{} `json:"record"`
+	Message string      `json:"message"`
 }
 type responsedua struct {
 	Status int `json:"status"`
@@ -152,7 +156,8 @@ func InitToken(c *fiber.Ctx) error {
 		SetResult(responseinitresult{}).
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
-			"token": client.Token,
+			"token":      client.Token,
+			"agent_code": client.Agent_Code,
 		}).
 		Post(PATH + "api/servicetoken")
 	if err != nil {
@@ -235,6 +240,15 @@ func Checkpasaran(c *fiber.Ctx) error {
 	if err != nil {
 		log.Println(err.Error())
 	}
+	fmt.Println("Response Info:")
+	fmt.Println("  Error      :", err)
+	fmt.Println("  Status Code:", resp.StatusCode())
+	fmt.Println("  Status     :", resp.Status())
+	fmt.Println("  Proto      :", resp.Proto())
+	fmt.Println("  Time       :", resp.Time())
+	fmt.Println("  Received At:", resp.ReceivedAt())
+	log.Println("  Body       :\n", resp)
+	fmt.Println()
 	result := resp.Result().(*responsecheckpasaran)
 	if result.Status == 200 {
 		return c.JSON(fiber.Map{
@@ -272,7 +286,7 @@ func Inittogel_432d(c *fiber.Ctx) error {
 		SetResult(response{}).
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
-			"client_company": client.Company,
+			"client_company": strings.ToUpper(client.Company),
 			"pasaran_code":   client.Pasaran_code,
 			"permainan":      client.Permainan,
 		}).
@@ -572,7 +586,16 @@ func SlipperiodeAll(c *fiber.Ctx) error {
 		Post(PATH + "api/serviceslipall")
 	if err != nil {
 		log.Println(err.Error())
-	}
+	} // Explore response object
+	fmt.Println("Response Info:")
+	fmt.Println("  Error      :", err)
+	fmt.Println("  Status Code:", resp.StatusCode())
+	fmt.Println("  Status     :", resp.Status())
+	fmt.Println("  Proto      :", resp.Proto())
+	fmt.Println("  Time       :", resp.Time())
+	fmt.Println("  Received At:", resp.ReceivedAt())
+	fmt.Println("  Body       :\n", resp)
+	fmt.Println()
 	result := resp.Result().(*response)
 
 	if result.Status == 200 {
@@ -658,21 +681,13 @@ func Savetransaksi(c *fiber.Ctx) error {
 			"client_username": client.Username,
 			"totalbayarbet":   client.Total,
 			"list4d":          string(client.Data),
+			"token":           client.Token,
 		}).
 		Post(PATH + "api/savetransaksi")
 	if err != nil {
 		log.Println(err.Error())
 	}
-	// Explore response object
-	log.Println("Response Info:")
-	log.Println("  Error      :", err)
-	log.Println("  Status Code:", resp.StatusCode())
-	log.Println("  Status     :", resp.Status())
-	log.Println("  Proto      :", resp.Proto())
-	log.Println("  Time       :", resp.Time())
-	log.Println("  Received At:", resp.ReceivedAt())
-	log.Println("  Body       :\n", resp)
-	log.Println()
+	fmt.Println("Response Info client: ", client.Company, resp.ReceivedAt(), resp)
 	result := resp.Result().(*response)
 
 	if result.Status == 200 {
@@ -683,9 +698,10 @@ func Savetransaksi(c *fiber.Ctx) error {
 		})
 	} else {
 		return c.JSON(fiber.Map{
-			"status": http.StatusOK,
-			"record": nil,
-			"time":   time.Since(render_page).String(),
+			"status":  result.Status,
+			"record":  nil,
+			"message": result.Message,
+			"time":    time.Since(render_page).String(),
 		})
 	}
 }

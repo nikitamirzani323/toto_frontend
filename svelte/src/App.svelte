@@ -7,6 +7,7 @@
   import dayjs from "dayjs";
   import utc from "dayjs/plugin/utc";
   import timezone from "dayjs/plugin/timezone";
+  import Notification, { notifications } from "./components/Noti.svelte";
 
   dayjs.extend(utc);
   dayjs.extend(timezone);
@@ -14,6 +15,7 @@
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const token_browser = urlParams.get("token");
+  const agentCode = urlParams.get("agent");
   let client_device = "";
   if (token_browser === null) {
     console.log("TOKEN NOT FOUND");
@@ -62,17 +64,18 @@
       const json = await res.json();
       client_ipaddress = json.ip;
       client_timezone = json.timezone;
-      initapp(token_browser);
+      initapp(token_browser, agentCode);
     }
   }
-  async function initapp(e) {
+  async function initapp(token, agent_code) {
     const resInit = await fetch("/api/init", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        token: e,
+        token,
+        agent_code,
       }),
     });
     if (!resInit.ok) {
@@ -146,10 +149,14 @@
             ];
           }
         } else {
-          alert("Error");
+          notifications.push(
+            "An error has occured, Please Contact Administrator"
+          );
         }
       } else {
-        alert("Error");
+        notifications.push(
+          "An error has occured, Please Contact Administrator"
+        );
       }
     }
   }
@@ -158,6 +165,8 @@
 <svelte:head>
   <title>SDSB4D</title>
 </svelte:head>
+<Notification duration="3000" />
+
 {#if client_device == "WEBSITE"}
   <div class="content" style="margin-top:20px;margin-bottom:50px;">
     <Container>
