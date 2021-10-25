@@ -41,6 +41,8 @@
   let client_username = "";
   let client_ipaddress = "";
   let client_timezone = "";
+  let client_website_status = "";
+  let client_website_message = "";
   let client_credit = 0;
   const pasaran = (e) => {
     pasaran_code = e.detail.code;
@@ -87,13 +89,21 @@
             setTimeout(function () {
                 css_err = "display: none;";
             }, 5000);
-			break;
+            break;
           default:
             client_token = initJson.token;
             client_company = initJson.company;
             client_username = initJson.developer;
             client_credit = initJson.credit;
-            initPasaran();
+            client_website_status = initJson.website_status;
+            client_website_message = initJson.website_message;
+            if(client_website_status == "OFFLINE"){
+              client_token = "";
+              message_err = client_website_message;
+              css_err = "display:inline-block";
+            }else{
+              initPasaran();
+            }  
         }
       }
     }
