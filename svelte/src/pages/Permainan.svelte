@@ -25,7 +25,7 @@
     export let pasaran_periode = 0;
     export let permainan = "";
     let css_loader = "display:none;";
-    let resulttogel = [];
+
     let resultinvoice = [];
     let resultslipbet = [];
     let filterBukuMimpi = [];
@@ -162,38 +162,7 @@
         }
         invoicebet("all");
     }
-    async function resultpasaran() {
-        const res = await fetch("/api/resulttogel", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                company: client_company,
-                pasaran_code: pasaran_code,
-            }),
-        });
 
-        const json = await res.json();
-        record = json.record;
-        if (json.status == 200) {
-            record = json.record;
-            if (record != null) {
-                for (var i = 0; i < record.length; i++) {
-                    resulttogel = [
-                        ...resulttogel,
-                        {
-                            no: record[i]["no"],
-                            date: dayjs(record[i]["date"])
-                                    .format("DD MMM YYYY"),
-                            periode: record[i]["periode"],
-                            result: record[i]["result"],
-                        },
-                    ];
-                }
-            }
-        }
-    }
     async function invoicebet(e) {
         const res = await fetch("/api/invoicebet", {
             method: "POST",
@@ -321,10 +290,6 @@
                 resultslipbet = [];
                 slipbet();
                 break;
-            case "RESULT":
-                resulttogel = [];
-                resultpasaran();
-                break;
             case "BUKUMIMPI":
                 filterBukuMimpi = [];
                 listBukumimpi = [];
@@ -366,7 +331,7 @@
             fetch_bukumimpi();
         }
     };
-   
+
     $: {
         if (searchbukumimpi) {
             filterBukuMimpi = listBukumimpi.filter((item) =>
@@ -591,29 +556,14 @@
                         aria-selected="true">PASANGAN</button
                     >
                 </li>
-                <li
-                    on:click={() => {
-                        handleClickTab("RESULT");
-                    }}
-                    class="nav-item"
-                    role="presentation">
-                    <button
-                        class="nav-link"
-                        id="pills-contact-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pills-result"
-                        type="button"
-                        role="tab"
-                        aria-controls="pills-result"
-                        aria-selected="false">RESULT</button
-                    >
-                </li>
+
                 <li
                     on:click={() => {
                         handleClickTab("BUKUMIMPI");
                     }}
                     class="nav-item"
-                    role="presentation">
+                    role="presentation"
+                >
                     <button
                         class="nav-link"
                         id="pills-contact-tab"
@@ -749,73 +699,6 @@
                                         )}</td
                                     >
                                 </tr>
-                            </table>
-                        </slot:template>
-                    </PanelFull>
-                </div>             
-                <div
-                    class="tab-pane fade"
-                    id="pills-result"
-                    role="tabpanel"
-                    aria-labelledby="pills-result-tab"
-                >
-                    <PanelFull
-                        header={false}
-                        footer={false}
-                        body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:710px;"
-                    >
-                        <slot:template slot="body">
-                            <table class="table table-dark table-striped">
-                                <thead>
-                                    <tr>
-                                        <th
-                                            width="10%"
-                                            style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
-                                            NOWRAP>NO</th
-                                        >
-                                        <th
-                                            width="20%"
-                                            style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
-                                            NOWRAP>TANGGAL</th
-                                        >
-                                        <th
-                                            width="20%"
-                                            style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
-                                            NOWRAP>PERIODE</th
-                                        >
-                                        <th
-                                            width="*"
-                                            style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
-                                            NOWRAP>HASIL</th
-                                        >
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {#each resulttogel as rec}
-                                        <tr>
-                                            <td
-                                                NOWRAP
-                                                style="text-align:center;vertical-align:top;font-size:12px;color:white;"
-                                                >{rec.no}</td
-                                            >
-                                            <td
-                                                NOWRAP
-                                                style="text-align:center;vertical-align:top;font-size:12px;color:white;"
-                                                >{rec.date}</td
-                                            >
-                                            <td
-                                                NOWRAP
-                                                style="text-align:center;vertical-align:top;font-size:12px;color:white;"
-                                                >{rec.periode}</td
-                                            >
-                                            <td
-                                                NOWRAP
-                                                style="text-align:center;vertical-align:top;font-size:12px;color:#fc0;"
-                                                >{rec.result}</td
-                                            >
-                                        </tr>
-                                    {/each}
-                                </tbody>
                             </table>
                         </slot:template>
                     </PanelFull>
@@ -1107,24 +990,6 @@
                     aria-controls="pills-pasangan"
                     aria-selected="true">PASANGAN</button
                 >
-            </li> 
-            <li
-                on:click={() => {
-                    handleClickTab("RESULT");
-                }}
-                class="nav-item"
-                role="presentation">
-                <button
-                    style="font-size:10px;"
-                    class="nav-link"
-                    id="pills-contact-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#pills-result"
-                    type="button"
-                    role="tab"
-                    aria-controls="pills-result"
-                    aria-selected="false">RESULT</button
-                >
             </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
@@ -1138,9 +1003,10 @@
                 <b style="font-size: 13px;">Pilih Permainan Dibawah Ini : </b>
                 <select
                     on:change={handleSelect}
-                    style="background-color: #323030;color:white;border:1px solid #323030;" 
-                    aria-label="Permainan" 
-                    class="form-select">
+                    style="background-color: #323030;color:white;border:1px solid #323030;"
+                    aria-label="Permainan"
+                    class="form-select"
+                >
                     <option value="4-3-2">4D/3D/2D</option>
                     <option value="colok">COLOK</option>
                     <option value="5050">50-50</option>
@@ -1374,74 +1240,6 @@
                                     )}</td
                                 >
                             </tr>
-                        </table>
-                    </slot:template>
-                </PanelFull>
-            </div>
-    
-            <div
-                class="tab-pane "
-                id="pills-result"
-                role="tabpanel"
-                aria-labelledby="pills-result-tab"
-            >
-                <PanelFull
-                    header={false}
-                    footer={false}
-                    body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:450px;"
-                >
-                    <slot:template slot="body">
-                        <table class="table table-dark table-striped">
-                            <thead>
-                                <tr>
-                                    <th
-                                        width="10%"
-                                        style="text-align:center;vertical-align:top;background:#303030;font-size:12px;border-bottom:none;"
-                                        NOWRAP>NO</th
-                                    >
-                                    <th
-                                        width="20%"
-                                        style="text-align:center;vertical-align:top;background:#303030;font-size:12px;border-bottom:none;"
-                                        NOWRAP>TANGGAL</th
-                                    >
-                                    <th
-                                        width="20%"
-                                        style="text-align:center;vertical-align:top;background:#303030;font-size:12px;border-bottom:none;"
-                                        NOWRAP>PERIODE</th
-                                    >
-                                    <th
-                                        width="*"
-                                        style="text-align:center;vertical-align:top;background:#303030;font-size:12px;border-bottom:none;"
-                                        NOWRAP>HASIL</th
-                                    >
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {#each resulttogel as rec}
-                                    <tr>
-                                        <td
-                                            NOWRAP
-                                            style="text-align:center;vertical-align:top;font-size:11px;color:white;"
-                                            >{rec.no}</td
-                                        >
-                                        <td
-                                            NOWRAP
-                                            style="text-align:center;vertical-align:top;font-size:11px;color:white;"
-                                            >{rec.date}</td
-                                        >
-                                        <td
-                                            NOWRAP
-                                            style="text-align:center;vertical-align:top;font-size:11px;color:white;"
-                                            >{rec.periode}</td
-                                        >
-                                        <td
-                                            NOWRAP
-                                            style="text-align:center;vertical-align:top;font-size:11px;color:#fc0;"
-                                            >{rec.result}</td
-                                        >
-                                    </tr>
-                                {/each}
-                            </tbody>
                         </table>
                     </slot:template>
                 </PanelFull>

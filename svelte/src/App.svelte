@@ -100,7 +100,6 @@
             client_credit = initJson.credit;
             client_website_status = initJson.website_status;
             client_website_message = initJson.website_message;
-
             if(client_website_status == "OFFLINE"){
               client_token = "";
               message_err = client_website_message;

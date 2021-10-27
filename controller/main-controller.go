@@ -131,11 +131,12 @@ type responsedua struct {
 type responseduaall struct {
 	Status int `json:"status"`
 	Record []struct {
-		No      int    `json:"no"`
-		Date    string `json:"date"`
-		Pasaran string `json:"pasaran"`
-		Periode string `json:"periode"`
-		Result  string `json:"result"`
+		No           int    `json:"no"`
+		Date         string `json:"date"`
+		Pasaran      string `json:"pasaran"`
+		Pasaran_code string `json:"pasaran_code"`
+		Periode      string `json:"periode"`
+		Result       string `json:"result"`
 	} `json:"record"`
 }
 
