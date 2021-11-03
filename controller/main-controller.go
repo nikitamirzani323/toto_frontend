@@ -159,6 +159,7 @@ func InitToken(c *fiber.Ctx) error {
 			"record":  nil,
 		})
 	}
+	log.Println(c.IPs())
 
 	axios := resty.New()
 	resp, err := axios.R().

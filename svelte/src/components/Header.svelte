@@ -131,9 +131,9 @@
                         ...listhasilkeluaran,
                         {
                             keluaran_no: record[i]["no"],
-                            keluaran_date: dayjs(record[i]["date"])
+                            keluaran_date: record[i]["date"] ? dayjs(record[i]["date"])
                                 .tz(client_timezone)
-                                .format("DD MMM YYYY"),
+                                .format("DD MMM YYYY") : "schedule not ready",
                             keluaran_pasaran: record[i]["pasaran"],
                             keluaran_pasarancode: record[i]["pasaran_code"],
                             keluaran_periode: record[i]["periode"],

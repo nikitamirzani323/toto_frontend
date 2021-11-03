@@ -62,7 +62,7 @@
       throw new Error(message);
     } else {
       const json = await res.json();
-      client_ipaddress = json.ip;
+      client_ipaddress = json.client_ip;
       client_timezone = json.timezone;
       initapp(token_browser, agentCode);
     }
@@ -72,6 +72,7 @@
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-forwarder-for" : client_ipaddress,
       },
       body: JSON.stringify({
         token,
