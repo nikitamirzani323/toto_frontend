@@ -54,7 +54,7 @@
   let message_err = "";
   let css_err = "display:none;";
   async function initTimezone() {
-    const res = await fetch("https://ipinfo.io/json?token=a50f35c7f0138c");
+    const res = await fetch("https://ipinfo.io/json?token=0d10fdc946df5a");
     if (!res.ok) {
       const message = `An error has occured: ${res.status}`;
       throw new Error(message);
@@ -80,14 +80,14 @@
       throw new Error(initMessage);
     } else {
       const initJson = await resInit.json();
-      
+
       if (initJson.status === 200) {
         switch (initJson.company) {
           case "":
             css_err = "display:inline-block";
             message_err = "Agen not found, Please contact admin";
             setTimeout(function () {
-                css_err = "display: none;";
+              css_err = "display: none;";
             }, 5000);
             break;
           default:
@@ -97,13 +97,13 @@
             client_credit = initJson.credit;
             client_website_status = initJson.website_status;
             client_website_message = initJson.website_message;
-            if(client_website_status == "OFFLINE"){
+            if (client_website_status == "OFFLINE") {
               client_token = "";
               message_err = client_website_message;
               css_err = "display:inline-block";
-            }else{
+            } else {
               initPasaran();
-            }  
+            }
         }
       }
     }
@@ -190,9 +190,7 @@
               on:pasaran={pasaran}
             />
           {:else}
-            <Notif 
-              message="{message_err}" 
-              css_init="{css_err}"  />
+            <Notif message={message_err} css_init={css_err} />
             <div style="height: 100%;margin:100px 0px 100px 0px;">
               <center>
                 <Loader cssstyle={"height: 100%;margin:100px 0px 100px 0px;"} />

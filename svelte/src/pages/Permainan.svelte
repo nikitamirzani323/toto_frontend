@@ -175,6 +175,7 @@
                 pasaran_code: pasaran_code,
                 pasaran_periode: pasaran_periode,
                 permainan: e,
+                pasaran_idtransaction: parseInt(idtrxkeluaran),
             }),
         });
 

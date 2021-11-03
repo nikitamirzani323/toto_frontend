@@ -38,6 +38,14 @@ type clientlimitpasaran struct {
 	Permainan       string `json:"permainan"`
 	Username        string `json:"username"`
 }
+type clientinvoice struct {
+	Company         string `json:"company"`
+	Pasaran_code    string `json:"pasaran_code"`
+	Pasaran_periode string `json:"pasaran_periode"`
+	Permainan       string `json:"permainan"`
+	Username        string `json:"username"`
+	Invoice         int    `json:"pasaran_idtransaction"`
+}
 type clientinvoicedetailid struct {
 	Invoice   int    `json:"invoice"`
 	Company   string `json:"company"`
@@ -412,7 +420,7 @@ func ResulttogelAll(c *fiber.Ctx) error {
 	}
 }
 func Invoicebet(c *fiber.Ctx) error {
-	client := new(clientlimitpasaran)
+	client := new(clientinvoice)
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -428,10 +436,11 @@ func Invoicebet(c *fiber.Ctx) error {
 		SetResult(responseinvoicebet{}).
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
-			"client_company":  client.Company,
-			"client_username": client.Username,
-			"pasaran_code":    client.Pasaran_code,
-			"pasaran_periode": client.Pasaran_periode,
+			"client_company":   client.Company,
+			"client_username":  client.Username,
+			"client_idinvoice": client.Invoice,
+			"pasaran_code":     client.Pasaran_code,
+			"pasaran_periode":  client.Pasaran_periode,
 		}).
 		Post(PATH + "api/serviceinvoicebet")
 	if err != nil {
