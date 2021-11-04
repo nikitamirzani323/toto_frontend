@@ -58,21 +58,27 @@
   async function initTimezone() {
     const res = await fetch("https://ipinfo.io/json?token=0d10fdc946df5a");
     if (!res.ok) {
-      const message = `An error has occured: ${res.status}`;
-      throw new Error(message);
-    } else {
+      const res = await fetch("https://worldtimeapi.org/api/ip");
+      if (!res.ok) {
+        const message = `An error has occured: ${res.status}`;
+        throw new Error(message);
+      }
       const json = await res.json();
       client_ipaddress = json.client_ip;
       client_timezone = json.timezone;
-      initapp(token_browser, agentCode);
+    } else {
+      const json = await res.json();
+      client_ipaddress = json.ip;
+      client_timezone = json.timezone;
     }
+    initapp(token_browser, agentCode);
   }
   async function initapp(token, agent_code) {
     const resInit = await fetch("/api/init", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-forwarder-for" : client_ipaddress,
+        "x-forwarder-for": client_ipaddress,
       },
       body: JSON.stringify({
         token,
@@ -93,7 +99,7 @@
             setTimeout(function () {
               css_err = "display: none;";
             }, 5000);
-			      break;
+            break;
           default:
             client_token = initJson.token;
             client_company = initJson.company;
