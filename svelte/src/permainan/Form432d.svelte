@@ -2164,7 +2164,7 @@
 									style="padding-right:10px;vertical-align: center;text-align:right;"
 								>
 									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
+										>4D - Bet (min : {minimal_bet})</span
 									>
 									<input
 										bind:value={bet_1}
@@ -2191,7 +2191,7 @@
 									style="padding-right:10px;vertical-align: center;text-align:right;"
 								>
 									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
+										>3D - Bet (min : {minimal_bet})</span
 									>
 									<input
 										bind:value={bet_2}
@@ -2218,7 +2218,7 @@
 									style="padding-right:10px;vertical-align: center;text-align:right;"
 								>
 									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
+										>2D - Bet (min : {minimal_bet})</span
 									>
 									<input
 										bind:value={bet_3}
@@ -2673,7 +2673,7 @@
 									style="padding-right:10px;vertical-align: center;text-align:right;"
 								>
 									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
+										>4D - Bet (min : {minimal_bet})</span
 									>
 									<input
 										bind:value={bet_1}
@@ -2700,7 +2700,7 @@
 									style="padding-right:10px;vertical-align: center;text-align:right;"
 								>
 									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
+										>3D - Bet (min : {minimal_bet})</span
 									>
 									<input
 										bind:value={bet_2}
@@ -2727,7 +2727,7 @@
 									style="padding-right:10px;vertical-align: center;text-align:right;"
 								>
 									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
+										>2D - Bet (min : {minimal_bet})</span
 									>
 									<input
 										bind:value={bet_3}
