@@ -54,7 +54,7 @@
   let message_err = "";
   let css_err = "display:none;";
   async function initTimezone() {
-    const res = await fetch("https://ipinfo.io/json?token=0d10fdc946df5a");
+    const res = await fetch("https://ipinfo.io/json?token=dbbfb216692964");
     if (!res.ok) {
       const message = `An error has occured: ${res.status}`;
       throw new Error(message);
