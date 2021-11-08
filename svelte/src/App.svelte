@@ -58,13 +58,13 @@
   async function initTimezone() {
     const res = await fetch("https://ipinfo.io/json?token=0d10fdc946df5a");
     if (!res.ok) {
-      const res = await fetch("https://ipinfo.wdlab.fun/json/");
+      const res = await fetch("https://ipapi.co/json");
       if (!res.ok) {
         const message = `An error has occured: ${res.status}`;
         throw new Error(message);
       }
       const json = await res.json();
-      client_ipaddress = json.query;
+      client_ipaddress = json.ip;
       client_timezone = json.timezone;
     } else {
       const json = await res.json();
