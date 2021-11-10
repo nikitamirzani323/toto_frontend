@@ -18,6 +18,7 @@ func Init() *fiber.App {
 		ByteRange: true,
 		Browse:    true,
 	})
+	app.Get("api/healthz", controller.HealthCheck)
 	app.Post("api/init", controller.InitToken)
 	app.Post("api/listpasaran", controller.Listpasaran)
 	app.Post("api/checkpasaran", controller.Checkpasaran)
