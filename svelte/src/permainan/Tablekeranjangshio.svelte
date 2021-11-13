@@ -2,7 +2,7 @@
     import { Button, Icon } from "sveltestrap";
     import { createEventDispatcher } from "svelte";
     import PanelFull from "../components/Panelfull.svelte";
-    import Modal from "../components/Modal.svelte";
+    import Modal from "../components/Modalfull2.svelte";
 
     export let keranjang = [];
     export let client_device = "";
@@ -43,8 +43,7 @@
     header={true}
     footer={true}
     header_style="background:#181717;border-bottom:1px solid #333;border-top: 0 solid #333;"
-    body_style="padding:0px;background:#181717;height:500px;"
->
+    body_style="padding:0px;background:#181717;height:500px;">
     <slot:template slot="header">
         {#if client_device == "WEBSITE"}
             {#if group_btn_beli == true}
@@ -284,22 +283,16 @@
     </slot:template>
 </PanelFull>
 
-<Modal modal_id={"modalInformasi"}>
+<Modal
+    modal_id={"modalInformasi"}
+    modal_footer_flag={false}
+    modal_body_height={"height:500px;"}
+    modal_size={"modal-dialog-centered"}>
     <slot:template slot="header">
-        <div class="float-end">
-            <img
-                style="cursor:pointer;"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                width="25"
-                src="https://i.ibb.co/9yNF25L/outline-close-white-48dp.png"
-                alt=""
-            />
-        </div>
-        <h5 class="modal-title" id="exampleModalLabel">SHIO</h5>
+        <h5 class="modal-title">SHIO</h5>
     </slot:template>
     <slot:template slot="body">
-        <table class="table table-dark">
+        <table class="table table-dark table-sm">
             <tbody>
                 <tr>
                     <td
@@ -345,5 +338,23 @@
                 </tr>
             </tbody>
         </table>
+        <p style="font-size:13px;padding: 5px;color:white;">
+            <b>CARA BERMAIN</b>
+            <br />
+            Menebak SHIO dari posisi 2D, SHIO merupakan 12 lambang kelahiran dalam penanggalan China. Dalam permainan ini, setiap lambang diwakili dengan satu nomor.
+            <br />
+            Struktur ABCD<br /><br />
+
+            Analisis I :<br />
+            Keluar : 4321<br />
+            Permainan ini hanya memperhatikan posisi 2D, berarti yang dipedomanin = 21<br />
+            Hasil = 21-12 = 9 (shio disesuaikan dengan tabel diatas)<br />
+            catatan: nilai yang dikurangi merupakan kelipatan 12.<br /><br />
+
+            Jika dilakukan pembelian dengan 100rb dan menang maka:<br />
+            Menang = 100rb + [Indeks kemenangan untuk SHIO]<br /><br />
+
+            NB: Indeks menang dan diskon dapat dilihat di bagian Peraturan
+        </p>
     </slot:template>
 </Modal>

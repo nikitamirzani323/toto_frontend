@@ -1,8 +1,8 @@
 <script>
-    import { Button, Icon, TabContent, TabPane } from "sveltestrap";
+    import { Button, Icon } from "sveltestrap";
     import { createEventDispatcher } from "svelte";
     import PanelFull from "../components/Panelfull.svelte";
-    import Modal from "../components/Modal.svelte";
+    import Modal from "../components/Modalfull2.svelte";
 
     export let keranjang = [];
     export let client_device = "";
@@ -49,8 +49,7 @@
     header={true}
     footer={true}
     header_style="background:#181717;border-bottom:1px solid #333;border-top: 0 solid #333;"
-    body_style="padding:0px;background:#181717;height:500px;"
->
+    body_style="padding:0px;background:#181717;height:500px;">
     <slot:template slot="header">
         {#if client_device == "WEBSITE"}
             {#if group_btn_beli == true}
@@ -290,22 +289,16 @@
     </slot:template>
 </PanelFull>
 
-<Modal modal_id={"modalInformasi"}>
+<Modal
+    modal_id={"modalInformasi"}
+    modal_footer_flag={false}
+    modal_body_height={"height:500px;"}
+    modal_size={"modal-dialog-centered"}>
     <slot:template slot="header">
-        <div class="float-end">
-            <img
-                style="cursor:pointer;"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                width="25"
-                src="https://i.ibb.co/9yNF25L/outline-close-white-48dp.png"
-                alt=""
-            />
-        </div>
-        <h5 class="modal-title" id="exampleModalLabel">DASAR</h5>
+        <h5 class="modal-title">DASAR</h5>
     </slot:template>
     <slot:template slot="body">
-        <table class="table table-dark">
+        <table class="table table-dark table-sm">
             <tbody>
                 <tr>
                     <td
@@ -360,5 +353,38 @@
                 </tr>
             </tbody>
         </table>
+        <p style="font-size:13px;padding: 5px;color:white;">
+            <b>CARA BERMAIN</b>
+            <br />
+            Menebak ganjil/genap dan besar/kecil dari penjumlah angka-angka 2D
+            <br />
+            Nilai pembelian ditentukan pasaran (kei) pada saat itu.
+            <br />
+            Struktur CD (2 angka terakhir)<br /><br />
+
+            Kecil = angka 0-4<br />
+            Besar = angka 5-9<br />
+            Ganjil = 1,3,5,7,9<br />
+            Genap = 0,2,4,6,8<br /><br />
+
+            Analisis I :<br />
+            Keluar : 1234,<br />
+            3+4 = 7<br />
+            Berarti keluar : Ganjil dan Besar<br /><br />
+
+            Analisis II :<br />
+            Keluar : 5678,<br />
+            7+8 = 15<br />
+            Karena angka 15 lebih besar dari 9, kembali dihitung 1+5=6<br />
+            Berarti keluar : Genap dan Besar<br /><br />
+
+            Analisis III :<br />
+            Keluar : 1204,<br />
+            0+4 = 4<br />
+            Berarti keluar : Genap dan Kecil<br />
+            Misal anda membeli dengan Rp.100rb untuk Genap, menang = 100rb + [indeks menang untuk Dasar]<br /><br />
+
+            NB: Indeks menang dan diskon dapat dilihat di bagian Peraturan
+        </p>
     </slot:template>
 </Modal>

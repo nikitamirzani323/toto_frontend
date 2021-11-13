@@ -570,8 +570,7 @@
     modal_id={"modalhasilkeluaran"}
     modal_footer_flag={false}
     modal_body_height={"height:350px;"}
-    modal_size={"modal-dialog-centered"}
->
+    modal_size={"modal-dialog-centered"}>
     <slot:template slot="header">
         <h5 class="modal-title">RESULT</h5>
     </slot:template>
@@ -581,29 +580,19 @@
                 <tr>
                     <th
                         width="1%"
-                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
-                        >NO</th
-                    >
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;">NO</th>
                     <th
                         width="15%"
-                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
-                        >TANGGAL</th
-                    >
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;">TANGGAL</th>
                     <th
                         width="*"
-                        style="text-align:left;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
-                        >PASARAN</th
-                    >
+                        style="text-align:left;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;">PASARAN</th>
                     <th
                         width="15%"
-                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
-                        >PERIODE</th
-                    >
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;">PERIODE</th>
                     <th
                         width="25%"
-                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;"
-                        >HASIL</th
-                    >
+                        style="text-align:center;vertical-align:top;background:#303030;font-size:{modal_table_fontsize_header};border-bottom:none;">HASIL</th>
                 </tr>
             </thead>
             <tbody>
@@ -611,14 +600,10 @@
                     <tr>
                         <td
                             NOWRAP
-                            style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};"
-                            >{rec.keluaran_no}</td
-                        >
+                            style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_no}</td>
                         <td
                             NOWRAP
-                            style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};"
-                            >{rec.keluaran_date}</td
-                        >
+                            style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_date}</td>
                         <td
                             on:click={() => {
                                 fetch_resultbypasaran(
@@ -627,19 +612,13 @@
                                 );
                             }}
                             NOWRAP
-                            style="text-decoration:underline;cursor:pointer;text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};"
-                            >{rec.keluaran_pasaran}</td
-                        >
+                            style="text-decoration:underline;cursor:pointer;text-align: left;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_pasaran}</td>
                         <td
                             NOWRAP
-                            style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};"
-                            >{rec.keluaran_periode}</td
-                        >
+                            style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};">{rec.keluaran_periode}</td>
                         <td
                             NOWRAP
-                            style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);"
-                            >{rec.keluaran_result}</td
-                        >
+                            style="text-align: center;vertical-align: top;font-size:{modal_table_fontsize_body};color:rgb(255, 204, 0);">{rec.keluaran_result}</td>
                     </tr>
                 {/each}
             </tbody>
