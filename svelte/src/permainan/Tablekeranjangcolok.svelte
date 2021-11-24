@@ -2,7 +2,7 @@
     import { Button, Icon, TabContent, TabPane } from "sveltestrap";
     import { createEventDispatcher } from "svelte";
     import PanelFull from "../components/Panelfull.svelte";
-    import Modal from "../components/Modal.svelte";
+    import Modal from "../components/Modalfull2.svelte";
 
     export let keranjang = [];
     export let client_device = "";
@@ -67,8 +67,7 @@
     header={true}
     footer={true}
     header_style="background:#181717;border-bottom:1px solid #333;border-top: 0 solid #333;"
-    body_style="padding:0px;background:#181717;height:470px;"
->
+    body_style="padding:0px;background:#181717;height:470px;">
     <slot:template slot="header">
         {#if client_device == "WEBSITE"}
             {#if group_btn_beli == true}
@@ -305,19 +304,14 @@
     </slot:template>
 </PanelFull>
 
-<Modal modal_id={"modalInformasi"}>
+
+<Modal
+    modal_id={"modalInformasi"}
+    modal_footer_flag={false}
+    modal_body_height={"height:500px;"}
+    modal_size={"modal-dialog-centered"}>
     <slot:template slot="header">
-        <div class="float-end">
-            <img
-                style="cursor:pointer;"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                width="25"
-                src="https://i.ibb.co/9yNF25L/outline-close-white-48dp.png"
-                alt=""
-            />
-        </div>
-        <h5 class="modal-title" id="exampleModalLabel">COLOK</h5>
+        <h5 class="modal-title">COLOK</h5>
     </slot:template>
     <slot:template slot="body">
         <TabContent style="padding: 0px;margin:0px;">
@@ -325,45 +319,28 @@
                 tabId="informasi_colokbebas"
                 tab="COLOK BEBAS"
                 active
-                style="padding:0px;font-size:12px;color:#8a8a8a;"
-            >
-                <table class="table table-dark">
-                    <thead>
-                        <tr>
-                            <th
-                                style="background:#303030;border:1px solid #282828;border-bottom:none;"
-                                >&nbsp;</th
-                            >
-                            <th
-                                style="background:#303030;border:1px solid #282828;text-align:center;border-bottom:none;"
-                                >COLOK BEBAS</th
-                            >
-                        </tr>
-                    </thead>
+                style="padding:0px;font-size:12px;color:#8a8a8a;">
+                <table class="table table-dark table-sm">
                     <tbody>
                         <tr>
                             <td
                                 style="background:#303030;border:1px solid #282828;font-size:12px;"
-                                >MIN BET</td
-                            >
+                                >MIN BET</td>
                             <td
                                 style="border:1px solid #282828;text-align:right;font-size:12px;color:#ffd292;"
                                 >{new Intl.NumberFormat().format(
                                     min_bet_colokbebas
-                                )}</td
-                            >
+                                )}</td>
                         </tr>
                         <tr>
                             <td
                                 style="background:#303030;border:1px solid #282828;font-size:12px;"
-                                >MAX BET</td
-                            >
+                                >MAX BET</td>
                             <td
                                 style="border:1px solid #282828;text-align:right;font-size:12px;color:#ffd292;"
                                 >{new Intl.NumberFormat().format(
                                     max_bet_colokbebas
-                                )}</td
-                            >
+                                )}</td>
                         </tr>
                         <tr>
                             <td
@@ -387,25 +364,31 @@
                         </tr>
                     </tbody>
                 </table>
+                <p style="padding: 5px;color:white;font-size:13px;">
+                    CARA BERMAIN
+                    <br />
+                    Menebak salah satu angka dari 4D. Posisi angka bisa dimana saja
+                    <br />
+                    Struktur ABCD<br /><br />
+                    
+                    Analisis I :<br />
+                    keluar : 4321<br />
+                    Misalnya pembelian Angka 3 dengan nilai taruhan 100rb.<br />
+                    Berarti menang : 100rb + [Indeks kemenangan untuk colok angka]<br /><br />
+                    
+                    Analisis I:<br />
+                    keluar : 4331<br />
+                    Misalnya pembelian Angka 3 dengan nilai taruhan 100rb.<br />
+                    Berarti menang: 100rb + ([Indeks kemenangan untuk colok Angka] x 2)<br /><br />
+                    
+                    Dan seterusnya untuk setiap kembaran yang berhasil ditebak, otomatis mendapat kelipatan [Indeks kemenangan untuk colok angka]
+                </p>
             </TabPane>
             <TabPane
                 tabId="informasi_colokmacau"
                 tab="COLOK MACAU"
-                style="padding:0px;font-size:12px;color:#8a8a8a;"
-            >
-                <table class="table table-dark">
-                    <thead>
-                        <tr>
-                            <th
-                                style="background:#303030;border:1px solid #282828;border-bottom:none;"
-                                >&nbsp;</th
-                            >
-                            <th
-                                style="background:#303030;border:1px solid #282828;text-align:center;border-bottom:none;"
-                                >COLOK MACAU</th
-                            >
-                        </tr>
-                    </thead>
+                style="padding:0px;font-size:12px;color:#8a8a8a;">
+                <table class="table table-dark table-sm">
                     <tbody>
                         <tr>
                             <td
@@ -473,25 +456,39 @@
                         </tr>
                     </tbody>
                 </table>
+                <p style="padding: 5px;color:white;font-size:13px;">
+                    CARA BERMAIN
+                    <br />
+                    Cara kerja seperti colok angka tapi mesti yang keluar 2 angka dari 4D.
+                    <br />
+                    Struktur ABCD<br /><br />
+                    
+                    Analisis I :<br />
+                    keluar : 4321<br />
+                    Misalnya dibeli 4 dan 2 dengan nilai 100rb.<br />
+                    Berarti menang: 100rb + [Indeks kemenangan untuk Macau, kategori: 2 digit]<br /><br />
+                    
+                    Analisis II :<br />
+                    keluar : 4321<br />
+                    Misalnya dibeli 4 dan 6 dengan nilai 100rb.<br />
+                    Berarti KALAH dan nilai betting tidak dikembalikan)<br /><br />
+                    
+                    Analisis III :<br />
+                    keluar : 4331<br />
+                    Misalnya dibeli 4 dan 3 dengan nilai 100rb.<br />
+                    Berarti menang: 100rb + [Indeks kemenangan untuk Macau, kategori: 3 digit]<br /><br />
+                    
+                    Analisis IV :<br />
+                    keluar : 4334<br />
+                    Misalnya dibeli 4 dan 3 dengan nilai 100rb.<br />
+                    Berarti menang: 100rb + [Indeks kemenangan untuk Macau, kategori: 3 digit]
+                </p>
             </TabPane>
             <TabPane
                 tabId="informasi_coloknaga"
                 tab="COLOK NAGA"
-                style="padding:0px;font-size:12px;color:#8a8a8a;"
-            >
+                style="padding:0px;font-size:12px;color:#8a8a8a;">
                 <table class="table table-dark">
-                    <thead>
-                        <tr>
-                            <th
-                                style="background:#303030;border:1px solid #282828;border-bottom:none;"
-                                >&nbsp;</th
-                            >
-                            <th
-                                style="background:#303030;border:1px solid #282828;text-align:center;border-bottom:none;"
-                                >COLOK NAGA</th
-                            >
-                        </tr>
-                    </thead>
                     <tbody>
                         <tr>
                             <td
@@ -549,25 +546,41 @@
                         </tr>
                     </tbody>
                 </table>
+                <p style="padding: 5px;color:white;font-size:13px;">
+                    CARA BERMAIN
+                    <br />
+                    Cara kerja seperti colok angka tapi mesti yang keluar 3 angka dari 4D.
+                    <br />
+                    Struktur ABCD<br /><br />
+                    
+                    Analisis I :<br />
+                    keluar : 4321<br />
+                    Misalnya dibeli 4,2 dan 3 dengan nilai 100rb.<br />
+                    Berarti menang: karena keluar 3 digit,angka 4,2 dan 3.<br />
+                    100rb + [Indeks kemenangan untuk colok naga , kategori: 3 digit]<br /><br />
+                    
+                    Analisis II :<br />
+                    keluar : 4321<br />
+                    Misalnya dibeli 4,2 dan 6 dengan nilai 100rb.<br />
+                    karena keluar hanya 2 digit angka 4 dan 2, dan angka 6 tidak muncul berarti kalah<br /><br />
+                    
+                    Analisis III :<br />
+                    keluar : 4331<br />
+                    Misalnya dibeli 4,3 dan 3 dengan nilai 100rb.<br />
+                    Berarti menang: karena keluar 3 digit,angka 4,3 dan 3.<br />
+                    100rb + [Indeks kemenangan untuk colok naga , kategori: 3 digit]<br /><br />
+                    
+                    Analisis IV :<br />
+                    keluar : 4334<br />
+                    Misalnya dibeli 4,3 dan 3 dengan nilai 100rb.<br />
+                    Berarti menang: 100rb + [Indeks kemenangan untuk colok naga, kategori: 4 digit]
+                </p>
             </TabPane>
             <TabPane
                 tabId="informasi_colokjitu"
                 tab="COLOK JITU"
-                style="padding:0px;font-size:12px;color:#8a8a8a;"
-            >
+                style="padding:0px;font-size:12px;color:#8a8a8a;">
                 <table class="table table-dark">
-                    <thead>
-                        <tr>
-                            <th
-                                style="background:#303030;border:1px solid #282828;border-bottom:none;"
-                                >&nbsp;</th
-                            >
-                            <th
-                                style="background:#303030;border:1px solid #282828;text-align:center;border-bottom:none;"
-                                >COLOK JITU</th
-                            >
-                        </tr>
-                    </thead>
                     <tbody>
                         <tr>
                             <td
@@ -645,6 +658,28 @@
                         </tr>
                     </tbody>
                 </table>
+                <p style="padding: 5px;color:white;font-size:13px;">
+                    CARA BERMAIN
+                    <br />
+                    Menebak satu angka pada posisi tertentu dari 4D.
+                    <br />
+                    Struktur ABCD<br /><br />
+                    
+                    Analisis I :<br />
+                    keluar : 4321<br />
+                    Misalnya dibeli 4 pada posisi AS dengan nilai 100rb.<br />
+                    Berarti menang: 100rb + [Indeks kemenangan untuk colok jitu]<br /><br />
+                    
+                    Analisis II :<br />
+                    keluar : 4331<br />
+                    Misalnya dibeli 3 pada posisi KOP dengan nilai 100rb.<br />
+                    Berarti menang: 100rb + [Indeks kemenangan untuk colok jitu]. Hasilnya sama dengan analisis I karena hanya memperhatikan posisi yang dipasang.<br /><br />
+                    
+                    Analisis III :<br />
+                    keluar : 4331<br />
+                    Misalnya dibeli 4 pada posisi EKOR dengan nilai 100rb.<br />
+                    Berarti kalah. Biarpun nilai 4 keluar pada posisi AS tapi tidak akan mepengaruhi pemilihan di pososi EKOR
+                </p>
             </TabPane>
         </TabContent>
     </slot:template>

@@ -2,7 +2,7 @@
     import { Button, Icon, TabContent, TabPane } from "sveltestrap";
     import { createEventDispatcher } from "svelte";
     import PanelFull from "../components/Panelfull.svelte";
-    import Modal from "../components/Modal.svelte";
+    import Modal from "../components/Modalfull2.svelte";
 
     export let keranjang = [];
     export let client_device = "";
@@ -121,8 +121,7 @@
     header={true}
     footer={true}
     header_style="background:#181717;border-bottom:1px solid #333;border-top: 0 solid #333;"
-    body_style="padding:0px;background:#181717;height:470px;"
->
+    body_style="padding:0px;background:#181717;height:470px;">
     <slot:template slot="header">
         {#if client_device == "WEBSITE"}
             {#if group_btn_beli == true}
@@ -386,19 +385,13 @@
     </slot:template>
 </PanelFull>
 
-<Modal modal_id={"modalInformasi"}>
+<Modal
+    modal_id={"modalInformasi"}
+    modal_footer_flag={false}
+    modal_body_height={"height:500px;"}
+    modal_size={"modal-dialog-centered"}>
     <slot:template slot="header">
-        <div class="float-end">
-            <img
-                style="cursor:pointer;"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                width="25"
-                src="https://i.ibb.co/9yNF25L/outline-close-white-48dp.png"
-                alt=""
-            />
-        </div>
-        <h5 class="modal-title" id="exampleModalLabel">50-50</h5>
+        <h5 class="modal-title">50-50</h5>
     </slot:template>
     <slot:template slot="body">
         <TabContent style="padding: 0px;margin:0px;">
@@ -406,21 +399,8 @@
                 tabId="informasi_5050umum"
                 tab="UMUM"
                 active
-                style="padding:0px;font-size:12px;color:#8a8a8a;"
-            >
-                <table class="table table-dark">
-                    <thead>
-                        <tr>
-                            <th
-                                style="background:#303030;border:1px solid #282828;border-bottom:none;"
-                                >&nbsp;</th
-                            >
-                            <th
-                                style="background:#303030;border:1px solid #282828;text-align:center;border-bottom:none;"
-                                >50 - 50 UMUM</th
-                            >
-                        </tr>
-                    </thead>
+                style="padding:0px;font-size:12px;color:#8a8a8a;">
+                <table class="table table-dark table-sm">
                     <tbody>
                         <tr>
                             <td
@@ -482,25 +462,33 @@
                         </tr>
                     </tbody>
                 </table>
+                <p style="padding: 5px;color:white;font-size:13px;">
+                    CARA BERMAIN
+                    <br />
+                    Permainan ganjil/genap, besar/kecil, dan tengah/ tepi UMUM
+                    <br />
+                    Struktur: CD ( hanya dua angka belakang yang dihitung)<br /><br />
+                    
+                    Menebak ganjil/genap dan besar/kecil dari posisi:<br />
+                    C=KEPALA<br />
+                    D=EKOR<br />
+                    Besar/Kecil: 0-4=kecil, 5-9=besar<br />
+                    Ganjil/Genap : 1=ganjil, 2=genap dan seterusnya<br /><br />
+                    Tengah/Tepi : Tengah: angka 25 s/d 74. TEPI : angka 75 s/d 99, dan 00s/d 24<br /><br />
+                    
+                    Analisis I :<br />
+                    Keluar : 6789, Berarti hasil 89<br />
+                    Berarti pemenang adalah yang memilih :<br />
+                    BESAR<br />
+                    GANJIL<br />
+                    TEPI
+                </p>
             </TabPane>
             <TabPane
                 tabId="informasi_5050special"
                 tab="SPECIAL"
-                style="padding:0px;font-size:12px;color:#8a8a8a;"
-            >
-                <table class="table table-dark">
-                    <thead>
-                        <tr>
-                            <th
-                                style="background:#303030;border:1px solid #282828;border-bottom:none;"
-                                >&nbsp;</th
-                            >
-                            <th
-                                style="background:#303030;border:1px solid #282828;text-align:center;border-bottom:none;"
-                                >50 - 50 SPECIAL</th
-                            >
-                        </tr>
-                    </thead>
+                style="padding:0px;font-size:12px;color:#8a8a8a;">
+                <table class="table table-dark table-sm">
                     <tbody>
                         <tr>
                             <td
@@ -617,25 +605,42 @@
                         </tr>
                     </tbody>
                 </table>
+                <p style="padding: 5px;color:white;font-size:13px;">
+                    CARA BERMAIN
+                    <br />
+                    Menebak ganjil/genap, besar/kecil <br>
+                    Permainan ini sangat menarik karena pasarannya naik turun sesuai keinginan market pada waktu tersebut. Dengan demikian, nilai pembelian dipengaruhi kei (pasaran)
+                    <br />
+                    Struktur: ABCD<br /><br />
+                    
+                    Menebak ganjil/genap dan besar/kecil dari posisi:<br />
+                    A=AS<br />
+                    B=KOP<br />
+                    C=KEPALA<br />
+                    D=EKOR<br />
+                    
+                    Besar/Kecil : 0-4=kecil, 5-9=besar<br />
+                    Ganjil/Genap : 1=ganjil, 2=genap dan seterusnya<br /><br />
+                    
+                    Analisis I :<br />
+                    Keluar : 4327<br />
+                    Berarti pemenang adalah yang memilih :<br />
+                    AS GENAP/KECIL<br />
+                    KOP GANJIL/KECIL<br />
+                    KEPALA GENAP/KECIL<br />
+                    EKOR GANJIL/BESAR<br />
+                    Misal anda membeli dengan dana Rp.100rb untuk AS Genap, menang = 100rb + [indeks pasaran AS Genap 50-50]<br />
+                    Atau :<br />
+                    Jika membeli dengan dana Rp.100rb untuk Ekor Ganjil, menang = 100rb + [indeks pasaran Ekor Ganjil 50-50]<br />
+                    Atau :<br />
+                    Jika membeli dengan dana Rp.100rb untuk AS Ganjil, kalah = 100rb + [indeks pasaran AS Ganjil 50-50]
+                </p>
             </TabPane>
             <TabPane
                 tabId="informasi_5050kombinasi"
                 tab="KOMBINASI"
-                style="padding:0px;font-size:12px;color:#8a8a8a;"
-            >
-                <table class="table table-dark">
-                    <thead>
-                        <tr>
-                            <th
-                                style="background:#303030;border:1px solid #282828;border-bottom:none;"
-                                >&nbsp;</th
-                            >
-                            <th
-                                style="background:#303030;border:1px solid #282828;text-align:center;border-bottom:none;"
-                                >50 - 50 KOMBINASI</th
-                            >
-                        </tr>
-                    </thead>
+                style="padding:0px;font-size:12px;color:#8a8a8a;">
+                <table class="table table-dark table-sm">
                     <tbody>
                         <tr>
                             <td
@@ -749,6 +754,62 @@
                         </tr>
                     </tbody>
                 </table>
+                <p style="padding: 5px;color:white;font-size:13px;">
+                    CARA BERMAIN
+                    <br />
+                    MONO STEREO <br>
+                    Menebak dari posisi Depan,Tengah,Belakang.
+                    <br />
+                    Contoh no 1234<br />
+                    Yang dimaksud dengan Posisi Depan adalah 2 no terdepan yaitu 12<br />
+                    Yang dimaksud dengan Posisi Tengah adalah 2 no ditengah yaitu 23<br />
+                    Yang dimaksud dengan Posisi Belakang adalah 2 no terbelakang yaitu 34<br />
+                    STEREO = Terdapat Ganjil dan Genap<br />
+                    MONO = Terdapat 1 pasang Ganjil atau 1 pasang Genap<br /><br />
+                    
+                    Analisis I : Beli Posisi Depan<br />
+                    Keluar : 1234<br />
+                    Yang menjadi pedoman adalah posisi Depan, berarti 12<br />
+                    12 => 1=ganjil dan 2=genap , berarti hasil = STEREO<br /><br />
+                    
+                    Analisis II : Beli Posisi Tengah<br />
+                    Keluar : 4326<br />
+                    Yang menjadi pedoman adalah posisi Tengah, berarti 32<br />
+                    32 => 3=ganjil dan 2=genap , berarti hasil = STEREO<br /><br />
+                    
+                    Analisis III : Beli Posisi Belakang<br />
+                    Keluar : 4533<br />
+                    Yang menjadi pedoman adalah posisi Belakang, berarti 33<br />
+                    33 => 3=ganjil dan 3=ganjil , berarti hasil = MONO<br />
+                    Jika dilakukan pembelian dengan 100rb dan menang maka: Menang = 100rb + [Indeks kemenangan untuk MONO STEREO]<br /><br />
+                    
+                    KEMBANG KEMPIS KEMBAR<br />
+                    Struktur=ABCD<br />
+                    Jika Menebang posisi Depan maka yang menjadi fokus adalah AB<br />
+                    Jika Menebang posisi Tengah maka yang menjadi fokus adalah BC<br />
+                    Jika Menebang posisi Belakang maka yang menjadi fokus adalah CD<br />
+                    KEMBANG jika A &#8249; B ataupun B &#8249; C ataupun C &#8249; D<br />
+                    KEMPIS jika A <span style='font-size:12px;'>&#8250</span> B ataupun B <span style='font-size:12px;'>&#8250</span> C ataupun C <span style='font-size:12px;'>&#8250</span> D<br />
+                    KEMBAR jika A = B ataupun B = C ataupun C = D<br /><br />
+                    
+                    Analisis I : Beli Posisi Depan<br />
+                    Keluar : 4321<br />
+                    Yang menjadi pedoman adalah posisi Depan, berarti 43<br />
+                    43 => 4 <span style='font-size:12px;'>&#8250</span>; 3, hasil = KEMPIS<br /><br />
+
+                    Analisis II : Beli Posisi Tengah<br />
+                    Keluar : 4236<br />
+                    Yang menjadi pedoman adalah posisi Tengah, berarti 23<br />
+                    23 => 2 &#8249; 3, hasil = KEMBANG<br /><br />
+
+                    Analisis III : Beli Posisi Belakang:<br />
+                    Keluar : 4099<br />
+                    Yang menjadi pedoman adalah posisi Belakang, berarti 99<br />
+                    99 => Hasil = KEMBAR<br /><br />
+
+                    Jika dilakukan pembelian dengan 100rb dan menang maka:<br />
+                    Menang = 100rb + [Indeks kemenangan untuk KEMBANG/KEMPIS/KEMBAR]
+                </p>
             </TabPane>
         </TabContent>
     </slot:template>

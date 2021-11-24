@@ -1,8 +1,8 @@
 <script>
-    import { Button, Icon, TabContent, TabPane } from "sveltestrap";
+    import { Button, Icon } from "sveltestrap";
     import { createEventDispatcher } from "svelte";
     import PanelFull from "../components/Panelfull.svelte";
-    import Modal from "../components/Modal.svelte";
+    import Modal from "../components/Modalfull2.svelte";
 
     export let keranjang = [];
     export let client_device = "";
@@ -43,8 +43,7 @@
     header={true}
     footer={true}
     header_style="background:#181717;border-bottom:1px solid #333;border-top: 0 solid #333;"
-    body_style="padding:0px;background:#181717;height:500px;"
->
+    body_style="padding:0px;background:#181717;height:500px;">
     <slot:template slot="header">
         {#if client_device == "WEBSITE"}
             {#if group_btn_beli == true}
@@ -282,22 +281,16 @@
     </slot:template>
 </PanelFull>
 
-<Modal modal_id={"modalInformasi"}>
+<Modal
+    modal_id={"modalInformasi"}
+    modal_footer_flag={false}
+    modal_body_height={"height:500px;"}
+    modal_size={"modal-dialog-centered"}>
     <slot:template slot="header">
-        <div class="float-end">
-            <img
-                style="cursor:pointer;"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                width="25"
-                src="https://i.ibb.co/9yNF25L/outline-close-white-48dp.png"
-                alt=""
-            />
-        </div>
-        <h5 class="modal-title" id="exampleModalLabel">MACAU/KOMBINASI</h5>
+        <h5 class="modal-title">MACAU/KOMBINASI</h5>
     </slot:template>
     <slot:template slot="body">
-        <table class="table table-dark">
+        <table class="table table-dark table-sm">
             <tbody>
                 <tr>
                     <td
@@ -341,5 +334,33 @@
                 </tr>
             </tbody>
         </table>
+        <p style="font-size:13px;padding: 5px;color:white;">
+            <b>CARA BERMAIN</b>
+            <br />
+            Struktur ABCD<br /><br />
+
+            AB = DEPAN, BC = TENGAH, CD = BELAKANG<br />
+            Besar/Kecil: 0-4=kecil, 5-9=besar<br />
+            Ganjil/Genap : 1=ganjil, 2=genap dan seterusnya<br /><br />
+
+            Anda dapat menebak Genap/Ganjil, Besar/Kecil<br />
+            dari 2 kombinasi antara DEPAN, TENGAH, BELAKANG<br /><br />
+
+            Analisis : keluar nomor 1845<br /><br />
+
+            berarti pemenang untuk :<br />
+            DEPAN Kecil/Genap<br />
+            TENGAH Besar/Genap<br />
+            BELAKANG Kecil/Ganjil<br /><br />
+
+            Misalnya anda membeli BELAKANG KECIl dan GANJIL seharga 100rb,<br />
+            maka menang = 100rb + [indeks kemenangan untuk kombinasi 2]<br />
+            atau :<br />
+            jika membeli DEPAN KECIL dan GENAP seharga 100rb,<br />
+            maka menang = 100rb + [indeks kemenangan untuk kombinasi 2]<br />
+            atau :<br />
+            jika membeli TENGAH KECIL dan GENAP seharga 100rb, berarti KALAH<br />
+            ( Anda harus menebak keduanya dengan Benar diantara DEPAN,TENGAH,BELAKANG agar Menang )<br />
+        </p>
     </slot:template>
 </Modal>
