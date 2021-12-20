@@ -166,9 +166,8 @@
   <title>SDSB4D</title>
 </svelte:head>
 <Notification duration="3000" />
-
 {#if client_device == "WEBSITE"}
-  <div class="content" style="margin-top:20px;margin-bottom:50px;">
+  <div class="content">
     <Container>
       {#if token_browser != ""}
         <Row align-items-start>
@@ -255,3 +254,18 @@
     {/if}
   </Container>
 {/if}
+
+<style>
+  .content {
+    margin-top: 20px;
+    margin-bottom: 50px;
+    background-image: linear-gradient(
+        180deg,
+        rgba(51, 0, 5, 0) 17.78%,
+        #330500 52.74%
+      ),
+      url("/bg-cover.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+</style>
