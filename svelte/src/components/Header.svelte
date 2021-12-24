@@ -97,8 +97,8 @@
                     listBukumimpi = [
                         ...listBukumimpi,
                         {
-                            bukumimpi_tipe: record[i]["bukumimpi_tipe"],
-                            bukumimpi_nama: record[i]["bukumimpi_nama"],
+                            bukumimpi_tipe: record[i]["bukumimpi_type"],
+                            bukumimpi_nama: record[i]["bukumimpi_name"],
                             bukumimpi_nomor: record[i]["bukumimpi_nomor"],
                         },
                     ];

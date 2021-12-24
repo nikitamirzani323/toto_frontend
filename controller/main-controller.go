@@ -14,6 +14,7 @@ import (
 )
 
 var PATH string = config.GetApiPath()
+var PATH_PANEL string = config.GetDreamApiPath()
 
 type clientInit struct {
 	Token      string `json:"token"`
@@ -736,7 +737,7 @@ func Listbukumimpi(c *fiber.Ctx) error {
 			"tipe": client.Tipe,
 			"nama": client.Nama,
 		}).
-		Post(PATH + "api/bukumimpi")
+		Post(PATH_PANEL + "api/bukumimpi")
 	if err != nil {
 		log.Println(err.Error())
 	}
