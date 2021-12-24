@@ -13,8 +13,7 @@ import (
 var PATH_API string = "http://34.126.177.103/"
 
 func GetApiPath() string {
-	var err error
-	err = godotenv.Load()
+	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Error getting env, not comming through %v", err)
 	} else {
@@ -27,4 +26,20 @@ func GetApiPath() string {
 	}
 
 	return appsApi
+}
+
+func GetDreamApiPath() string {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error getting env, not comming through %v", err)
+	} else {
+		fmt.Println("We are getting the env values")
+	}
+
+	deramApi := os.Getenv("PATH_PANEL_API")
+	if deramApi == "" {
+		deramApi = "http://34.126.177.103/"
+	}
+
+	return deramApi
 }
