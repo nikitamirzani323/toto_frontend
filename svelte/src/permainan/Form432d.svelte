@@ -165,16 +165,20 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        pasaran_idtransaction: idtrxkeluaran,
-        pasaran_idcomp: idcomppasaran,
-        token: client_token,
-        company: client_company,
-        username: client_username,
-        ipaddress: client_ipaddress,
-        devicemember: client_device,
-        timezone: client_timezone,
-        total: totalkeranjang,
-        data: keranjang,
+        transaction: btoa(
+          JSON.stringify({
+            pasaran_idtransaction: idtrxkeluaran,
+            pasaran_idcomp: idcomppasaran,
+            token: client_token,
+            company: client_company,
+            username: client_username,
+            ipaddress: client_ipaddress,
+            devicemember: client_device,
+            timezone: client_timezone,
+            total: totalkeranjang,
+            data: keranjang,
+          })
+        ),
       }),
     });
     const json = await res.json();
@@ -182,7 +186,9 @@
       css_loader = "display:none;";
       notifications.push(
         "Data telah berhasil disimpan, Total belanja : " +
-          new Intl.NumberFormat().format(totalkeranjang), "warning", "middle"
+          new Intl.NumberFormat().format(totalkeranjang),
+        "warning",
+        "middle"
       );
       dispatch("handleInvoice", "call");
       reset();
@@ -366,14 +372,14 @@
       reset();
       count_keranjang();
     } else {
-      notifications.push("Tidak ada list transaksi","","middle");
+      notifications.push("Tidak ada list transaksi", "", "middle");
     }
   };
   const handleSave = (e) => {
     if (keranjang.length > 0) {
       savetransaksi();
     } else {
-      notifications.push("Tidak ada list transaksi","","middle");
+      notifications.push("Tidak ada list transaksi", "", "middle");
     }
   };
   function count_keranjang() {
@@ -408,124 +414,124 @@
     count_line_2dt = count_2dt + db_form4d_2dt_count_temp;
   }
 
-	//432 - INIT FORM
-	let nomor = "";
-	let nomor_input;
-	let bet_432 = "";
-	//BBFS - INIT FORM
-	let nomorbbfs = "";
-	let nomorbbfs_input;
-	let bet_1 = "";
-	let bet_2 = "";
-	let bet_3 = "";
-	let bet_4 = "";
-	let bet_5 = "";
-	//WAP
-	let nomorwap = "";
-	let nomorwap_input;
-	//2DD - INIT FORM
-	let nomor2dd = "";
-	let nomor2dd_input;
-	let bet_2dd = "";
-	//2DT - INIT FORM
-	let nomor2dt = "";
-	let nomor2dt_input;
-	let bet_2dt = "";
-	//QUICK 2D
-	let quick_pilihan1;
-	let quick_pilihan2;
-	let quick_bet = "";
-	let quick_pilihan1_input;
-	let quick_pilihan2_input;
-	let quick_bet_input;
+  //432 - INIT FORM
+  let nomor = "";
+  let nomor_input;
+  let bet_432 = "";
+  //BBFS - INIT FORM
+  let nomorbbfs = "";
+  let nomorbbfs_input;
+  let bet_1 = "";
+  let bet_2 = "";
+  let bet_3 = "";
+  let bet_4 = "";
+  let bet_5 = "";
+  //WAP
+  let nomorwap = "";
+  let nomorwap_input;
+  //2DD - INIT FORM
+  let nomor2dd = "";
+  let nomor2dd_input;
+  let bet_2dd = "";
+  //2DT - INIT FORM
+  let nomor2dt = "";
+  let nomor2dt_input;
+  let bet_2dt = "";
+  //QUICK 2D
+  let quick_pilihan1;
+  let quick_pilihan2;
+  let quick_bet = "";
+  let quick_pilihan1_input;
+  let quick_pilihan2_input;
+  let quick_bet_input;
 
-	let generate2D = [];
-	let generate2DD = [];
-	let generate2DT = [];
-	let generate3D = [];
-	let generate4D = [];
-	let data_bbfs = [];
-	let nol = 0;
-	let satu = 0;
-	let dua = 0;
-	let tiga = 0;
-	let empat = 0;
-	let lima = 0;
-	let enam = 0;
-	let tujuh = 0;
-	let delapan = 0;
-	let sembilan = 0;
-	let temp_bulk_error = "";
-	function form_clear(e) {
-		switch (e) {
-			case "4-3-2":
-				nomor = "";
-				nomor_input.focus();
-				bet_432 = "";
-				break;
-			case "bbfs":
-				nomorbbfs = "";
-				nomorbbfs_input.focus();
-				bet_432 = "";
-				bet_1 = "";
-				bet_2 = "";
-				bet_3 = "";
-				bet_4 = "";
-				bet_5 = "";
-				break;
-			case "wap":
-				nomorwap = "";
-				nomorwap_input.focus();
-				break;
-			case "2DD":
-				nomor2dd = "";
-				nomor2dd_input.focus();
-				bet_2dd = "";
-				break;
-			case "2DT":
-				nomor2dt = "";
-				nomor2dt_input.focus();
-				bet_2dt = "";
-				break;
-			case "quick2D":
-				quick_pilihan1;
-				quick_pilihan2;
-				quick_bet = "";
-				quick_pilihan1_input;
-				quick_pilihan2_input;
-				quick_bet_input.focus();
-				break;
-		}
-	}
-	function form4d_add() {
-		let flag = true;
-		let game = nomor.length;
-		let diskon = 0;
-		let diskonpercen = 0;
-		let win = 0;
-		let kei = 0;
-		let kei_percen = 0;
-		let bayar = 0;
-		let nmgame = "";
-		let msg = "";
-		if (nomor == "") {
-			nomor_input.focus();
-			flag = false;
-		}
-		let tempbintang = 0;
-		for (let i = 0; i <= 3; i++) {
-			if (nomor[i] == "*") {
-				tempbintang = tempbintang + 1;
-			}
-		}
-		if (tempbintang > 2) {
-			flag = false;
-			form_clear("4-3-2");
-			nomor_input.focus();
-			alert(
-				"Format Salah\nContoh:\n4D: 1234\n3D: 123\n2D: 12 atau **10\n2DD: 10**\n2DT: *10*\n"
-			);
-		}
+  let generate2D = [];
+  let generate2DD = [];
+  let generate2DT = [];
+  let generate3D = [];
+  let generate4D = [];
+  let data_bbfs = [];
+  let nol = 0;
+  let satu = 0;
+  let dua = 0;
+  let tiga = 0;
+  let empat = 0;
+  let lima = 0;
+  let enam = 0;
+  let tujuh = 0;
+  let delapan = 0;
+  let sembilan = 0;
+  let temp_bulk_error = "";
+  function form_clear(e) {
+    switch (e) {
+      case "4-3-2":
+        nomor = "";
+        nomor_input.focus();
+        bet_432 = "";
+        break;
+      case "bbfs":
+        nomorbbfs = "";
+        nomorbbfs_input.focus();
+        bet_432 = "";
+        bet_1 = "";
+        bet_2 = "";
+        bet_3 = "";
+        bet_4 = "";
+        bet_5 = "";
+        break;
+      case "wap":
+        nomorwap = "";
+        nomorwap_input.focus();
+        break;
+      case "2DD":
+        nomor2dd = "";
+        nomor2dd_input.focus();
+        bet_2dd = "";
+        break;
+      case "2DT":
+        nomor2dt = "";
+        nomor2dt_input.focus();
+        bet_2dt = "";
+        break;
+      case "quick2D":
+        quick_pilihan1;
+        quick_pilihan2;
+        quick_bet = "";
+        quick_pilihan1_input;
+        quick_pilihan2_input;
+        quick_bet_input.focus();
+        break;
+    }
+  }
+  function form4d_add() {
+    let flag = true;
+    let game = nomor.length;
+    let diskon = 0;
+    let diskonpercen = 0;
+    let win = 0;
+    let kei = 0;
+    let kei_percen = 0;
+    let bayar = 0;
+    let nmgame = "";
+    let msg = "";
+    if (nomor == "") {
+      nomor_input.focus();
+      flag = false;
+    }
+    let tempbintang = 0;
+    for (let i = 0; i <= 3; i++) {
+      if (nomor[i] == "*") {
+        tempbintang = tempbintang + 1;
+      }
+    }
+    if (tempbintang > 2) {
+      flag = false;
+      form_clear("4-3-2");
+      nomor_input.focus();
+      alert(
+        "Format Salah\nContoh:\n4D: 1234\n3D: 123\n2D: 12 atau **10\n2DD: 10**\n2DT: *10*\n"
+      );
+    }
 
     if (nomor[0] == "*" && nomor[1] == "*") {
       nomor = String(nomor[2]) + String(nomor[3]);
@@ -552,13 +558,17 @@
     if (parseInt(bet_432) < parseInt(minimal_bet)) {
       bet_432 = minimal_bet;
       flag = false;
-      notifications.push("Minimal Bet : " + new Intl.NumberFormat().format(minimal_bet));
+      notifications.push(
+        "Minimal Bet : " + new Intl.NumberFormat().format(minimal_bet)
+      );
     }
     if (game.toString() == "4") {
       if (parseInt(bet_432) > parseInt(max4d_bet)) {
         bet_432 = minimal_bet;
         flag = false;
-        notifications.push("Maximal Bet 4D : " + new Intl.NumberFormat().format(max4d_bet));
+        notifications.push(
+          "Maximal Bet 4D : " + new Intl.NumberFormat().format(max4d_bet)
+        );
       }
       if (checkLimitLine("4D") == false) {
         flag = false;
@@ -570,7 +580,9 @@
       if (parseInt(bet_432) > parseInt(max3d_bet)) {
         bet_432 = minimal_bet;
         flag = false;
-        notifications.push("Maximal Bet 3D : " + new Intl.NumberFormat().format(max3d_bet));
+        notifications.push(
+          "Maximal Bet 3D : " + new Intl.NumberFormat().format(max3d_bet)
+        );
       }
       if (checkLimitLine("3D") == false) {
         flag = false;
@@ -582,7 +594,9 @@
       if (parseInt(bet_432) > parseInt(max2d_bet)) {
         bet_432 = minimal_bet;
         flag = false;
-        notifications.push("Maximal Bet 2D : " + new Intl.NumberFormat().format(max2d_bet));
+        notifications.push(
+          "Maximal Bet 2D : " + new Intl.NumberFormat().format(max2d_bet)
+        );
       }
       if (checkLimitLine("2D") == false) {
         flag = false;
@@ -594,7 +608,9 @@
       if (parseInt(bet_432) > parseInt(max2dd_bet)) {
         bet_432 = minimal_bet;
         flag = false;
-        notifications.push("Maximal Bet 2D : " + new Intl.NumberFormat().format(max2dd_bet));
+        notifications.push(
+          "Maximal Bet 2D : " + new Intl.NumberFormat().format(max2dd_bet)
+        );
       }
       if (checkLimitLine("2DD") == false) {
         flag = false;
@@ -652,32 +668,32 @@
       bayar = parseInt(bet_432) - parseInt(Math.ceil(diskon));
       totalkeranjang = bayar + totalkeranjang;
 
-			addKeranjang(
-				nomor,
-				nmgame,
-				bet_432,
-				diskonpercen,
-				diskon,
-				bayar,
-				win,
-				0,
-				0
-			);
-			form_clear("4-3-2");
-			if (temp_bulk_error != "") {
-				let myModal = new bootstrap.Modal(
-					document.getElementById("modalError")
-				);
-				myModal.show();
-			}
-		}
-	}
-	function formbbfs_add() {
-		generate4D = [];
-		generate3D = [];
-		generate2D = [];
-		generate2DD = [];
-		generate2DT = [];
+      addKeranjang(
+        nomor,
+        nmgame,
+        bet_432,
+        diskonpercen,
+        diskon,
+        bayar,
+        win,
+        0,
+        0
+      );
+      form_clear("4-3-2");
+      if (temp_bulk_error != "") {
+        let myModal = new bootstrap.Modal(
+          document.getElementById("modalError")
+        );
+        myModal.show();
+      }
+    }
+  }
+  function formbbfs_add() {
+    generate4D = [];
+    generate3D = [];
+    generate2D = [];
+    generate2DD = [];
+    generate2DT = [];
 
     data_bbfs = [];
     nol = 0;
@@ -726,7 +742,9 @@
       if (parseInt(bet_1) > parseInt(max4d_bet)) {
         bet_1 = max4d_bet;
         flag = false;
-        notifications.push("Maximal Bet 4D : " + new Intl.NumberFormat().format(max4d_bet));
+        notifications.push(
+          "Maximal Bet 4D : " + new Intl.NumberFormat().format(max4d_bet)
+        );
       }
       if (flag == true) {
         diskon = Math.ceil(bet_1 * disc4d_bet);
@@ -797,7 +815,9 @@
       if (parseInt(bet_2) > parseInt(max3d_bet)) {
         bet_2 = max3d_bet;
         flag = false;
-        notifications.push("Maximal Bet 3D : " + new Intl.NumberFormat().format(max3d_bet));
+        notifications.push(
+          "Maximal Bet 3D : " + new Intl.NumberFormat().format(max3d_bet)
+        );
       }
       if (flag == true) {
         diskon = Math.ceil(bet_2 * disc3d_bet);
@@ -850,251 +870,246 @@
           }
         }
 
-				if (code_alert == 1) {
-					alert(note_alert);
-					code_alert = 0;
-				}
-			}
-		}
-		if (parseInt(bet_3) > 0) {
-			if (parseInt(bet_3) < parseInt(minimal_bet)) {
-				bet_3 = minimal_bet;
-				flag = false;
-				alert("Minimal Bet 2D : " + minimal_bet);
-			}
-			if (parseInt(bet_3) > parseInt(max2d_bet)) {
-				bet_3 = max2d_bet;
-				flag = false;
-				alert(
-					"Maximal Bet 2D : " +
-						new Intl.NumberFormat().format(max2d_bet)
-				);
-			}
-			if (flag == true) {
-				diskon = Math.ceil(bet_3 * disc2d_bet);
-				diskonpercen = disc2d_bet;
-				win = win2d_bet;
-				bayar = parseInt(bet_3) - parseInt(Math.ceil(diskon));
-				for (let a = 0; a < data_bbfs.length; a++) {
-					for (let b = 0; b < data_bbfs.length; b++) {
-						let dat = data_bbfs[a] + data_bbfs[b];
-						if (generate2D.length > 0) {
-							for (let x = 0; x < generate2D.length; x++) {
-								if (dat == generate2D[x]) {
-									found = true;
-								}
-							}
-							if (found == false) {
-								generate2D.push(dat);
-							}
-						} else {
-							generate2D.push(dat);
-						}
-						found = false;
-						dat = "";
-					}
-				}
-				for (let x = 0; x < generate2D.length; x++) {
-					if (checkcountangka(generate2D[x]) == true) {
-						if (checkLimitLine("2D") == true) {
-							nomor = generate2D[x];
-							totalkeranjang = bayar + totalkeranjang;
-							bet = bet_3;
-							addKeranjang(
-								nomor,
-								"2D",
-								bet,
-								diskonpercen,
-								diskon,
-								bayar,
-								win,
-								0,
-								0
-							);
-						} else {
-							code_alert = 1;
-							note_alert = "Line 2D sudah melebihi limit";
-							break;
-						}
-					}
-				}
-				if (temp_bulk_error != "") {
-					let myModal = new bootstrap.Modal(
-						document.getElementById("modalError")
-					);
-					myModal.show();
-				}
-				if (code_alert == 1) {
-					alert(note_alert);
-					code_alert = 0;
-				}
-			}
-		}
-		if (parseInt(bet_4) > 0) {
-			if (parseInt(bet_4) < parseInt(minimal_bet)) {
-				bet_4 = minimal_bet;
-				flag = false;
-				alert("Minimal Bet 2DD : " + minimal_bet);
-			}
-			if (parseInt(bet_4) > parseInt(max2dd_bet)) {
-				bet_4 = max2dd_bet;
-				flag = false;
-				alert(
-					"Maximal Bet 2DD : " +
-						new Intl.NumberFormat().format(max2dd_bet)
-				);
-			}
-			if (flag == true) {
-				diskon = Math.ceil(bet_4 * disc2dd_bet);
-				diskonpercen = disc2dd_bet;
-				win = win2dd_bet;
-				bayar = parseInt(bet_4) - parseInt(Math.ceil(diskon));
-				for (let a = 0; a < data_bbfs.length; a++) {
-					for (let b = 0; b < data_bbfs.length; b++) {
-						let dat = data_bbfs[a] + data_bbfs[b];
-						if (generate2DD.length > 0) {
-							for (let x = 0; x < generate2DD.length; x++) {
-								if (dat == generate2DD[x]) {
-									found = true;
-								}
-							}
-							if (found == false) {
-								generate2DD.push(dat);
-							}
-						} else {
-							generate2DD.push(dat);
-						}
-						found = false;
-						dat = "";
-					}
-				}
-				for (let x = 0; x < generate2DD.length; x++) {
-					if (checkcountangka(generate2DD[x]) == true) {
-						if (checkLimitLine("2DD") == true) {
-							nomor = generate2DD[x];
-							totalkeranjang = bayar + totalkeranjang;
-							bet = bet_4;
-							addKeranjang(
-								nomor,
-								"2DD",
-								bet,
-								diskonpercen,
-								diskon,
-								bayar,
-								win,
-								0,
-								0
-							);
-						} else {
-							code_alert = 1;
-							note_alert = "Line 2DD sudah melebihi limit";
-							break;
-						}
-					}
-				}
-				if (temp_bulk_error != "") {
-					let myModal = new bootstrap.Modal(
-						document.getElementById("modalError")
-					);
-					myModal.show();
-				}
-				if (code_alert == 1) {
-					alert(note_alert);
-					code_alert = 0;
-				}
-			}
-		}
-		if (parseInt(bet_5) > 0) {
-			if (parseInt(bet_5) < parseInt(minimal_bet)) {
-				bet_5 = minimal_bet;
-				flag = false;
-				alert("Minimal Bet 2DT : " + minimal_bet);
-			}
-			if (parseInt(bet_5) > parseInt(max2dt_bet)) {
-				bet_5 = max2dt_bet;
-				flag = false;
-				alert(
-					"Maximal Bet 2DT : " +
-						new Intl.NumberFormat().format(max2dt_bet)
-				);
-			}
-			if (flag == true) {
-				diskon = Math.ceil(bet_5 * disc2dt_bet);
-				diskonpercen = disc2dt_bet;
-				win = win2dd_bet;
-				bayar = parseInt(bet_5) - parseInt(Math.ceil(diskon));
-				for (let a = 0; a < data_bbfs.length; a++) {
-					for (let b = 0; b < data_bbfs.length; b++) {
-						let dat = data_bbfs[a] + data_bbfs[b];
-						if (generate2DT.length > 0) {
-							for (let x = 0; x < generate2DT.length; x++) {
-								if (dat == generate2DT[x]) {
-									found = true;
-								}
-							}
-							if (found == false) {
-								generate2DT.push(dat);
-							}
-						} else {
-							generate2DT.push(dat);
-						}
-						found = false;
-						dat = "";
-					}
-				}
-				for (let x = 0; x < generate2DT.length; x++) {
-					if (checkcountangka(generate2DT[x]) == true) {
-						if (checkLimitLine("2DT") == true) {
-							nomor = generate2DT[x];
-							totalkeranjang = bayar + totalkeranjang;
-							bet = bet_5;
-							addKeranjang(
-								nomor,
-								"2DT",
-								bet,
-								diskonpercen,
-								diskon,
-								bayar,
-								win,
-								0,
-								0
-							);
-						} else {
-							code_alert = 1;
-							note_alert = "Line 2DT sudah melebihi limit";
-							break;
-						}
-					}
-				}
-				if (temp_bulk_error != "") {
-					let myModal = new bootstrap.Modal(
-						document.getElementById("modalError")
-					);
-					myModal.show();
-				}
-				if (code_alert == 1) {
-					alert(note_alert);
-					code_alert = 0;
-				}
-			}
-		}
-		form_clear("bbfs");
-	}
-	function form2dd_add() {
-		let flag = true;
-		let game = nomor2dd.length;
-		let bet = 0;
-		let diskon = 0;
-		let diskonpercen = 0;
-		let win = 0;
-		let kei = 0;
-		let kei_percen = 0;
-		let bayar = 0;
-		let nmgame = "";
-		if (nomor2dd == "") {
-			nomor2dd_input.focus();
-			flag = false;
-		}
+        if (code_alert == 1) {
+          alert(note_alert);
+          code_alert = 0;
+        }
+      }
+    }
+    if (parseInt(bet_3) > 0) {
+      if (parseInt(bet_3) < parseInt(minimal_bet)) {
+        bet_3 = minimal_bet;
+        flag = false;
+        alert("Minimal Bet 2D : " + minimal_bet);
+      }
+      if (parseInt(bet_3) > parseInt(max2d_bet)) {
+        bet_3 = max2d_bet;
+        flag = false;
+        alert("Maximal Bet 2D : " + new Intl.NumberFormat().format(max2d_bet));
+      }
+      if (flag == true) {
+        diskon = Math.ceil(bet_3 * disc2d_bet);
+        diskonpercen = disc2d_bet;
+        win = win2d_bet;
+        bayar = parseInt(bet_3) - parseInt(Math.ceil(diskon));
+        for (let a = 0; a < data_bbfs.length; a++) {
+          for (let b = 0; b < data_bbfs.length; b++) {
+            let dat = data_bbfs[a] + data_bbfs[b];
+            if (generate2D.length > 0) {
+              for (let x = 0; x < generate2D.length; x++) {
+                if (dat == generate2D[x]) {
+                  found = true;
+                }
+              }
+              if (found == false) {
+                generate2D.push(dat);
+              }
+            } else {
+              generate2D.push(dat);
+            }
+            found = false;
+            dat = "";
+          }
+        }
+        for (let x = 0; x < generate2D.length; x++) {
+          if (checkcountangka(generate2D[x]) == true) {
+            if (checkLimitLine("2D") == true) {
+              nomor = generate2D[x];
+              totalkeranjang = bayar + totalkeranjang;
+              bet = bet_3;
+              addKeranjang(
+                nomor,
+                "2D",
+                bet,
+                diskonpercen,
+                diskon,
+                bayar,
+                win,
+                0,
+                0
+              );
+            } else {
+              code_alert = 1;
+              note_alert = "Line 2D sudah melebihi limit";
+              break;
+            }
+          }
+        }
+        if (temp_bulk_error != "") {
+          let myModal = new bootstrap.Modal(
+            document.getElementById("modalError")
+          );
+          myModal.show();
+        }
+        if (code_alert == 1) {
+          alert(note_alert);
+          code_alert = 0;
+        }
+      }
+    }
+    if (parseInt(bet_4) > 0) {
+      if (parseInt(bet_4) < parseInt(minimal_bet)) {
+        bet_4 = minimal_bet;
+        flag = false;
+        alert("Minimal Bet 2DD : " + minimal_bet);
+      }
+      if (parseInt(bet_4) > parseInt(max2dd_bet)) {
+        bet_4 = max2dd_bet;
+        flag = false;
+        alert(
+          "Maximal Bet 2DD : " + new Intl.NumberFormat().format(max2dd_bet)
+        );
+      }
+      if (flag == true) {
+        diskon = Math.ceil(bet_4 * disc2dd_bet);
+        diskonpercen = disc2dd_bet;
+        win = win2dd_bet;
+        bayar = parseInt(bet_4) - parseInt(Math.ceil(diskon));
+        for (let a = 0; a < data_bbfs.length; a++) {
+          for (let b = 0; b < data_bbfs.length; b++) {
+            let dat = data_bbfs[a] + data_bbfs[b];
+            if (generate2DD.length > 0) {
+              for (let x = 0; x < generate2DD.length; x++) {
+                if (dat == generate2DD[x]) {
+                  found = true;
+                }
+              }
+              if (found == false) {
+                generate2DD.push(dat);
+              }
+            } else {
+              generate2DD.push(dat);
+            }
+            found = false;
+            dat = "";
+          }
+        }
+        for (let x = 0; x < generate2DD.length; x++) {
+          if (checkcountangka(generate2DD[x]) == true) {
+            if (checkLimitLine("2DD") == true) {
+              nomor = generate2DD[x];
+              totalkeranjang = bayar + totalkeranjang;
+              bet = bet_4;
+              addKeranjang(
+                nomor,
+                "2DD",
+                bet,
+                diskonpercen,
+                diskon,
+                bayar,
+                win,
+                0,
+                0
+              );
+            } else {
+              code_alert = 1;
+              note_alert = "Line 2DD sudah melebihi limit";
+              break;
+            }
+          }
+        }
+        if (temp_bulk_error != "") {
+          let myModal = new bootstrap.Modal(
+            document.getElementById("modalError")
+          );
+          myModal.show();
+        }
+        if (code_alert == 1) {
+          alert(note_alert);
+          code_alert = 0;
+        }
+      }
+    }
+    if (parseInt(bet_5) > 0) {
+      if (parseInt(bet_5) < parseInt(minimal_bet)) {
+        bet_5 = minimal_bet;
+        flag = false;
+        alert("Minimal Bet 2DT : " + minimal_bet);
+      }
+      if (parseInt(bet_5) > parseInt(max2dt_bet)) {
+        bet_5 = max2dt_bet;
+        flag = false;
+        alert(
+          "Maximal Bet 2DT : " + new Intl.NumberFormat().format(max2dt_bet)
+        );
+      }
+      if (flag == true) {
+        diskon = Math.ceil(bet_5 * disc2dt_bet);
+        diskonpercen = disc2dt_bet;
+        win = win2dd_bet;
+        bayar = parseInt(bet_5) - parseInt(Math.ceil(diskon));
+        for (let a = 0; a < data_bbfs.length; a++) {
+          for (let b = 0; b < data_bbfs.length; b++) {
+            let dat = data_bbfs[a] + data_bbfs[b];
+            if (generate2DT.length > 0) {
+              for (let x = 0; x < generate2DT.length; x++) {
+                if (dat == generate2DT[x]) {
+                  found = true;
+                }
+              }
+              if (found == false) {
+                generate2DT.push(dat);
+              }
+            } else {
+              generate2DT.push(dat);
+            }
+            found = false;
+            dat = "";
+          }
+        }
+        for (let x = 0; x < generate2DT.length; x++) {
+          if (checkcountangka(generate2DT[x]) == true) {
+            if (checkLimitLine("2DT") == true) {
+              nomor = generate2DT[x];
+              totalkeranjang = bayar + totalkeranjang;
+              bet = bet_5;
+              addKeranjang(
+                nomor,
+                "2DT",
+                bet,
+                diskonpercen,
+                diskon,
+                bayar,
+                win,
+                0,
+                0
+              );
+            } else {
+              code_alert = 1;
+              note_alert = "Line 2DT sudah melebihi limit";
+              break;
+            }
+          }
+        }
+        if (temp_bulk_error != "") {
+          let myModal = new bootstrap.Modal(
+            document.getElementById("modalError")
+          );
+          myModal.show();
+        }
+        if (code_alert == 1) {
+          alert(note_alert);
+          code_alert = 0;
+        }
+      }
+    }
+    form_clear("bbfs");
+  }
+  function form2dd_add() {
+    let flag = true;
+    let game = nomor2dd.length;
+    let bet = 0;
+    let diskon = 0;
+    let diskonpercen = 0;
+    let win = 0;
+    let kei = 0;
+    let kei_percen = 0;
+    let bayar = 0;
+    let nmgame = "";
+    if (nomor2dd == "") {
+      nomor2dd_input.focus();
+      flag = false;
+    }
 
     if (bet_2dd == "") {
       flag = false;
@@ -2088,994 +2103,861 @@
 <Loader cssstyle={css_loader} />
 
 {#if client_device == "WEBSITE"}
-	<Card color="dark" style="border:1px solid #262424;margin:0px;padding:0px;">
-		<CardHeader
-			style="background:#323030;border-bottom:1px solid #333;border-top: 0 solid #333;"
-		>
-			<div class="float-end">
-				<div
-					style="color:white;text-align:right;font-size:13px;font-weight:bold;"
-				>
-					{pasaran_name}
-				</div>
-			</div>
-			<h1 style="padding:0px;margin:0px;color:white;font-size:15px;">
-				{permainan_title}<br />
-				PERIODE : {pasaran_periode + " - " + pasaran_code}
-			</h1>
-		</CardHeader>
-		<CardBody style="background:#121212;padding:0px;margin:0px;">
-			<TabContent style="padding: 0px;margin:0px;">
-				<TabPane tabId="form_432d" tab="4D/3D/2D" active>
-					<div style="margin:5px;">
-						<table
-							class="table"
-							style="background:none;width:100%;"
-						>
-							<tr>
-								<td
-									width="25%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;"
-								>
-									<span style="color:#8a8a8a;"
-										>Nomor (2-4)</span
-									>
-									<input
-										autofocus
-										bind:this={nomor_input}
-										bind:value={nomor}
-										on:keyup={handleKeyboard_format}
-										on:keypress={handleKeyboard_checkenter}
-										type="text"
-										class="form-control form-control-sm"
-										placeholder="Input 4D/3D/2D Digit"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
-										minlength="4"
-										maxlength="4"
-										tab_index="-1"
-										autocomplete="off"
-									/>
-									<span
-										class="help-block"
-										style="text-align:right;font-size:12px;"
-									/>
-								</td>
-								<td
-									width="*"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_432}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboard_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_432
-										)}</span
-									>
-								</td>
-								<td
-									width="20%"
-									NOWRAP
-									style="vertical-align: center;"
-								>
-									<Button
-										id="btn2"
-										on:click={() => {
-											handleTambah("4-3-2");
-										}}>TAMBAH</Button
-									>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</TabPane>
-				<TabPane tabId="form_bbfs" tab="BBFS">
-					<div style="margin:5px;">
-						<table
-							class="table"
-							style="background:none;width:100%;"
-						>
-							<tr>
-								<td
-									width="15%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: top;"
-								>
-									<span style="color:#8a8a8a;"
-										>Nomor (2-{bbfs})</span
-									>
-									<input
-										bind:this={nomorbbfs_input}
-										bind:value={nomorbbfs}
-										on:keyup={handleKeyboard_format}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control form-control-sm"
-										placeholder="Input 4D/3D/2D Digit"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
-										minlength="4"
-										maxlength={bbfs}
-										tab_index="-1"
-										autocomplete="off"
-									/>
-									<span
-										class="help-block"
-										style="text-align:right;font-size:12px;"
-									/>
-								</td>
-								<td
-									width="22%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: top;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>4D - Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_1}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_1
-										)}</span
-									>
-								</td>
-								<td
-									width="22%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: top;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>3D - Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_2}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="1"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_2
-										)}</span
-									>
-									<br>
-									<span style="color:#8a8a8a;"
-										>2DD - Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_4}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="3"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_4
-										)}</span
-									>
-								</td>
-								<td
-									width="22%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: top;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>2D - Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_3}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="2"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_3
-										)}</span
-									>
-									<br>
-									<span style="color:#8a8a8a;"
-										>2DT - Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_5}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="4"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_5
-										)}</span
-									>
-								</td>
-								
-							</tr>
-							<tr>
-								<td colspan="4">
-									<div class="d-grid gap-1 mt-3">
-										<Button
-											id="btn2"
-											on:click={() => {
-												handleTambah("BBFS");
-											}}>TAMBAH</Button
-										>
-									</div>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</TabPane>
-				<TabPane tabId="form_WAP" tab="WAP">
-					<div style="margin:5px;">
-						<textarea
-							bind:this={nomorwap_input}
-							bind:value={nomorwap}
-							placeholder="Input Format"
-							style="border:none;background:#303030;color:white;height:95px;resize:none;"
-							class="form-control"
-						/>
-						<div class="d-grid gap-1 mt-3">
-							<Button
-								id="btn2"
-								on:click={() => {
-									handleTambah("wap");
-								}}>TAMBAH</Button
-							>
-						</div>
-						<p class="p-3" style="font-size:12px;color:#8a8a8a;">
-							<b>Contoh (WAP) :</b><br />
-							1234*234*34#1000,34*235*35#5000<br />
-						</p>
-					</div>
-				</TabPane>
-				<TabPane tabId="form_quick2d" tab="QUICK 2D">
-					<div style="margin:5px;">
-						<table
-							class="table"
-							style="background:none;width:100%;"
-						>
-							<tr>
-								<td
-									width="15%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;"
-								>
-									<span style="color:#8a8a8a;"
-										>Besar/Kecil/Genap/Ganjil</span
-									>
-									<select
-										bind:value={quick_pilihan1}
-										bind:this={quick_pilihan1_input}
-										style="border:none;background:#303030;color:white;"
-										class="form-control"
-									>
-										<option value="BESAR">BESAR</option>
-										<option value="KECIL">KECIL</option>
-										<option value="GENAP">GENAP</option>
-										<option value="GANJIL">GANJIL</option>
-									</select>
-									<span
-										class="help-block"
-										style="text-align:right;font-size:12px;"
-									/>
-								</td>
-								<td
-									width="15%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;"
-								>
-									<span style="color:#8a8a8a;"
-										>Besar/Kecil/Genap/Ganjil</span
-									>
-									<select
-										bind:value={quick_pilihan2}
-										bind:this={quick_pilihan2_input}
-										style="border:none;background:#303030;color:white;"
-										class="form-control"
-									>
-										<option value="2D">2D</option>
-										<option value="2DD">2D DEPAN</option>
-										<option value="2DT">2D TENGAH</option>
-									</select>
-									<span
-										class="help-block"
-										style="text-align:right;font-size:12px;"
-									/>
-								</td>
-								<td
-									width="*"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={quick_bet}
-										bind:this={quick_bet_input}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardquick2d_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											quick_bet
-										)}</span
-									>
-								</td>
-								<td
-									width="20%"
-									NOWRAP
-									style="vertical-align: center;"
-								>
-									<Button
-										id="btn2"
-										on:click={() => {
-											handleTambah("quick2D");
-										}}>TAMBAH</Button
-									>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</TabPane>
-				<TabPane tabId="form_2dd" tab="2D DEPAN">
-					<div style="margin:5px;">
-						<table
-							class="table"
-							style="background:none;width:100%;"
-						>
-							<tr>
-								<td
-									width="25%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;"
-								>
-									<span style="color:#8a8a8a;"
-										>Nomor (2 digit)</span
-									>
-									<input
-										bind:this={nomor2dd_input}
-										bind:value={nomor2dd}
-										on:keyup={handleKeyboard_format}
-										on:keypress={handleKeyboard2dd_checkenter}
-										type="text"
-										class="form-control form-control-sm"
-										placeholder="Input 2DD Digit"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
-										minlength="2"
-										maxlength="2"
-										tab_index="-1"
-										autocomplete="off"
-									/>
-									<span
-										class="help-block"
-										style="text-align:right;font-size:12px;"
-									/>
-								</td>
-								<td
-									width="*"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_2dd}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboard2dd_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_2dd
-										)}</span
-									>
-								</td>
-								<td
-									width="20%"
-									NOWRAP
-									style="vertical-align: center;"
-								>
-									<Button
-										id="btn2"
-										on:click={() => {
-											handleTambah("2DD");
-										}}>TAMBAH</Button
-									>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</TabPane>
-				<TabPane tabId="form_2dt" tab="2D TENGAH">
-					<div style="margin:5px;">
-						<table
-							class="table"
-							style="background:none;width:100%;"
-						>
-							<tr>
-								<td
-									width="25%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;"
-								>
-									<span style="color:#8a8a8a;"
-										>Nomor (2 digit)</span
-									>
-									<input
-										bind:this={nomor2dt_input}
-										bind:value={nomor2dt}
-										on:keyup={handleKeyboard_format}
-										on:keypress={handleKeyboard2dt_checkenter}
-										type="text"
-										class="form-control form-control-sm"
-										placeholder="Input 2DT Digit"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
-										minlength="2"
-										maxlength="2"
-										tab_index="-1"
-										autocomplete="off"
-									/>
-									<span
-										class="help-block"
-										style="text-align:right;font-size:12px;"
-									/>
-								</td>
-								<td
-									width="*"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_2dt}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboard2dt_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_2dt
-										)}</span
-									>
-								</td>
-								<td
-									width="20%"
-									NOWRAP
-									style="vertical-align: center;"
-								>
-									<Button
-										id="btn2"
-										on:click={() => {
-											handleTambah("2DT");
-										}}>TAMBAH</Button
-									>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</TabPane>
-			</TabContent>
-		</CardBody>
-	</Card>
+  <Card color="dark" style="border:1px solid #262424;margin:0px;padding:0px;">
+    <CardHeader
+      style="background:#323030;border-bottom:1px solid #333;border-top: 0 solid #333;"
+    >
+      <div class="float-end">
+        <div
+          style="color:white;text-align:right;font-size:13px;font-weight:bold;"
+        >
+          {pasaran_name}
+        </div>
+      </div>
+      <h1 style="padding:0px;margin:0px;color:white;font-size:15px;">
+        {permainan_title}<br />
+        PERIODE : {pasaran_periode + " - " + pasaran_code}
+      </h1>
+    </CardHeader>
+    <CardBody style="background:#121212;padding:0px;margin:0px;">
+      <TabContent style="padding: 0px;margin:0px;">
+        <TabPane tabId="form_432d" tab="4D/3D/2D" active>
+          <div style="margin:5px;">
+            <table class="table" style="background:none;width:100%;">
+              <tr>
+                <td
+                  width="25%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;"
+                >
+                  <span style="color:#8a8a8a;">Nomor (2-4)</span>
+                  <input
+                    autofocus
+                    bind:this={nomor_input}
+                    bind:value={nomor}
+                    on:keyup={handleKeyboard_format}
+                    on:keypress={handleKeyboard_checkenter}
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Input 4D/3D/2D Digit"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
+                    minlength="4"
+                    maxlength="4"
+                    tab_index="-1"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="help-block"
+                    style="text-align:right;font-size:12px;"
+                  />
+                </td>
+                <td
+                  width="*"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;">Bet (min : {minimal_bet})</span>
+                  <input
+                    bind:value={bet_432}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboard_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_432)}</span
+                  >
+                </td>
+                <td width="20%" NOWRAP style="vertical-align: center;">
+                  <Button
+                    id="btn2"
+                    on:click={() => {
+                      handleTambah("4-3-2");
+                    }}>TAMBAH</Button
+                  >
+                </td>
+              </tr>
+            </table>
+          </div>
+        </TabPane>
+        <TabPane tabId="form_bbfs" tab="BBFS">
+          <div style="margin:5px;">
+            <table class="table" style="background:none;width:100%;">
+              <tr>
+                <td
+                  width="15%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: top;"
+                >
+                  <span style="color:#8a8a8a;">Nomor (2-{bbfs})</span>
+                  <input
+                    bind:this={nomorbbfs_input}
+                    bind:value={nomorbbfs}
+                    on:keyup={handleKeyboard_format}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Input 4D/3D/2D Digit"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
+                    minlength="4"
+                    maxlength={bbfs}
+                    tab_index="-1"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="help-block"
+                    style="text-align:right;font-size:12px;"
+                  />
+                </td>
+                <td
+                  width="22%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: top;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;"
+                    >4D - Bet (min : {minimal_bet})</span
+                  >
+                  <input
+                    bind:value={bet_1}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_1)}</span
+                  >
+                </td>
+                <td
+                  width="22%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: top;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;"
+                    >3D - Bet (min : {minimal_bet})</span
+                  >
+                  <input
+                    bind:value={bet_2}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="1"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_2)}</span
+                  >
+                  <br />
+                  <span style="color:#8a8a8a;"
+                    >2DD - Bet (min : {minimal_bet})</span
+                  >
+                  <input
+                    bind:value={bet_4}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="3"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_4)}</span
+                  >
+                </td>
+                <td
+                  width="22%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: top;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;"
+                    >2D - Bet (min : {minimal_bet})</span
+                  >
+                  <input
+                    bind:value={bet_3}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="2"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_3)}</span
+                  >
+                  <br />
+                  <span style="color:#8a8a8a;"
+                    >2DT - Bet (min : {minimal_bet})</span
+                  >
+                  <input
+                    bind:value={bet_5}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="4"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_5)}</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td colspan="4">
+                  <div class="d-grid gap-1 mt-3">
+                    <Button
+                      id="btn2"
+                      on:click={() => {
+                        handleTambah("BBFS");
+                      }}>TAMBAH</Button
+                    >
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </TabPane>
+        <TabPane tabId="form_WAP" tab="WAP">
+          <div style="margin:5px;">
+            <textarea
+              bind:this={nomorwap_input}
+              bind:value={nomorwap}
+              placeholder="Input Format"
+              style="border:none;background:#303030;color:white;height:95px;resize:none;"
+              class="form-control"
+            />
+            <div class="d-grid gap-1 mt-3">
+              <Button
+                id="btn2"
+                on:click={() => {
+                  handleTambah("wap");
+                }}>TAMBAH</Button
+              >
+            </div>
+            <p class="p-3" style="font-size:12px;color:#8a8a8a;">
+              <b>Contoh (WAP) :</b><br />
+              1234*234*34#1000,34*235*35#5000<br />
+            </p>
+          </div>
+        </TabPane>
+        <TabPane tabId="form_quick2d" tab="QUICK 2D">
+          <div style="margin:5px;">
+            <table class="table" style="background:none;width:100%;">
+              <tr>
+                <td
+                  width="15%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;"
+                >
+                  <span style="color:#8a8a8a;">Besar/Kecil/Genap/Ganjil</span>
+                  <select
+                    bind:value={quick_pilihan1}
+                    bind:this={quick_pilihan1_input}
+                    style="border:none;background:#303030;color:white;"
+                    class="form-control"
+                  >
+                    <option value="BESAR">BESAR</option>
+                    <option value="KECIL">KECIL</option>
+                    <option value="GENAP">GENAP</option>
+                    <option value="GANJIL">GANJIL</option>
+                  </select>
+                  <span
+                    class="help-block"
+                    style="text-align:right;font-size:12px;"
+                  />
+                </td>
+                <td
+                  width="15%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;"
+                >
+                  <span style="color:#8a8a8a;">Besar/Kecil/Genap/Ganjil</span>
+                  <select
+                    bind:value={quick_pilihan2}
+                    bind:this={quick_pilihan2_input}
+                    style="border:none;background:#303030;color:white;"
+                    class="form-control"
+                  >
+                    <option value="2D">2D</option>
+                    <option value="2DD">2D DEPAN</option>
+                    <option value="2DT">2D TENGAH</option>
+                  </select>
+                  <span
+                    class="help-block"
+                    style="text-align:right;font-size:12px;"
+                  />
+                </td>
+                <td
+                  width="*"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;">Bet (min : {minimal_bet})</span>
+                  <input
+                    bind:value={quick_bet}
+                    bind:this={quick_bet_input}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardquick2d_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(quick_bet)}</span
+                  >
+                </td>
+                <td width="20%" NOWRAP style="vertical-align: center;">
+                  <Button
+                    id="btn2"
+                    on:click={() => {
+                      handleTambah("quick2D");
+                    }}>TAMBAH</Button
+                  >
+                </td>
+              </tr>
+            </table>
+          </div>
+        </TabPane>
+        <TabPane tabId="form_2dd" tab="2D DEPAN">
+          <div style="margin:5px;">
+            <table class="table" style="background:none;width:100%;">
+              <tr>
+                <td
+                  width="25%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;"
+                >
+                  <span style="color:#8a8a8a;">Nomor (2 digit)</span>
+                  <input
+                    bind:this={nomor2dd_input}
+                    bind:value={nomor2dd}
+                    on:keyup={handleKeyboard_format}
+                    on:keypress={handleKeyboard2dd_checkenter}
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Input 2DD Digit"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
+                    minlength="2"
+                    maxlength="2"
+                    tab_index="-1"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="help-block"
+                    style="text-align:right;font-size:12px;"
+                  />
+                </td>
+                <td
+                  width="*"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;">Bet (min : {minimal_bet})</span>
+                  <input
+                    bind:value={bet_2dd}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboard2dd_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_2dd)}</span
+                  >
+                </td>
+                <td width="20%" NOWRAP style="vertical-align: center;">
+                  <Button
+                    id="btn2"
+                    on:click={() => {
+                      handleTambah("2DD");
+                    }}>TAMBAH</Button
+                  >
+                </td>
+              </tr>
+            </table>
+          </div>
+        </TabPane>
+        <TabPane tabId="form_2dt" tab="2D TENGAH">
+          <div style="margin:5px;">
+            <table class="table" style="background:none;width:100%;">
+              <tr>
+                <td
+                  width="25%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;"
+                >
+                  <span style="color:#8a8a8a;">Nomor (2 digit)</span>
+                  <input
+                    bind:this={nomor2dt_input}
+                    bind:value={nomor2dt}
+                    on:keyup={handleKeyboard_format}
+                    on:keypress={handleKeyboard2dt_checkenter}
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Input 2DT Digit"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
+                    minlength="2"
+                    maxlength="2"
+                    tab_index="-1"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="help-block"
+                    style="text-align:right;font-size:12px;"
+                  />
+                </td>
+                <td
+                  width="*"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;">Bet (min : {minimal_bet})</span>
+                  <input
+                    bind:value={bet_2dt}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboard2dt_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_2dt)}</span
+                  >
+                </td>
+                <td width="20%" NOWRAP style="vertical-align: center;">
+                  <Button
+                    id="btn2"
+                    on:click={() => {
+                      handleTambah("2DT");
+                    }}>TAMBAH</Button
+                  >
+                </td>
+              </tr>
+            </table>
+          </div>
+        </TabPane>
+      </TabContent>
+    </CardBody>
+  </Card>
 {:else}
-	<Card color="dark" style="border:1px solid #262424;margin:0px;padding:0px;">
-		<CardHeader
-			style="background:#323030;border-bottom:1px solid #333;border-top: 0 solid #333;"
-		>
-			<div class="float-end">
-				<div
-					style="color:white;text-align:right;font-size:12px;font-weight:bold;"
-				>
-					{pasaran_name}
-				</div>
-			</div>
-			<h1 style="padding:0px;margin:0px;color:white;font-size:12px;">
-				{permainan_title}<br />
-				PERIODE : {pasaran_periode + " - " + pasaran_code}
-			</h1>
-		</CardHeader>
-		<CardBody style="background:#121212;padding:0px;margin:0px;">
-			<TabContent style="padding: 0px;margin:0px;">
-				<TabPane tabId="form_432d" tab="4D/3D/2D" active>
-					<div style="margin:5px;">
-						<table
-							class="table"
-							style="background:none;width:100%;"
-						>
-							<tr>
-								<td
-									width="35%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;"
-								>
-									<span style="color:#8a8a8a;"
-										>Nomor (2-4)</span
-									>
-									<input
-										bind:this={nomor_input}
-										bind:value={nomor}
-										on:keyup={handleKeyboard_format}
-										on:keypress={handleKeyboard_checkenter}
-										type="text"
-										class="form-control form-control-sm"
-										placeholder="Input 4D/3D/2D Digit"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
-										minlength="4"
-										maxlength="4"
-										tab_index="-1"
-										autocomplete="off"
-									/>
-									<span
-										class="help-block"
-										style="text-align:right;font-size:12px;"
-									/>
-								</td>
-								<td
-									width="*"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_432}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboard_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_432
-										)}</span
-									>
-								</td>
-							</tr>
-							<tr>
-								<td
-									colspan="2"
-									NOWRAP
-									style="vertical-align: center;"
-								/>
-							</tr>
-						</table>
-						<Button
-							block
-							id="btn2"
-							on:click={() => {
-								handleTambah("4-3-2");
-							}}>TAMBAH</Button
-						>
-					</div>
-				</TabPane>
-				<TabPane tabId="form_bbfs" tab="BBFS">
-					<div class="table-responsive" style="margin:5px;">
-						<table
-							class="table"
-							style="background:none;width:100%;"
-						>
-							<tr>
-								<td
-									colspan="3"
-									NOWRAP
-									style="padding-right:10px;vertical-align: top;"
-								>
-									<span style="color:#8a8a8a;"
-										>Nomor (2-{bbfs})</span
-									>
-									<input
-										bind:this={nomorbbfs_input}
-										bind:value={nomorbbfs}
-										on:keyup={handleKeyboard_format}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control form-control-sm"
-										placeholder="Input 4D/3D/2D Digit"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
-										minlength="4"
-										maxlength={bbfs}
-										tab_index="-1"
-										autocomplete="off"
-									/>
-									<span
-										class="help-block"
-										style="text-align:right;font-size:12px;"
-									/>
-								</td>
-							</tr>
-							<tr>
-								<td
-									width="22%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: top;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>4D - Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_1}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_1
-										)}</span
-									>
-								</td>
-								<td
-									width="22%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: top;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>3D - Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_2}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_2
-										)}</span
-									>
-									<br>
-									<span style="color:#8a8a8a;"
-										>2DD - Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_4}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_4
-										)}</span
-									>
-								</td>
-								<td
-									width="22%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: top;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>2D - Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_3}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_3
-										)}</span
-									>
-									<br>
-									<span style="color:#8a8a8a;"
-										>2DT - Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_5}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboardbbfs_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_5
-										)}</span
-									>
-								</td>
-							</tr>
-						</table>
-						<Button
-							block
-							id="btn2"
-							on:click={() => {
-								handleTambah("BBFS");
-							}}>TAMBAH</Button
-						>
-					</div>
-				</TabPane>
-				<TabPane tabId="form_WAP" tab="WAP">
-					<div class="d-grid gap-1">
-						<textarea
-							bind:this={nomorwap_input}
-							bind:value={nomorwap}
-							placeholder="Input Format"
-							style="border:none;background:#303030;color:white;height:95px;resize:none;"
-							class="form-control"
-						/>
-						<Button
-							id="btn2"
-							on:click={() => {
-								handleTambah("wap");
-							}}>TAMBAH</Button
-						>
-						<p style="font-size:12px;color:#8a8a8a;">
-							<b>Contoh (WAP) :</b><br />
-							1234*234*34#1000,34*235*35#5000<br />
-						</p>
-					</div>
-				</TabPane>
-				<TabPane tabId="form_2dd" tab="2DD">
-					<div style="margin:5px;">
-						<table
-							class="table"
-							style="background:none;width:100%;"
-						>
-							<tr>
-								<td
-									width="25%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;"
-								>
-									<span style="color:#8a8a8a;"
-										>Nomor (2 digit)</span
-									>
-									<input
-										bind:this={nomor2dd_input}
-										bind:value={nomor2dd}
-										on:keyup={handleKeyboard_format}
-										on:keypress={handleKeyboard2dd_checkenter}
-										type="text"
-										class="form-control form-control-sm"
-										placeholder="Input 2DD Digit"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
-										minlength="2"
-										maxlength="2"
-										tab_index="-1"
-										autocomplete="off"
-									/>
-									<span
-										class="help-block"
-										style="text-align:right;font-size:12px;"
-									/>
-								</td>
-								<td
-									width="*"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_2dd}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboard2dd_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_2dd
-										)}</span
-									>
-								</td>
-							</tr>
-						</table>
-						<Button
-							block
-							id="btn2"
-							on:click={() => {
-								handleTambah("2DD");
-							}}>TAMBAH</Button
-						>
-					</div>
-				</TabPane>
-				<TabPane tabId="form_2dt" tab="2DT">
-					<div style="margin:5px;">
-						<table
-							class="table"
-							style="background:none;width:100%;"
-						>
-							<tr>
-								<td
-									width="25%"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;"
-								>
-									<span style="color:#8a8a8a;"
-										>Nomor (2 digit)</span
-									>
-									<input
-										bind:this={nomor2dt_input}
-										bind:value={nomor2dt}
-										on:keyup={handleKeyboard_format}
-										on:keypress={handleKeyboard2dt_checkenter}
-										type="text"
-										class="form-control form-control-sm"
-										placeholder="Input 2DT Digit"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
-										minlength="2"
-										maxlength="2"
-										tab_index="-1"
-										autocomplete="off"
-									/>
-									<span
-										class="help-block"
-										style="text-align:right;font-size:12px;"
-									/>
-								</td>
-								<td
-									width="*"
-									NOWRAP
-									style="padding-right:10px;vertical-align: center;text-align:right;"
-								>
-									<span style="color:#8a8a8a;"
-										>Bet (min : {minimal_bet})</span
-									>
-									<input
-										bind:value={bet_2dt}
-										on:keyup={handleKeyboard_number}
-										on:keypress={handleKeyboard2dt_checkenter}
-										type="text"
-										class="form-control"
-										placeholder="Bet"
-										style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
-										minlength="3"
-										maxlength="7"
-										tab_index="0"
-									/>
-									<span
-										style="text-align:right;font-size:12px;color:#8a8a8a;"
-										>{new Intl.NumberFormat().format(
-											bet_2dt
-										)}</span
-									>
-								</td>
-							</tr>
-						</table>
-						<Button
-							block
-							id="btn2"
-							on:click={() => {
-								handleTambah("2DT");
-							}}>TAMBAH</Button
-						>
-					</div>
-				</TabPane>
-			</TabContent>
-		</CardBody>
-	</Card>
+  <Card color="dark" style="border:1px solid #262424;margin:0px;padding:0px;">
+    <CardHeader
+      style="background:#323030;border-bottom:1px solid #333;border-top: 0 solid #333;"
+    >
+      <div class="float-end">
+        <div
+          style="color:white;text-align:right;font-size:12px;font-weight:bold;"
+        >
+          {pasaran_name}
+        </div>
+      </div>
+      <h1 style="padding:0px;margin:0px;color:white;font-size:12px;">
+        {permainan_title}<br />
+        PERIODE : {pasaran_periode + " - " + pasaran_code}
+      </h1>
+    </CardHeader>
+    <CardBody style="background:#121212;padding:0px;margin:0px;">
+      <TabContent style="padding: 0px;margin:0px;">
+        <TabPane tabId="form_432d" tab="4D/3D/2D" active>
+          <div style="margin:5px;">
+            <table class="table" style="background:none;width:100%;">
+              <tr>
+                <td
+                  width="35%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;"
+                >
+                  <span style="color:#8a8a8a;">Nomor (2-4)</span>
+                  <input
+                    bind:this={nomor_input}
+                    bind:value={nomor}
+                    on:keyup={handleKeyboard_format}
+                    on:keypress={handleKeyboard_checkenter}
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Input 4D/3D/2D Digit"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
+                    minlength="4"
+                    maxlength="4"
+                    tab_index="-1"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="help-block"
+                    style="text-align:right;font-size:12px;"
+                  />
+                </td>
+                <td
+                  width="*"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;">Bet (min : {minimal_bet})</span>
+                  <input
+                    bind:value={bet_432}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboard_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_432)}</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" NOWRAP style="vertical-align: center;" />
+              </tr>
+            </table>
+            <Button
+              block
+              id="btn2"
+              on:click={() => {
+                handleTambah("4-3-2");
+              }}>TAMBAH</Button
+            >
+          </div>
+        </TabPane>
+        <TabPane tabId="form_bbfs" tab="BBFS">
+          <div class="table-responsive" style="margin:5px;">
+            <table class="table" style="background:none;width:100%;">
+              <tr>
+                <td
+                  colspan="3"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: top;"
+                >
+                  <span style="color:#8a8a8a;">Nomor (2-{bbfs})</span>
+                  <input
+                    bind:this={nomorbbfs_input}
+                    bind:value={nomorbbfs}
+                    on:keyup={handleKeyboard_format}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Input 4D/3D/2D Digit"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
+                    minlength="4"
+                    maxlength={bbfs}
+                    tab_index="-1"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="help-block"
+                    style="text-align:right;font-size:12px;"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  width="22%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: top;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;"
+                    >4D - Bet (min : {minimal_bet})</span
+                  >
+                  <input
+                    bind:value={bet_1}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_1)}</span
+                  >
+                </td>
+                <td
+                  width="22%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: top;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;"
+                    >3D - Bet (min : {minimal_bet})</span
+                  >
+                  <input
+                    bind:value={bet_2}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_2)}</span
+                  >
+                  <br />
+                  <span style="color:#8a8a8a;"
+                    >2DD - Bet (min : {minimal_bet})</span
+                  >
+                  <input
+                    bind:value={bet_4}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_4)}</span
+                  >
+                </td>
+                <td
+                  width="22%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: top;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;"
+                    >2D - Bet (min : {minimal_bet})</span
+                  >
+                  <input
+                    bind:value={bet_3}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_3)}</span
+                  >
+                  <br />
+                  <span style="color:#8a8a8a;"
+                    >2DT - Bet (min : {minimal_bet})</span
+                  >
+                  <input
+                    bind:value={bet_5}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboardbbfs_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_5)}</span
+                  >
+                </td>
+              </tr>
+            </table>
+            <Button
+              block
+              id="btn2"
+              on:click={() => {
+                handleTambah("BBFS");
+              }}>TAMBAH</Button
+            >
+          </div>
+        </TabPane>
+        <TabPane tabId="form_WAP" tab="WAP">
+          <div class="d-grid gap-1">
+            <textarea
+              bind:this={nomorwap_input}
+              bind:value={nomorwap}
+              placeholder="Input Format"
+              style="border:none;background:#303030;color:white;height:95px;resize:none;"
+              class="form-control"
+            />
+            <Button
+              id="btn2"
+              on:click={() => {
+                handleTambah("wap");
+              }}>TAMBAH</Button
+            >
+            <p style="font-size:12px;color:#8a8a8a;">
+              <b>Contoh (WAP) :</b><br />
+              1234*234*34#1000,34*235*35#5000<br />
+            </p>
+          </div>
+        </TabPane>
+        <TabPane tabId="form_2dd" tab="2DD">
+          <div style="margin:5px;">
+            <table class="table" style="background:none;width:100%;">
+              <tr>
+                <td
+                  width="25%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;"
+                >
+                  <span style="color:#8a8a8a;">Nomor (2 digit)</span>
+                  <input
+                    bind:this={nomor2dd_input}
+                    bind:value={nomor2dd}
+                    on:keyup={handleKeyboard_format}
+                    on:keypress={handleKeyboard2dd_checkenter}
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Input 2DD Digit"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
+                    minlength="2"
+                    maxlength="2"
+                    tab_index="-1"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="help-block"
+                    style="text-align:right;font-size:12px;"
+                  />
+                </td>
+                <td
+                  width="*"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;">Bet (min : {minimal_bet})</span>
+                  <input
+                    bind:value={bet_2dd}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboard2dd_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_2dd)}</span
+                  >
+                </td>
+              </tr>
+            </table>
+            <Button
+              block
+              id="btn2"
+              on:click={() => {
+                handleTambah("2DD");
+              }}>TAMBAH</Button
+            >
+          </div>
+        </TabPane>
+        <TabPane tabId="form_2dt" tab="2DT">
+          <div style="margin:5px;">
+            <table class="table" style="background:none;width:100%;">
+              <tr>
+                <td
+                  width="25%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;"
+                >
+                  <span style="color:#8a8a8a;">Nomor (2 digit)</span>
+                  <input
+                    bind:this={nomor2dt_input}
+                    bind:value={nomor2dt}
+                    on:keyup={handleKeyboard_format}
+                    on:keypress={handleKeyboard2dt_checkenter}
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Input 2DT Digit"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
+                    minlength="2"
+                    maxlength="2"
+                    tab_index="-1"
+                    autocomplete="off"
+                  />
+                  <span
+                    class="help-block"
+                    style="text-align:right;font-size:12px;"
+                  />
+                </td>
+                <td
+                  width="*"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;text-align:right;"
+                >
+                  <span style="color:#8a8a8a;">Bet (min : {minimal_bet})</span>
+                  <input
+                    bind:value={bet_2dt}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboard2dt_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_2dt)}</span
+                  >
+                </td>
+              </tr>
+            </table>
+            <Button
+              block
+              id="btn2"
+              on:click={() => {
+                handleTambah("2DT");
+              }}>TAMBAH</Button
+            >
+          </div>
+        </TabPane>
+      </TabContent>
+    </CardBody>
+  </Card>
 {/if}
 
 <Modal modal_id={"modalError"} modal_size={"modal-dialog-centered"}>

@@ -4,8 +4,10 @@ import (
 	"bitbucket.org/isbtotogroup/frontend_svelte/controller"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/gofiber/fiber/v2/middleware/etag"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
 )
 
 func Init() *fiber.App {
@@ -25,6 +27,9 @@ func Init() *fiber.App {
 	app.Use(logger.New())
 	app.Use(recover.New())
 	app.Use(compress.New())
+	app.Use(requestid.New())
+	app.Use(etag.New())
+
 	app.Static("/", "svelte/public", fiber.Static{
 		Compress:  true,
 		ByteRange: true,
