@@ -147,6 +147,8 @@
 			body: JSON.stringify({
 				pasaran_idtransaction: idtrxkeluaran,
 				pasaran_idcomp: idcomppasaran,
+				pasaran_code: pasaran_code,
+				pasaran_periode: pasaran_periode,
 				token: client_token,
 				company: client_company,
 				username: client_username,

@@ -76,6 +76,8 @@ type clientslipdetail struct {
 type clientsavetransaksi struct {
 	Pasaran_idtransaction string          `json:"pasaran_idtransaction"`
 	Pasaran_idcomp        string          `json:"pasaran_idcomp"`
+	Pasaran_code          string          `json:"pasaran_code"`
+	Pasaran_periode       string          `json:"pasaran_periode"`
 	Token                 string          `json:"token"`
 	Company               string          `json:"company"`
 	Username              string          `json:"username"`
@@ -676,6 +678,8 @@ func Savetransaksi(c *fiber.Ctx) error {
 		SetBody(map[string]interface{}{
 			"idtrxkeluaran":   client.Pasaran_idtransaction,
 			"idcomppasaran":   client.Pasaran_idcomp,
+			"pasarancode":     client.Pasaran_code,
+			"pasaranperiode":  client.Pasaran_periode,
 			"devicemember":    client.Devicemember,
 			"formipaddress":   client.Ipaddress,
 			"timezone":        client.Timezone,

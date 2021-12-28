@@ -166,6 +166,8 @@
 			body: JSON.stringify({
 				pasaran_idtransaction: idtrxkeluaran,
 				pasaran_idcomp: idcomppasaran,
+				pasaran_code: pasaran_code,
+				pasaran_periode: pasaran_periode,
 				token: client_token,
 				company: client_company,
 				username: client_username,
@@ -216,8 +218,7 @@
 		bayar,
 		win,
 		kei,
-		kei_percen
-	) {
+		kei_percen) {
 		let total_data = keranjang.length;
 		let flag_data = false;
 		for (var i = 0; i < total_data; i++) {
