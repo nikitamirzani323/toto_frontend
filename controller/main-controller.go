@@ -721,6 +721,12 @@ func Slipperiodedetail(c *fiber.Ctx) error {
 		})
 	}
 }
+func reverse(str string) (result string) {
+	for _, v := range str {
+		result = string(v) + result
+	}
+	return
+}
 func Savetransaksi(c *fiber.Ctx) error {
 	encrypt := new(encryptedTransaction)
 	client := new(clientsavetransaksi)
@@ -733,7 +739,7 @@ func Savetransaksi(c *fiber.Ctx) error {
 			"record":  nil,
 		})
 	}
-	var decodedByte, _ = base64.StdEncoding.DecodeString(encrypt.Enkrip_transaksi)
+	var decodedByte, _ = base64.StdEncoding.DecodeString(reverse(encrypt.Enkrip_transaksi))
 	var decodedString = string(decodedByte)
 	err := json.Unmarshal([]byte(decodedString), &client)
 	if err != nil {

@@ -80,19 +80,21 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        transaction: btoa(
-          JSON.stringify({
-            pasaran_idtransaction: idtrxkeluaran,
-            pasaran_idcomp: idcomppasaran,
-            token: client_token,
-            company: client_company,
-            username: client_username,
-            ipaddress: client_ipaddress,
-            devicemember: client_device,
-            timezone: client_timezone,
-            total: totalkeranjang,
-            data: keranjang,
-          })
+        transaction: reverseString(
+          btoa(
+            JSON.stringify({
+              pasaran_idtransaction: idtrxkeluaran,
+              pasaran_idcomp: idcomppasaran,
+              token: client_token,
+              company: client_company,
+              username: client_username,
+              ipaddress: client_ipaddress,
+              devicemember: client_device,
+              timezone: client_timezone,
+              total: totalkeranjang,
+              data: keranjang,
+            })
+          )
         ),
       }),
     });
@@ -124,6 +126,11 @@
       }
     }
   }
+
+  function reverseString(str) {
+    return str.split("").reverse().join("");
+  }
+
   function reset() {
     keranjang = [];
     group_btn_beli = true;
