@@ -142,16 +142,22 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        pasaran_idtransaction: idtrxkeluaran,
-        pasaran_idcomp: idcomppasaran,
-        token: client_token,
-        company: client_company,
-        username: client_username,
-        ipaddress: client_ipaddress,
-        devicemember: client_device,
-        timezone: client_timezone,
-        total: totalkeranjang,
-        data: keranjang,
+        transaction: reverseString(
+          btoa(
+            JSON.stringify({
+              pasaran_idtransaction: idtrxkeluaran,
+              pasaran_idcomp: idcomppasaran,
+              token: client_token,
+              company: client_company,
+              username: client_username,
+              ipaddress: client_ipaddress,
+              devicemember: client_device,
+              timezone: client_timezone,
+              total: totalkeranjang,
+              data: keranjang,
+            })
+          )
+        ),
       }),
     });
     const json = await res.json();
@@ -159,7 +165,9 @@
       css_loader = "display:none;";
       notifications.push(
         "Data telah berhasil disimpan, Total belanja : " +
-          new Intl.NumberFormat().format(totalkeranjang), "warning", "middle"
+          new Intl.NumberFormat().format(totalkeranjang),
+        "warning",
+        "middle"
       );
       dispatch("handleInvoice", "call");
       reset();
@@ -180,6 +188,11 @@
       }
     }
   }
+
+  function reverseString(str) {
+    return str.split("").reverse().join("");
+  }
+
   function reset() {
     keranjang = [];
     group_btn_beli = true;
@@ -262,14 +275,14 @@
       reset();
       count_keranjang();
     } else {
-      notifications.push("Tidak ada list transaksi","","middle");
+      notifications.push("Tidak ada list transaksi", "", "middle");
     }
   };
   const handleSave = (e) => {
     if (keranjang.length > 0) {
       savetransaksi();
     } else {
-      notifications.push("Tidak ada list transaksi","","middle");
+      notifications.push("Tidak ada list transaksi", "", "middle");
     }
   };
   function count_keranjang() {
