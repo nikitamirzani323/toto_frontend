@@ -418,24 +418,25 @@
 </script>
 
 {#if client_device == "WEBSITE"}
-  <nav class="navbar fixed-top " style="background-color: #2b2a33;">
-    <div class="container">
+  <nav class="navbar">
+    <div class="col">
       <a href="/?token={client_token}&agent={client_company}" title="totoapp">
         <img
           id="imglogo"
           alt="SDSB4D"
           style="margin-top:0px;"
-          width="80"
+          width="135"
           src="logo.svg"
         />
       </a>
+    </div>
+    <div class="col">
       <form class="d-flex">
         <button
           on:click={() => {
             handleClickButtonTop("result");
           }}
-          id="btn1"
-          class="btn btn-secondary"
+          class="btn btn-play"
           type="button">RESULT</button
         >
         &nbsp;
@@ -443,8 +444,7 @@
           on:click={() => {
             handleClickButtonTop("invoice");
           }}
-          id="btn1"
-          class="btn btn-secondary"
+          class="btn btn-play"
           type="button">INVOICE</button
         >
         &nbsp;
@@ -452,39 +452,30 @@
           on:click={() => {
             handleClickButtonTop("bukumimpi");
           }}
-          id="btn1"
-          class="btn btn-secondary"
+          class="btn btn-play"
           type="button">BUKU MIMPI</button
         >
       </form>
     </div>
+    <div class="col">
+      <Card style="border:none;background-color:transparent;text-align:right;">
+        <CardBody>
+          <span style="font-size:13px;"
+            >Timezone : <span id="style_text"
+              >{client_timezone}, {clockmachine} WIB</span
+            ></span
+          ><br />
+
+          <span style="font-size:15px;color:#fff;"
+            >{client_username} ({client_ipaddress})</span
+          ><br />
+          <span style="font-size:15px;color:#fff;"
+            >Saldo : IDR <span id="style_text">{display_credit}</span></span
+          ><br />
+        </CardBody>
+      </Card>
+    </div>
   </nav>
-  <Col
-    xxl="3"
-    xl="3"
-    lg="4"
-    md="12"
-    sm="12"
-    style="padding:5px;margin:0px;margin-top:50px;"
-  >
-    <Card color="dark" style="border:none;">
-      <CardBody style="background-color:#2b3038;">
-        <span style="font-size:13px;">Welcome, {client_username}</span><br />
-        <span style="font-size:13px;"
-          >Credit : IDR <span id="style_text">{display_credit}</span></span
-        ><br />
-        <span style="font-size:13px;"
-          >IPADDRESS : <span id="style_text">{client_ipaddress}</span></span
-        ><br />
-        <span style="font-size:13px;"
-          >TIMEZONE : <span id="style_text">{client_timezone}</span></span
-        ><br />
-        <span style="font-size:13px;"
-          >CLOCK : <span id="style_text">{clockmachine} WIB</span></span
-        >
-      </CardBody>
-    </Card>
-  </Col>
 {:else}
   <center style="margin-bottom:5px;">
     <a href="/?token={client_token}" title="SDSB4D">
@@ -498,8 +489,8 @@
     </a>
   </center>
   <Col xxl="12" xl="12" lg="12" md="12" sm="12" style="padding:5px;margin:0px;">
-    <Card color="dark">
-      <CardBody style="background-color:#2b3038;">
+    <Card>
+      <CardBody style="background-color: transparent;">
         <span style="font-size:12px;">Welcome, {client_username}</span><br />
         <span style="font-size:12px;"
           >Credit : IDR <span id="style_text">{display_credit}</span></span
@@ -1594,3 +1585,13 @@
     </table>
   </slot:template>
 </Modal>
+
+<style scoped>
+  .btn.btn-play {
+    color: #fff;
+    border-color: #fff;
+    border-radius: 15px;
+    margin: 1rem 0.5rem 0;
+    width: 11em;
+  }
+</style>

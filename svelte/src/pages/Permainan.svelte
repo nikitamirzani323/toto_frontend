@@ -36,95 +36,42 @@
   let statuspasaran = "";
   let permainan_title = "4D / 3D / 2D";
   let permainan_periode = pasaran_periode + " - " + pasaran_code;
-  let css_permainan_432 = "btn1";
-  let css_permainan_colok = "btn1";
-  let css_permainan_5050 = "btn1";
-  let css_permainan_kombinasi = "btn1";
-  let css_permainan_dasar = "btn1";
-  let css_permainan_shio = "btn1";
   let totalbayar_invoice = 0;
   let totalbet_invoice = 0;
   let searchbukumimpi = "";
   let tipe = "";
   let message_err = "";
   let css_err = "display:none;";
-  switch (permainan) {
-    case "4-3-2":
-      css_permainan_432 = "btn2";
-      break;
-    case "colok":
-      css_permainan_colok = "btn2";
-      break;
-    case "5050":
-      css_permainan_5050 = "btn2";
-      break;
-    case "kombinasi":
-      css_permainan_kombinasi = "btn2";
-      break;
-    case "dasar":
-      css_permainan_dasar = "btn2";
-      break;
-    case "shio":
-      css_permainan_shio = "btn2";
-      break;
-  }
+  let tabs = ["4-3-2", "colok", "5050", "kombinasi", "dasar", "shio"];
+  let selected = tabs[0];
 
   const changePermainan = (e) => {
     permainan = e;
+    console.log(permainan);
     switch (e) {
       case "4-3-2":
         permainan_title = "4D / 3D / 2D";
-        css_permainan_432 = "btn2";
-        css_permainan_colok = "btn1";
-        css_permainan_5050 = "btn1";
-        css_permainan_kombinasi = "btn1";
-        css_permainan_dasar = "btn1";
-        css_permainan_shio = "btn1";
+        selected = tabs[0];
         break;
       case "colok":
         permainan_title = "COLOK";
-        css_permainan_colok = "btn2";
-        css_permainan_432 = "btn1";
-        css_permainan_5050 = "btn1";
-        css_permainan_kombinasi = "btn1";
-        css_permainan_dasar = "btn1";
-        css_permainan_shio = "btn1";
+        selected = tabs[1];
         break;
       case "5050":
         permainan_title = "50 - 50";
-        css_permainan_5050 = "btn2";
-        css_permainan_432 = "btn1";
-        css_permainan_colok = "btn1";
-        css_permainan_kombinasi = "btn1";
-        css_permainan_dasar = "btn1";
-        css_permainan_shio = "btn1";
+        selected = tabs[2];
         break;
       case "kombinasi":
         permainan_title = "MACAU / KOMBINASI";
-        css_permainan_kombinasi = "btn2";
-        css_permainan_432 = "btn1";
-        css_permainan_colok = "btn1";
-        css_permainan_5050 = "btn1";
-        css_permainan_dasar = "btn1";
-        css_permainan_shio = "btn1";
+        selected = tabs[3];
         break;
       case "dasar":
         permainan_title = "DASAR";
-        css_permainan_dasar = "btn2";
-        css_permainan_432 = "btn1";
-        css_permainan_colok = "btn1";
-        css_permainan_5050 = "btn1";
-        css_permainan_kombinasi = "btn1";
-        css_permainan_shio = "btn1";
+        selected = tabs[4];
         break;
       case "shio":
         permainan_title = "SHIO";
-        css_permainan_shio = "btn2";
-        css_permainan_432 = "btn1";
-        css_permainan_colok = "btn1";
-        css_permainan_5050 = "btn1";
-        css_permainan_kombinasi = "btn1";
-        css_permainan_dasar = "btn1";
+        selected = tabs[5];
         break;
     }
   };
@@ -347,64 +294,73 @@
 </script>
 
 {#if statuspasaran == "ONLINE"}
-  <Headerback {client_token} {client_device} {client_company} />
+  <Headerback
+    {client_username}
+    {client_company}
+    {client_credit}
+    {client_token}
+    {client_ipaddress}
+    {client_timezone}
+    {client_device}
+  />
   {#if client_device == "WEBSITE"}
-    <Col xs="12" style="padding: 0px; margin:0px;margin-top:40px;">
+    <Col xs="12" style="padding:0;">
       <Panel>
-        <slot:template slot="header">
-          <h1 style="padding:0px;margin:0px;color:white;font-size:13px;">
-            JENIS PERMAINAN
-          </h1>
-        </slot:template>
         <slot:template slot="body">
-          <ul class="nav nav-pills">
-            <li class="active">
-              <Button
+          <ul class="nav top-menu nav-pills justify-content-center">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                class:active={selected === "4-3-2"}
                 on:click={() => {
                   changePermainan("4-3-2");
-                }}
-                id={css_permainan_432}>4D/3D/2D</Button
-              >&nbsp;
+                }}>4D/3D/2D</a
+              >
             </li>
-            <li>
-              <Button
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                class:active={selected === "colok"}
                 on:click={() => {
                   changePermainan("colok");
-                }}
-                id={css_permainan_colok}>Colok</Button
-              >&nbsp;
+                }}>Colok</a
+              >
             </li>
-            <li>
-              <Button
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                class:active={selected === "5050"}
                 on:click={() => {
                   changePermainan("5050");
-                }}
-                id={css_permainan_5050}>50-50</Button
-              >&nbsp;
+                }}>50-50</a
+              >
             </li>
-            <li>
-              <Button
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                class:active={selected === "kombinasi"}
                 on:click={() => {
                   changePermainan("kombinasi");
-                }}
-                id={css_permainan_kombinasi}>KOMBINASI</Button
-              >&nbsp;
+                }}>KOMBINASI</a
+              >
             </li>
-            <li>
-              <Button
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                class:active={selected === "dasar"}
                 on:click={() => {
                   changePermainan("dasar");
-                }}
-                id={css_permainan_dasar}>DASAR</Button
-              >&nbsp;
+                }}>DASAR</a
+              >
             </li>
-            <li>
-              <Button
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                class:active={selected === "shio"}
                 on:click={() => {
                   changePermainan("shio");
-                }}
-                id={css_permainan_shio}>SHIO</Button
-              >&nbsp;
+                }}>SHIO</a
+              >
             </li>
           </ul>
         </slot:template>
@@ -1233,9 +1189,38 @@
   <div style="margin-bottom:10px;margin-left: -10px;">
     <center>
       <div style="cursor: pointer;">
-        <a href="/?token={client_token}" title="nuketoto"> Back to Home </a>
+        <a
+          href="/?token={client_token}&agent={client_company}"
+          title="nuketoto"
+        >
+          Back to Home
+        </a>
       </div>
     </center>
   </div>
 {/if}
 <Loader2 cssstyle={css_loader} />
+
+<style scoped>
+  .nav.top-menu > .nav-item > .nav-link.active,
+  .nav.top-menu > .nav-item > .nav-link:hover {
+    background: #ff9900;
+    border-radius: 4px;
+    color: #000;
+    cursor: pointer;
+  }
+  .nav.top-menu > .nav-item {
+    font-size: 10pt;
+    font-family: "Poppins";
+    opacity: 1;
+    color: #fff;
+    width: 105px;
+    text-align: center;
+    margin: 0 5px;
+  }
+
+  .nav.top-menu > .nav-item > .nav-link,
+  .nav.top-menu > .nav-item > .nav-link.active {
+    text-decoration: none;
+  }
+</style>

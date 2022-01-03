@@ -12,6 +12,7 @@
   import Loader from "../components/Loader.svelte";
   import { createEventDispatcher } from "svelte";
   import { notifications } from "../components/Noti.svelte";
+  import PeriodePanel from "../components/PeriodePanel.svelte";
 
   export let idcomppasaran = "";
   export let idtrxkeluaran = "";
@@ -2110,24 +2111,15 @@
 <Loader cssstyle={css_loader} />
 
 {#if client_device == "WEBSITE"}
-  <Card color="dark" style="border:1px solid #262424;margin:0px;padding:0px;">
-    <CardHeader
-      style="background:#323030;border-bottom:1px solid #333;border-top: 0 solid #333;"
-    >
-      <div class="float-end">
-        <div
-          style="color:white;text-align:right;font-size:13px;font-weight:bold;"
-        >
-          {pasaran_name}
-        </div>
-      </div>
-      <h1 style="padding:0px;margin:0px;color:white;font-size:15px;">
-        {permainan_title}<br />
-        PERIODE : {pasaran_periode + " - " + pasaran_code}
-      </h1>
-    </CardHeader>
-    <CardBody style="background:#121212;padding:0px;margin:0px;">
-      <TabContent style="padding: 0px;margin:0px;">
+  <Card color="dark" style="margin:0px;padding:0px;">
+    <PeriodePanel
+      {pasaran_name}
+      {permainan_title}
+      {pasaran_periode}
+      {pasaran_code}
+    />
+    <CardBody style="background:#171717;">
+      <TabContent class="periode-menu">
         <TabPane tabId="form_432d" tab="4D/3D/2D" active>
           <div style="margin:5px;">
             <table class="table" style="background:none;width:100%;">
@@ -2192,7 +2184,7 @@
             </table>
           </div>
         </TabPane>
-        <TabPane tabId="form_bbfs" tab="BBFS">
+        <TabPane tabId="form_bbfs" tab="BOLAK BALIK">
           <div style="margin:5px;">
             <table class="table" style="background:none;width:100%;">
               <tr>
@@ -2665,7 +2657,7 @@
             >
           </div>
         </TabPane>
-        <TabPane tabId="form_bbfs" tab="BBFS">
+        <TabPane tabId="form_bbfs" tab="bbfs">
           <div class="table-responsive" style="margin:5px;">
             <table class="table" style="background:none;width:100%;">
               <tr>

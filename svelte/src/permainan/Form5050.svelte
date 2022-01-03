@@ -12,6 +12,7 @@
   import Loader from "../components/Loader.svelte";
   import { createEventDispatcher } from "svelte";
   import { notifications } from "../components/Noti.svelte";
+  import PeriodePanel from "../components/PeriodePanel.svelte";
 
   export let idcomppasaran = "";
   export let idtrxkeluaran = "";
@@ -1039,21 +1040,12 @@
 <Loader cssstyle={css_loader} />
 {#if client_device == "WEBSITE"}
   <Card color="dark" style="border:1px solid #262424;">
-    <CardHeader
-      style="background:#323030;border-bottom:1px solid #333;border-top: 0 solid #333;"
-    >
-      <div class="float-end">
-        <div
-          style="color:white;text-align:right;font-size:13px;font-weight:bold;"
-        >
-          {pasaran_name}
-        </div>
-      </div>
-      <h1 style="padding:0px;margin:0px;color:white;font-size:15px;">
-        {permainan_title}<br />
-        PERIODE : {pasaran_periode + " - " + pasaran_code}
-      </h1>
-    </CardHeader>
+    <PeriodePanel
+      {pasaran_name}
+      {permainan_title}
+      {pasaran_periode}
+      {pasaran_code}
+    />
     <CardBody style="background:#121212;padding:0px;margin:0px;">
       <TabContent style="padding:0px;margin:0px;">
         <TabPane tabId="form_5050umum" tab="UMUM" active style="padding:5px;">

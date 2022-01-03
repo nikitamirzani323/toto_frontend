@@ -75,11 +75,13 @@
         </div>
         <CardBody>
           <center>
-            <h1 class="head-fonts">{rec.pasaran}</h1>
+            <br />
+            <h2 class="head-fonts">{rec.pasaran}</h2>
             <span style="font-size: 12px;">PERIODE : {rec.pasaran_periode}</span
             ><br />
             <span style="font-size: 11px;">{rec.pasaran_tgl} WIB</span>
             {#if rec.pasaran_status == "ONLINE"}
+              <br />
               <button class="btn btn-play">Play Now</button>
             {/if}
           </center>
@@ -126,7 +128,7 @@
         </div>
         <CardBody>
           <center id="style_text" style="font-size:15px;">
-            <h3 class="head-fonts">{rec.pasaran}</h3>
+            <h4 class="head-fonts">{rec.pasaran}</h4>
             <span style="font-size: 11px;">
               PERIODE : {rec.pasaran_periode}
             </span>
@@ -146,8 +148,12 @@
     color: #fff;
     border-color: #ff9900;
     border-radius: 15px;
-    margin-top: 2rem;
+    margin-top: 3rem;
     padding: 5px 25px;
+  }
+
+  .btn-play:hover {
+    background-color: #ff9900;
   }
   .bg-online {
     background-color: #009e42 !important;
@@ -157,6 +163,7 @@
   }
   .card-header {
     border-bottom: none !important;
+    padding: 2rem 1rem 0.5rem !important;
   }
   .default-block {
     background-image: url("/bg-button.svg"),
@@ -167,8 +174,8 @@
   }
 
   .web-block {
-    width: 227px;
-    height: 227px;
+    width: 300px;
+    height: 300px;
     border-radius: 20px;
   }
 

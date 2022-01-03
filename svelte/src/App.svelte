@@ -257,7 +257,6 @@
 
 <style>
   .content {
-    margin-top: 20px;
     margin-bottom: 50px;
     background-image: linear-gradient(
         180deg,

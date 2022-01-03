@@ -307,3 +307,22 @@ input:-moz-placeholder { /* Firefox 18- */
     font-weight: 600;
     color: #fff;
 }
+
+.periode-menu .nav-tabs {
+    border-bottom: 1px solid rgb(139, 139, 139);
+}
+
+.periode-menu .nav-tabs .nav-link {
+    background-color: transparent;
+    color: #FFF;
+    opacity: .5;
+    border: none;
+    text-decoration: none;
+}
+
+.periode-menu .nav-tabs .nav-link.active,
+.periode-menu .nav-tabs .nav-link:hover {
+    border-bottom: 2px solid #F9A407;
+    color: #F9A407;
+    opacity: 1;
+}
