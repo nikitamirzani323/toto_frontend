@@ -37,6 +37,7 @@ type clientlimitpasaran struct {
 	Pasaran_periode string `json:"pasaran_periode"`
 	Permainan       string `json:"permainan"`
 	Username        string `json:"username"`
+	Invoice         int    `json:"pasaran_idtransaction"`
 }
 type clientinvoice struct {
 	Company         string `json:"company"`
@@ -323,12 +324,13 @@ func Clientlimitpasaran(c *fiber.Ctx) error {
 		SetResult(response{}).
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
-			"client_company":  client.Company,
-			"client_username": client.Username,
-			"pasaran_code":    client.Pasaran_code,
-			"pasaran_periode": client.Pasaran_periode,
-			"permainan":       client.Permainan,
-			"hostname":        origin,
+			"client_idinvoice": client.Invoice,
+			"client_company":   client.Company,
+			"client_username":  client.Username,
+			"pasaran_code":     client.Pasaran_code,
+			"pasaran_periode":  client.Pasaran_periode,
+			"permainan":        client.Permainan,
+			"hostname":         origin,
 		}).
 		Post(PATH + "api/servicelimittogel")
 	if err != nil {

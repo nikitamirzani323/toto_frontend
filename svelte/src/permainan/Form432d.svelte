@@ -127,6 +127,7 @@
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
+				pasaran_idtransaction: parseInt(idtrxkeluaran),
 				company: client_company,
 				username: client_username,
 				pasaran_code: pasaran_code,
