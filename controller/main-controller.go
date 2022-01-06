@@ -44,6 +44,7 @@ type clientlimitpasaran struct {
 	Pasaran_periode string `json:"pasaran_periode"`
 	Permainan       string `json:"permainan"`
 	Username        string `json:"username"`
+	Invoice         int    `json:"pasaran_idtransaction"`
 }
 type clientinvoice struct {
 	Company         string `json:"company"`
@@ -158,6 +159,7 @@ type responseduaall struct {
 
 func InitToken(c *fiber.Ctx) error {
 	client := new(clientInit)
+	origin := c.Get("origin")
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -176,6 +178,7 @@ func InitToken(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"token":      client.Token,
@@ -210,6 +213,7 @@ func InitToken(c *fiber.Ctx) error {
 }
 func Listpasaran(c *fiber.Ctx) error {
 	client := new(clientlistpasaran)
+	origin := c.Get("origin")
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -227,6 +231,7 @@ func Listpasaran(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
@@ -244,6 +249,7 @@ func Listpasaran(c *fiber.Ctx) error {
 }
 func Checkpasaran(c *fiber.Ctx) error {
 	client := new(clientcheckpasaran)
+	origin := c.Get("origin")
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -261,6 +267,7 @@ func Checkpasaran(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
@@ -301,6 +308,8 @@ func Checkpasaran(c *fiber.Ctx) error {
 }
 func Inittogel_432d(c *fiber.Ctx) error {
 	client := new(clientinitpasaran)
+	origin := c.Get("origin")
+
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -318,6 +327,7 @@ func Inittogel_432d(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"client_company": strings.ToUpper(client.Company),
@@ -346,6 +356,8 @@ func Inittogel_432d(c *fiber.Ctx) error {
 }
 func Clientlimitpasaran(c *fiber.Ctx) error {
 	client := new(clientlimitpasaran)
+	origin := c.Get("origin")
+
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -363,13 +375,15 @@ func Clientlimitpasaran(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
-			"client_company":  client.Company,
-			"client_username": client.Username,
-			"pasaran_code":    client.Pasaran_code,
-			"pasaran_periode": client.Pasaran_periode,
-			"permainan":       client.Permainan,
+			"client_idinvoice": client.Invoice,
+			"client_company":   client.Company,
+			"client_username":  client.Username,
+			"pasaran_code":     client.Pasaran_code,
+			"pasaran_periode":  client.Pasaran_periode,
+			"permainan":        client.Permainan,
 		}).
 		Post(PATH + "api/servicelimittogel")
 	if err != nil {
@@ -393,6 +407,7 @@ func Clientlimitpasaran(c *fiber.Ctx) error {
 }
 func Resulttogel(c *fiber.Ctx) error {
 	client := new(clientresult)
+	origin := c.Get("origin")
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -410,6 +425,7 @@ func Resulttogel(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
@@ -438,6 +454,7 @@ func Resulttogel(c *fiber.Ctx) error {
 }
 func ResulttogelAll(c *fiber.Ctx) error {
 	client := new(clientresultall)
+	origin := c.Get("origin")
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -455,6 +472,7 @@ func ResulttogelAll(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
@@ -482,6 +500,7 @@ func ResulttogelAll(c *fiber.Ctx) error {
 }
 func Invoicebet(c *fiber.Ctx) error {
 	client := new(clientinvoice)
+	origin := c.Get("origin")
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -499,6 +518,7 @@ func Invoicebet(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"client_company":   client.Company,
@@ -511,7 +531,7 @@ func Invoicebet(c *fiber.Ctx) error {
 	if err != nil {
 		log.Println(err.Error())
 	}
-	// log.Println(resp)
+	log.Println(resp)
 	result := resp.Result().(*responseinvoicebet)
 	// log.Println(resp)
 
@@ -533,6 +553,7 @@ func Invoicebet(c *fiber.Ctx) error {
 }
 func Invoicebetid(c *fiber.Ctx) error {
 	client := new(clientinvoicedetailid)
+	origin := c.Get("origin")
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -550,6 +571,7 @@ func Invoicebetid(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"client_idinvoice": client.Invoice,
@@ -579,6 +601,8 @@ func Invoicebetid(c *fiber.Ctx) error {
 }
 func Slipperiode(c *fiber.Ctx) error {
 	client := new(clientslip)
+	origin := c.Get("origin")
+
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -596,6 +620,7 @@ func Slipperiode(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"client_company":  client.Company,
@@ -624,6 +649,8 @@ func Slipperiode(c *fiber.Ctx) error {
 }
 func SlipperiodeAll(c *fiber.Ctx) error {
 	client := new(clientslipall)
+	origin := c.Get("origin")
+
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -641,6 +668,7 @@ func SlipperiodeAll(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"client_company":  client.Company,
@@ -677,6 +705,8 @@ func SlipperiodeAll(c *fiber.Ctx) error {
 }
 func Slipperiodedetail(c *fiber.Ctx) error {
 	client := new(clientslipdetail)
+	origin := c.Get("origin")
+
 	render_page := time.Now()
 	if err := c.BodyParser(client); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -694,6 +724,7 @@ func Slipperiodedetail(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"client_company":  client.Company,
@@ -730,6 +761,8 @@ func reverse(str string) (result string) {
 func Savetransaksi(c *fiber.Ctx) error {
 	encrypt := new(encryptedTransaction)
 	client := new(clientsavetransaksi)
+	origin := c.Get("origin")
+
 	render_page := time.Now()
 	if err := c.BodyParser(encrypt); err != nil {
 		c.Status(fiber.StatusBadRequest)
@@ -754,6 +787,7 @@ func Savetransaksi(c *fiber.Ctx) error {
 			"Content-Type":      "application/json",
 			"User-Agent":        "isbtoto-agent",
 			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
 		}).
 		SetBody(map[string]interface{}{
 			"idtrxkeluaran":   client.Pasaran_idtransaction,
