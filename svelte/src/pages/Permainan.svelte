@@ -497,7 +497,7 @@
         class="nav nav-pills mb-3"
         id="pills-tab"
         role="tablist"
-        style="background-color: #323030;"
+        style="background-color: #171717;padding:10px;"
       >
         <li class="nav-item" role="presentation">
           <button
@@ -544,39 +544,83 @@
             header_style="padding:0px;margin:0px;"
             body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:655px;"
           >
-            <slot:template slot="header" />
+            <slot:template slot="header">
+              <div
+                class="row"
+                style="padding: 20px;font-size: 15px;color: #fff;"
+              >
+                <div class="col">
+                  <span
+                    >BET SAYA : <span style="color:#FF9900; font-weight:bold"
+                      >{new Intl.NumberFormat().format(totalbet_invoice)}</span
+                    ></span
+                  >
+                </div>
+                <div class="col text-end">
+                  <span
+                    >TOTAL BAYAR : <span style="color:#FF9900; font-weight:bold"
+                      >{new Intl.NumberFormat().format(
+                        totalbayar_invoice
+                      )}</span
+                    ></span
+                  >
+                </div>
+              </div>
+              <!-- <table class="table" style="background:none;">
+                <tr>
+                  <td style="text-align:right;color:white;font-size:12px;"
+                    >TOTAL BET</td
+                  >
+                  <td style="text-align:right;color:white;font-size:12px;">:</td
+                  >
+                  <td style="text-align:right;color:#fc0;font-size:12px;"
+                    >{new Intl.NumberFormat().format(totalbet_invoice)}</td
+                  >
+                </tr>
+                <tr>
+                  <td style="text-align:right;color:white;font-size:12px;"
+                    >TOTAL BAYAR</td
+                  >
+                  <td style="text-align:right;color:white;font-size:12px;">:</td
+                  >
+                  <td style="text-align:right;color:#fc0;font-size:12px;"
+                    >{new Intl.NumberFormat().format(totalbayar_invoice)}</td
+                  >
+                </tr>
+              </table> -->
+            </slot:template>
             <slot:template slot="body">
               <table class="table table-dark table-striped">
                 <thead>
                   <tr>
                     <th
                       width="10%"
-                      style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                      style="text-align:center;vertical-align:top;background:#171717;font-size:13px;border-bottom:none;"
                       NOWRAP>NOMOR</th
                     >
                     <th
                       width="10%"
-                      style="text-align:center;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                      style="text-align:center;vertical-align:top;background:#171717;font-size:13px;border-bottom:none;"
                       NOWRAP>PERMAINAN</th
                     >
                     <th
                       width="20%"
-                      style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                      style="text-align:right;vertical-align:top;background:#171717;font-size:13px;border-bottom:none;"
                       NOWRAP>BET</th
                     >
                     <th
                       width="20%"
-                      style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                      style="text-align:right;vertical-align:top;background:#171717;font-size:13px;border-bottom:none;"
                       NOWRAP>KEI(%)</th
                     >
                     <th
                       width="20%"
-                      style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                      style="text-align:right;vertical-align:top;background:#171717;font-size:13px;border-bottom:none;"
                       NOWRAP>DIS(%)</th
                     >
                     <th
                       width="20%"
-                      style="text-align:right;vertical-align:top;background:#303030;font-size:13px;border-bottom:none;"
+                      style="text-align:right;vertical-align:top;background:#171717;font-size:13px;border-bottom:none;"
                       NOWRAP>BAYAR</th
                     >
                   </tr>
@@ -613,30 +657,7 @@
                 </tbody>
               </table>
             </slot:template>
-            <slot:template slot="footer">
-              <table class="table" style="background:none;">
-                <tr>
-                  <td style="text-align:right;color:white;font-size:12px;"
-                    >TOTAL BET</td
-                  >
-                  <td style="text-align:right;color:white;font-size:12px;">:</td
-                  >
-                  <td style="text-align:right;color:#fc0;font-size:12px;"
-                    >{new Intl.NumberFormat().format(totalbet_invoice)}</td
-                  >
-                </tr>
-                <tr>
-                  <td style="text-align:right;color:white;font-size:12px;"
-                    >TOTAL BAYAR</td
-                  >
-                  <td style="text-align:right;color:white;font-size:12px;">:</td
-                  >
-                  <td style="text-align:right;color:#fc0;font-size:12px;"
-                    >{new Intl.NumberFormat().format(totalbayar_invoice)}</td
-                  >
-                </tr>
-              </table>
-            </slot:template>
+            <slot:template slot="footer" />
           </PanelFull>
         </div>
         <div
@@ -1063,7 +1084,28 @@
           header_style="padding:0px;margin:0px;"
           body_style="padding:0px;margin:0px;background:#121212;border:1px solid #0e0c13;height:450px;"
         >
-          <slot:template slot="header" />
+          <slot:template slot="header">
+            <table class="table" style="background:none;">
+              <tr>
+                <td style="text-align:right;color:white;font-size:11px;"
+                  >TOTAL BET</td
+                >
+                <td style="text-align:right;color:white;font-size:11px;">:</td>
+                <td style="text-align:right;color:#fc0;font-size:11px;"
+                  >{new Intl.NumberFormat().format(totalbet_invoice)}</td
+                >
+              </tr>
+              <tr>
+                <td style="text-align:right;color:white;font-size:11px;"
+                  >TOTAL BAYAR</td
+                >
+                <td style="text-align:right;color:white;font-size:11px;">:</td>
+                <td style="text-align:right;color:#fc0;font-size:11px;"
+                  >{new Intl.NumberFormat().format(totalbayar_invoice)}</td
+                >
+              </tr>
+            </table>
+          </slot:template>
           <slot:template slot="body">
             <table class="table table-dark table-striped">
               <thead>
@@ -1132,28 +1174,7 @@
               </tbody>
             </table>
           </slot:template>
-          <slot:template slot="footer">
-            <table class="table" style="background:none;">
-              <tr>
-                <td style="text-align:right;color:white;font-size:11px;"
-                  >TOTAL BET</td
-                >
-                <td style="text-align:right;color:white;font-size:11px;">:</td>
-                <td style="text-align:right;color:#fc0;font-size:11px;"
-                  >{new Intl.NumberFormat().format(totalbet_invoice)}</td
-                >
-              </tr>
-              <tr>
-                <td style="text-align:right;color:white;font-size:11px;"
-                  >TOTAL BAYAR</td
-                >
-                <td style="text-align:right;color:white;font-size:11px;">:</td>
-                <td style="text-align:right;color:#fc0;font-size:11px;"
-                  >{new Intl.NumberFormat().format(totalbayar_invoice)}</td
-                >
-              </tr>
-            </table>
-          </slot:template>
+          <slot:template slot="footer" />
         </PanelFull>
       </div>
     </div>

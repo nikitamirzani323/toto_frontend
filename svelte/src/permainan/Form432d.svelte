@@ -2122,15 +2122,13 @@
     <CardBody style="background:#171717;">
       <TabContent class="periode-menu">
         <TabPane tabId="form_432d" tab="4D/3D/2D" active>
-          <div style="margin:5px;">
-            <table class="table" style="background:none;width:100%;">
-              <tr>
-                <td
-                  width="25%"
-                  NOWRAP
-                  style="padding-right:10px;vertical-align: center;"
-                >
-                  <span style="color:#8a8a8a;">Nomor (2-4)</span>
+          <div style="margin:10px 0;">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="mb-3">
+                  <label for="inputNomor432d" class="form-label"
+                    >Nomor (2 sampai 4 Digits)</label
+                  >
                   <input
                     autofocus
                     bind:this={nomor_input}
@@ -2140,7 +2138,70 @@
                     type="text"
                     class="form-control form-control-sm"
                     placeholder="Input 4D/3D/2D Digit"
-                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;"
+                    id="inputNomor432d"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;border-radius:5px;"
+                    minlength="4"
+                    maxlength="4"
+                    tab_index="-1"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="inputBetMin432d" class="form-label"
+                    >Bet (min : {minimal_bet})</label
+                  >
+                  <input
+                    bind:value={bet_432}
+                    on:keyup={handleKeyboard_number}
+                    on:keypress={handleKeyboard_checkenter}
+                    type="text"
+                    class="form-control"
+                    placeholder="Bet"
+                    id="inputBetMin432d"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;border-radius:5px; "
+                    minlength="3"
+                    maxlength="7"
+                    tab_index="0"
+                  />
+                  <span style="text-align:right;font-size:12px;color:#8a8a8a;"
+                    >{new Intl.NumberFormat().format(bet_432)}</span
+                  >
+                </div>
+              </div>
+              <div class="col">
+                <div class="mb-3">
+                  <label for="btn2" class="form-label" />
+                  <Button
+                    id="btn2"
+                    class="form-control mt-2"
+                    style="border-radius:5px"
+                    on:click={() => {
+                      handleTambah("4-3-2");
+                    }}>TAMBAH</Button
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- <table class="table" style="background:none;width:100%;">
+              <tr>
+                <td
+                  width="25%"
+                  NOWRAP
+                  style="padding-right:10px;vertical-align: center;"
+                >
+                  <span style="color:#fff;">Nomor (2 sampai 4 Digits)</span>
+                  <input
+                    autofocus
+                    bind:this={nomor_input}
+                    bind:value={nomor}
+                    on:keyup={handleKeyboard_format}
+                    on:keypress={handleKeyboard_checkenter}
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Input 4D/3D/2D Digit"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:center;border-radius:5px;"
                     minlength="4"
                     maxlength="4"
                     tab_index="-1"
@@ -2164,7 +2225,7 @@
                     type="text"
                     class="form-control"
                     placeholder="Bet"
-                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;"
+                    style="border:none;background:#303030;color:white;font-size:20px;text-align:right;border-radius:5px; "
                     minlength="3"
                     maxlength="7"
                     tab_index="0"
@@ -2182,11 +2243,11 @@
                   >
                 </td>
               </tr>
-            </table>
+            </table> -->
           </div>
         </TabPane>
         <TabPane tabId="form_bbfs" tab="BOLAK BALIK">
-          <div style="margin:5px;">
+          <div style="margin:10px 0;">
             <table class="table" style="background:none;width:100%;">
               <tr>
                 <td
@@ -2341,7 +2402,7 @@
           </div>
         </TabPane>
         <TabPane tabId="form_WAP" tab="WAP">
-          <div style="margin:5px;">
+          <div style="margin:10px 0;">
             <textarea
               bind:this={nomorwap_input}
               bind:value={nomorwap}
@@ -2364,7 +2425,7 @@
           </div>
         </TabPane>
         <TabPane tabId="form_quick2d" tab="QUICK 2D">
-          <div style="margin:5px;">
+          <div style="margin:10px 0;">
             <table class="table" style="background:none;width:100%;">
               <tr>
                 <td
@@ -2446,7 +2507,7 @@
           </div>
         </TabPane>
         <TabPane tabId="form_2dd" tab="2D DEPAN">
-          <div style="margin:5px;">
+          <div style="margin:10px 0;">
             <table class="table" style="background:none;width:100%;">
               <tr>
                 <td
@@ -2509,7 +2570,7 @@
           </div>
         </TabPane>
         <TabPane tabId="form_2dt" tab="2D TENGAH">
-          <div style="margin:5px;">
+          <div style="margin:10px 0;">
             <table class="table" style="background:none;width:100%;">
               <tr>
                 <td
@@ -2594,7 +2655,7 @@
     <CardBody style="background:#121212;padding:0px;margin:0px;">
       <TabContent style="padding: 0px;margin:0px;">
         <TabPane tabId="form_432d" tab="4D/3D/2D" active>
-          <div style="margin:5px;">
+          <div style="margin:10px 0;">
             <table class="table" style="background:none;width:100%;">
               <tr>
                 <td
@@ -2659,7 +2720,7 @@
           </div>
         </TabPane>
         <TabPane tabId="form_bbfs" tab="bbfs">
-          <div class="table-responsive" style="margin:5px;">
+          <div class="table-responsive" style="margin:10px 0;">
             <table class="table" style="background:none;width:100%;">
               <tr>
                 <td
@@ -2832,7 +2893,7 @@
           </div>
         </TabPane>
         <TabPane tabId="form_2dd" tab="2DD">
-          <div style="margin:5px;">
+          <div style="margin:10px 0;">
             <table class="table" style="background:none;width:100%;">
               <tr>
                 <td
@@ -2894,7 +2955,7 @@
           </div>
         </TabPane>
         <TabPane tabId="form_2dt" tab="2DT">
-          <div style="margin:5px;">
+          <div style="margin:10px 0;">
             <table class="table" style="background:none;width:100%;">
               <tr>
                 <td

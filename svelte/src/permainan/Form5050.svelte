@@ -1046,10 +1046,13 @@
       {pasaran_periode}
       {pasaran_code}
     />
-    <CardBody style="background:#121212;padding:0px;margin:0px;">
-      <TabContent style="padding:0px;margin:0px;">
-        <TabPane tabId="form_5050umum" tab="UMUM" active style="padding:5px;">
-          <table class="table" style="background:none;width:100%;">
+    <CardBody style="background:#171717">
+      <TabContent class="periode-menu">
+        <TabPane tabId="form_5050umum" tab="UMUM" active>
+          <table
+            class="table"
+            style="background:none;width:100%; margin-top:10px;"
+          >
             <tr>
               <td
                 width="25%"
@@ -1115,7 +1118,10 @@
           </table>
         </TabPane>
         <TabPane tabId="form_5050special" tab="SPECIAL">
-          <table class="table" style="background:none;width:100%;">
+          <table
+            class="table"
+            style="background:none;width:100%; margin-top:10px;"
+          >
             <tr>
               <td
                 width="25%"
@@ -1203,7 +1209,10 @@
           </table>
         </TabPane>
         <TabPane tabId="form_5050kombinasi" tab="KOMBINASI">
-          <table class="table" style="background:none;width:100%;">
+          <table
+            class="table"
+            style="background:none;width:100%;margin-top:10px;"
+          >
             <tr>
               <td
                 width="25%"

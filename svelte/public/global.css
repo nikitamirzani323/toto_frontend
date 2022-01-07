@@ -283,7 +283,7 @@ hr {
     color: black;
     background-color: #F9A407;
     border-color: #F9A407 #F9A407 #F9A407;
-    border-radius: 0px;
+    border-radius: 4px;
     font-weight: bold;
 }
 input::placeholder {
