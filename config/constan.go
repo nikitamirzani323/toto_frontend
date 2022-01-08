@@ -10,7 +10,7 @@ import (
 
 // const PATH_API string = "http://10.104.0.14:7071/"
 
-var PATH_API string = "http://34.126.177.103/"
+var PATH_API string = "http://128.199.241.112:7071/"
 
 func GetApiPath() string {
 	err := godotenv.Load()
@@ -22,7 +22,7 @@ func GetApiPath() string {
 
 	appsApi := os.Getenv("PATH_API")
 	if appsApi == "" {
-		appsApi = "http://34.126.177.103/"
+		appsApi = "http://128.199.241.112:7071/"
 	}
 
 	return appsApi

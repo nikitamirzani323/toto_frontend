@@ -183,6 +183,7 @@ func InitToken(c *fiber.Ctx) error {
 		SetBody(map[string]interface{}{
 			"token":      client.Token,
 			"agent_code": client.Agent_Code,
+			"hostname":   origin,
 		}).
 		Post(PATH + "api/servicetoken")
 	if err != nil {
@@ -235,6 +236,7 @@ func Listpasaran(c *fiber.Ctx) error {
 		}).
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
+			"hostname":       origin,
 		}).
 		Post(PATH + "api/serviceinit")
 	if err != nil {
@@ -272,6 +274,7 @@ func Checkpasaran(c *fiber.Ctx) error {
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
 			"pasaran_code":   client.Pasaran_code,
+			"hostname":       origin,
 		}).
 		Post(PATH + "api/servicecheckpasaran")
 	if err != nil {
@@ -333,6 +336,7 @@ func Inittogel_432d(c *fiber.Ctx) error {
 			"client_company": strings.ToUpper(client.Company),
 			"pasaran_code":   client.Pasaran_code,
 			"permainan":      client.Permainan,
+			"hostname":       origin,
 		}).
 		Post(PATH + "api/serviceconfigtogel")
 	if err != nil {
@@ -384,6 +388,7 @@ func Clientlimitpasaran(c *fiber.Ctx) error {
 			"pasaran_code":     client.Pasaran_code,
 			"pasaran_periode":  client.Pasaran_periode,
 			"permainan":        client.Permainan,
+			"hostname":         origin,
 		}).
 		Post(PATH + "api/servicelimittogel")
 	if err != nil {
@@ -430,6 +435,7 @@ func Resulttogel(c *fiber.Ctx) error {
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
 			"pasaran_code":   client.Pasaran_code,
+			"hostname":       origin,
 		}).
 		Post(PATH + "api/serviceresult")
 	if err != nil {
@@ -476,6 +482,7 @@ func ResulttogelAll(c *fiber.Ctx) error {
 		}).
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
+			"hostname":       origin,
 		}).
 		Post(PATH + "api/serviceresultall")
 	if err != nil {
@@ -526,6 +533,7 @@ func Invoicebet(c *fiber.Ctx) error {
 			"client_idinvoice": client.Invoice,
 			"pasaran_code":     client.Pasaran_code,
 			"pasaran_periode":  client.Pasaran_periode,
+			"hostname":         origin,
 		}).
 		Post(PATH + "api/serviceinvoicebet")
 	if err != nil {
@@ -578,6 +586,7 @@ func Invoicebetid(c *fiber.Ctx) error {
 			"client_company":   client.Company,
 			"client_username":  client.Username,
 			"permainan":        client.Permainan,
+			"hostname":         origin,
 		}).
 		Post(PATH + "api/serviceinvoicebetdetail")
 	if err != nil {
@@ -626,6 +635,7 @@ func Slipperiode(c *fiber.Ctx) error {
 			"client_company":  client.Company,
 			"client_username": client.Username,
 			"pasaran_code":    client.Pasaran_code,
+			"hostname":        origin,
 		}).
 		Post(PATH + "api/serviceslip")
 	if err != nil {
@@ -673,6 +683,7 @@ func SlipperiodeAll(c *fiber.Ctx) error {
 		SetBody(map[string]interface{}{
 			"client_company":  client.Company,
 			"client_username": client.Username,
+			"hostname":        origin,
 		}).
 		Post(PATH + "api/serviceslipall")
 	if err != nil {
@@ -730,6 +741,7 @@ func Slipperiodedetail(c *fiber.Ctx) error {
 			"client_company":  client.Company,
 			"client_username": client.Username,
 			"idtrxkeluaran":   client.Idinvoice,
+			"hostname":        origin,
 		}).
 		Post(PATH + "api/serviceslipdetail")
 	if err != nil {
@@ -800,6 +812,7 @@ func Savetransaksi(c *fiber.Ctx) error {
 			"totalbayarbet":   client.Total,
 			"list4d":          string(client.Data),
 			"token":           client.Token,
+			"hostname":        origin,
 		}).
 		Post(PATH + "api/savetransaksi")
 	if err != nil {
