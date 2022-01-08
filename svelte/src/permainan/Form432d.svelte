@@ -2254,6 +2254,14 @@
             bet_3 = 0;
             flag = false;
           }
+          if (isNaN(bet_4)) {
+            bet_4 = 0;
+            flag = false;
+          }
+          if (isNaN(bet_5)) {
+            bet_5 = 0;
+            flag = false;
+          }
           if (flag) {
             formbbfs_add();
           }
@@ -2404,6 +2412,18 @@
       numbera = parseInt(bet_3[i]);
       if (isNaN(numbera)) {
         bet_3 = "";
+      }
+    }
+    for (let i = 0; i < bet_4.length; i++) {
+      numbera = parseInt(bet_4[i]);
+      if (isNaN(numbera)) {
+        bet_4 = "";
+      }
+    }
+    for (let i = 0; i < bet_5.length; i++) {
+      numbera = parseInt(bet_5[i]);
+      if (isNaN(numbera)) {
+        bet_5 = "";
       }
     }
     for (let i = 0; i < bet_2dd.length; i++) {
