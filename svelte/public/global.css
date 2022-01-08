@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 html,
 body {
     font-size: 81.25%;
@@ -5,7 +6,7 @@ body {
     ;
     color: #acacac;
     line-height: 1.5;
-    background: #252525;
+    background: #330500;
 }
 
 #btn1 {
@@ -282,7 +283,7 @@ hr {
     color: black;
     background-color: #F9A407;
     border-color: #F9A407 #F9A407 #F9A407;
-    border-radius: 0px;
+    border-radius: 4px;
     font-weight: bold;
 }
 input::placeholder {
@@ -299,4 +300,29 @@ input:-ms-input-placeholder { /* IE 10+ */
 }
 input:-moz-placeholder { /* Firefox 18- */
     font-size:12px;
+}
+
+.head-fonts {
+    font-family: 'Poppins' !important;
+    font-weight: 600;
+    color: #fff;
+}
+
+.periode-menu .nav-tabs {
+    border-bottom: 1px solid rgb(139, 139, 139);
+}
+
+.periode-menu .nav-tabs .nav-link {
+    background-color: transparent;
+    color: #FFF;
+    opacity: .5;
+    border: none;
+    text-decoration: none;
+}
+
+.periode-menu .nav-tabs .nav-link.active,
+.periode-menu .nav-tabs .nav-link:hover {
+    border-bottom: 2px solid #F9A407;
+    color: #F9A407;
+    opacity: 1;
 }

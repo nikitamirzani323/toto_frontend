@@ -9,4 +9,6 @@ services:
     - ./svelte:/app/svelte
     ports:
       - 7071:7071
+    environment:
+      PATH_API: http://toto-api-go:7071/
     restart: always

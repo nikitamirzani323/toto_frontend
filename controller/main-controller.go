@@ -1,9 +1,13 @@
 package controller
 
 import (
+	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 	"time"
 
 	"bitbucket.org/isbtotogroup/frontend_svelte/config"
@@ -11,10 +15,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-const PATH string = config.PATH_API
+var PATH string = config.GetApiPath()
+var PATH_PANEL string = config.GetDreamApiPath()
+var API_SECRET string = os.Getenv("API_SECRET")
 
 type clientInit struct {
-	Token string `json:"token"`
+	Token      string `json:"token"`
+	Agent_Code string `json:"agent`
 }
 type clientlistpasaran struct {
 	Token    string `json:"token"`
@@ -88,6 +95,10 @@ type clientsavetransaksi struct {
 	Total                 int             `json:"total"`
 	Data                  json.RawMessage `json:"data"`
 }
+
+type encryptedTransaction struct {
+	Enkrip_transaksi string `json:"transaction"`
+}
 type clientbukumimpi struct {
 	Tipe string `json:"tipe"`
 	Nama string `json:"nama"`
@@ -123,8 +134,9 @@ type responseinvoicebet struct {
 	Record     interface{} `json:"record"`
 }
 type response struct {
-	Status int         `json:"status"`
-	Record interface{} `json:"record"`
+	Status  int         `json:"status"`
+	Record  interface{} `json:"record"`
+	Message string      `json:"message"`
 }
 type responsedua struct {
 	Status int `json:"status"`
@@ -159,19 +171,36 @@ func InitToken(c *fiber.Ctx) error {
 			"record":  nil,
 		})
 	}
+	log.Println(c.IPs())
 
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(responseinitresult{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
-			"token":    client.Token,
-			"hostname": origin,
+			"token":      client.Token,
+			"agent_code": client.Agent_Code,
+			"hostname":   origin,
 		}).
 		Post(PATH + "api/servicetoken")
 	if err != nil {
 		log.Println(err.Error())
 	}
+	// Explore response object
+	log.Println("Response Info:")
+	log.Println("  Error      :", err)
+	log.Println("  Status Code:", resp.StatusCode())
+	log.Println("  Status     :", resp.Status())
+	log.Println("  Proto      :", resp.Proto())
+	log.Println("  Time       :", resp.Time())
+	log.Println("  Received At:", resp.ReceivedAt())
+	log.Println("  Body       :\n", resp)
+	log.Println()
 	result := resp.Result().(*responseinitresult)
 	c.Status(fiber.StatusOK)
 	return c.JSON(fiber.Map{
@@ -201,7 +230,12 @@ func Listpasaran(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(response{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
 			"hostname":       origin,
@@ -233,7 +267,12 @@ func Checkpasaran(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(responsecheckpasaran{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
 			"pasaran_code":   client.Pasaran_code,
@@ -243,6 +282,15 @@ func Checkpasaran(c *fiber.Ctx) error {
 	if err != nil {
 		log.Println(err.Error())
 	}
+	fmt.Println("Response Info:")
+	fmt.Println("  Error      :", err)
+	fmt.Println("  Status Code:", resp.StatusCode())
+	fmt.Println("  Status     :", resp.Status())
+	fmt.Println("  Proto      :", resp.Proto())
+	fmt.Println("  Time       :", resp.Time())
+	fmt.Println("  Received At:", resp.ReceivedAt())
+	log.Println("  Body       :\n", resp)
+	fmt.Println()
 	result := resp.Result().(*responsecheckpasaran)
 	if result.Status == 200 {
 		return c.JSON(fiber.Map{
@@ -279,9 +327,14 @@ func Inittogel_432d(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(response{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
-			"client_company": client.Company,
+			"client_company": strings.ToUpper(client.Company),
 			"pasaran_code":   client.Pasaran_code,
 			"permainan":      client.Permainan,
 			"hostname":       origin,
@@ -322,7 +375,12 @@ func Clientlimitpasaran(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(response{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"client_idinvoice": client.Invoice,
 			"client_company":   client.Company,
@@ -368,7 +426,12 @@ func Resulttogel(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(responsedua{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
 			"pasaran_code":   client.Pasaran_code,
@@ -411,7 +474,12 @@ func ResulttogelAll(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(responseduaall{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"client_company": client.Company,
 			"hostname":       origin,
@@ -453,7 +521,12 @@ func Invoicebet(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(responseinvoicebet{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"client_company":   client.Company,
 			"client_username":  client.Username,
@@ -466,7 +539,7 @@ func Invoicebet(c *fiber.Ctx) error {
 	if err != nil {
 		log.Println(err.Error())
 	}
-	// log.Println(resp)
+	log.Println(resp)
 	result := resp.Result().(*responseinvoicebet)
 	// log.Println(resp)
 
@@ -502,7 +575,12 @@ func Invoicebetid(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(response{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"client_idinvoice": client.Invoice,
 			"client_company":   client.Company,
@@ -546,7 +624,12 @@ func Slipperiode(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(response{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"client_company":  client.Company,
 			"client_username": client.Username,
@@ -589,7 +672,12 @@ func SlipperiodeAll(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(response{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"client_company":  client.Company,
 			"client_username": client.Username,
@@ -598,7 +686,16 @@ func SlipperiodeAll(c *fiber.Ctx) error {
 		Post(PATH + "api/serviceslipall")
 	if err != nil {
 		log.Println(err.Error())
-	}
+	} // Explore response object
+	fmt.Println("Response Info:")
+	fmt.Println("  Error      :", err)
+	fmt.Println("  Status Code:", resp.StatusCode())
+	fmt.Println("  Status     :", resp.Status())
+	fmt.Println("  Proto      :", resp.Proto())
+	fmt.Println("  Time       :", resp.Time())
+	fmt.Println("  Received At:", resp.ReceivedAt())
+	fmt.Println("  Body       :\n", resp)
+	fmt.Println()
 	result := resp.Result().(*response)
 
 	if result.Status == 200 {
@@ -631,7 +728,12 @@ func Slipperiodedetail(c *fiber.Ctx) error {
 	axios := resty.New()
 	resp, err := axios.R().
 		SetResult(response{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"client_company":  client.Company,
 			"client_username": client.Username,
@@ -659,11 +761,18 @@ func Slipperiodedetail(c *fiber.Ctx) error {
 		})
 	}
 }
+func reverse(str string) (result string) {
+	for _, v := range str {
+		result = string(v) + result
+	}
+	return
+}
 func Savetransaksi(c *fiber.Ctx) error {
+	encrypt := new(encryptedTransaction)
 	client := new(clientsavetransaksi)
 	origin := c.Get("origin")
 	render_page := time.Now()
-	if err := c.BodyParser(client); err != nil {
+	if err := c.BodyParser(encrypt); err != nil {
 		c.Status(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
 			"status":  fiber.StatusBadRequest,
@@ -671,12 +780,23 @@ func Savetransaksi(c *fiber.Ctx) error {
 			"record":  nil,
 		})
 	}
+	var decodedByte, _ = base64.StdEncoding.DecodeString(reverse(encrypt.Enkrip_transaksi))
+	var decodedString = string(decodedByte)
+	err := json.Unmarshal([]byte(decodedString), &client)
+	if err != nil {
+		log.Println(err.Error())
+	}
 
 	axios := resty.New()
 
 	resp, err := axios.R().
 		SetResult(response{}).
-		SetHeader("Content-Type", "application/json").
+		SetHeaders(map[string]string{
+			"Content-Type":      "application/json",
+			"User-Agent":        "isbtoto-agent",
+			"x-endpoint-secret": API_SECRET,
+			"x-origin-hostname": origin,
+		}).
 		SetBody(map[string]interface{}{
 			"idtrxkeluaran":   client.Pasaran_idtransaction,
 			"idcomppasaran":   client.Pasaran_idcomp,
@@ -689,22 +809,17 @@ func Savetransaksi(c *fiber.Ctx) error {
 			"client_username": client.Username,
 			"totalbayarbet":   client.Total,
 			"list4d":          string(client.Data),
+<<<<<<< HEAD
+=======
+			"token":           client.Token,
+>>>>>>> features/templating
 			"hostname":        origin,
 		}).
 		Post(PATH + "api/savetransaksi")
 	if err != nil {
 		log.Println(err.Error())
 	}
-	// Explore response object
-	log.Println("Response Info:")
-	log.Println("  Error      :", err)
-	log.Println("  Status Code:", resp.StatusCode())
-	log.Println("  Status     :", resp.Status())
-	log.Println("  Proto      :", resp.Proto())
-	log.Println("  Time       :", resp.Time())
-	log.Println("  Received At:", resp.ReceivedAt())
-	log.Println("  Body       :\n", resp)
-	log.Println()
+	fmt.Println("Response Info client: ", client.Company, resp.ReceivedAt(), resp)
 	result := resp.Result().(*response)
 
 	if result.Status == 200 {
@@ -715,9 +830,10 @@ func Savetransaksi(c *fiber.Ctx) error {
 		})
 	} else {
 		return c.JSON(fiber.Map{
-			"status": http.StatusOK,
-			"record": nil,
-			"time":   time.Since(render_page).String(),
+			"status":  result.Status,
+			"record":  nil,
+			"message": result.Message,
+			"time":    time.Since(render_page).String(),
 		})
 	}
 }
@@ -741,7 +857,7 @@ func Listbukumimpi(c *fiber.Ctx) error {
 			"tipe": client.Tipe,
 			"nama": client.Nama,
 		}).
-		Post(PATH + "api/bukumimpi")
+		Post(PATH_PANEL + "api/bukumimpi")
 	if err != nil {
 		log.Println(err.Error())
 	}

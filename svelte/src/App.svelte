@@ -7,6 +7,7 @@
   import dayjs from "dayjs";
   import utc from "dayjs/plugin/utc";
   import timezone from "dayjs/plugin/timezone";
+  import Notification, { notifications } from "./components/Noti.svelte";
 
   dayjs.extend(utc);
   dayjs.extend(timezone);
@@ -14,6 +15,7 @@
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const token_browser = urlParams.get("token");
+  const agentCode = urlParams.get("agent");
   let client_device = "";
   if (token_browser === null) {
     console.log("TOKEN NOT FOUND");
@@ -54,25 +56,27 @@
   let message_err = "";
   let css_err = "display:none;";
   async function initTimezone() {
-    const res = await fetch("https://ipinfo.io/json?token=dbbfb216692964");
+    const res = await fetch("/api/healthz");
     if (!res.ok) {
       const message = `An error has occured: ${res.status}`;
       throw new Error(message);
     } else {
       const json = await res.json();
-      client_ipaddress = json.ip;
-      client_timezone = json.timezone;
-      initapp(token_browser);
+      client_ipaddress = json.real_ip;
+      client_timezone = "Asia/Jakarta";
     }
+    initapp(token_browser, agentCode);
   }
-  async function initapp(e) {
+  async function initapp(token, agent_code) {
     const resInit = await fetch("/api/init", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-forwarder-for": client_ipaddress,
       },
       body: JSON.stringify({
-        token: e,
+        token,
+        agent_code,
       }),
     });
     if (!resInit.ok) {
@@ -104,6 +108,7 @@
             } else {
               initPasaran();
             }
+            break;
         }
       }
     }
@@ -144,10 +149,14 @@
             ];
           }
         } else {
-          alert("Error");
+          notifications.push(
+            "An error has occured, Please Contact Administrator"
+          );
         }
       } else {
-        alert("Error");
+        notifications.push(
+          "An error has occured, Please Contact Administrator"
+        );
       }
     }
   }
@@ -156,8 +165,9 @@
 <svelte:head>
   <title>SDSB4D</title>
 </svelte:head>
+<Notification duration="3000" />
 {#if client_device == "WEBSITE"}
-  <div class="content" style="margin-top:20px;margin-bottom:50px;">
+  <div class="content">
     <Container>
       {#if token_browser != ""}
         <Row align-items-start>
@@ -244,3 +254,17 @@
     {/if}
   </Container>
 {/if}
+
+<style>
+  .content {
+    margin-bottom: 50px;
+    background-image: linear-gradient(
+        180deg,
+        rgba(51, 0, 5, 0) 17.78%,
+        #330500 52.74%
+      ),
+      url("/bg-cover.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+</style>
