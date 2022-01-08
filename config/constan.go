@@ -38,7 +38,7 @@ func GetDreamApiPath() string {
 
 	deramApi := os.Getenv("PATH_PANEL_API")
 	if deramApi == "" {
-		deramApi = "http://34.126.177.103/"
+		deramApi = "http://128.199.241.112:7071/"
 	}
 
 	return deramApi

@@ -809,10 +809,7 @@ func Savetransaksi(c *fiber.Ctx) error {
 			"client_username": client.Username,
 			"totalbayarbet":   client.Total,
 			"list4d":          string(client.Data),
-<<<<<<< HEAD
-=======
 			"token":           client.Token,
->>>>>>> features/templating
 			"hostname":        origin,
 		}).
 		Post(PATH + "api/savetransaksi")
